@@ -326,7 +326,7 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>Vim可视化模式</title>
     <url>/2021/09/12/vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="Visual-Mode"><a href="#Visual-Mode" class="headerlink" title="Visual Mode"></a>Visual Mode</h1><p>可视化模式</p>
 <p>Vim 的可视模式允许我们选中一块文本区域并在其上进行操作，并具有 3 种不同的可视模式，分别用于操作字符文本、行文本或块文本。</p>
@@ -383,5 +383,11 @@
 <p><img src="/2021/09/12/vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
 <p>处于插入模式期间，任何输入的内容只出现在顶行，然而一旦返回到普通模式，这些修改就会被扩散到其余选中的行上。</p>
 ]]></content>
+      <categories>
+        <category>vim实用技巧</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
+      </tags>
   </entry>
 </search>
