@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,140 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-SPI%E5%AD%90%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-SPI%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">SPI子系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 18:56:27 / Modified: 18:57:08" itemprop="dateCreated datePublished" datetime="2021-09-12T18:56:27+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="SPI驱动框架"><a href="#SPI驱动框架" class="headerlink" title="SPI驱动框架"></a>SPI驱动框架</h1><p>SPI 驱动框架和 I2C 很类似 ，都分为主机控制器驱动和设备驱动。</p>
+<h1 id="SPI主机驱动"><a href="#SPI主机驱动" class="headerlink" title="SPI主机驱动"></a>SPI主机驱动</h1><p>​    SPI 主机驱动就是 SOC 的 SPI 控制器驱动，类似 I2C 驱动里面的适配器驱动。 Linux 内核<br>使用结构体<code>spi_master</code> 表示 SPI 主机驱动 。</p>
+<p>​    SPI 主机驱动的核心就是申请 spi_master，然后初始化 spi_master，最后向 Linux 内核注册<br>spi_master。  </p>
+<p>​    和 I2C 适配器驱动一样， SPI 主机驱动一般都是半导体厂商去编写的。</p>
+<h1 id="SPI-设备驱动"><a href="#SPI-设备驱动" class="headerlink" title="SPI 设备驱动"></a>SPI 设备驱动</h1><p>​    Linux 内核使用 spi_driver 结构体来表示 spi 设备驱动。 SPI 设备驱动的关键就是 <code>spi_driver</code> ，申请，设置，向内核注册 <code>spi_driver</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">spi_driver</span> <span class="title">chip_spi_driver</span> =</span> &#123;</span><br><span class="line">	.probe		= chip_spi_probe,</span><br><span class="line">	.remove     = chip_spi_remove,</span><br><span class="line">	.driver = &#123;</span><br><span class="line">		.name	= <span class="string">&quot;chip&quot;</span>,</span><br><span class="line">		.owner = THIS_MODULE,</span><br><span class="line">		.of_match_table = chip_of_match,</span><br><span class="line">	&#125;,</span><br><span class="line">	.id_table	= chip_id,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="spi-driver-注册"><a href="#spi-driver-注册" class="headerlink" title="spi_driver 注册"></a>spi_driver 注册</h2><ol>
+<li>传统方法</li>
+</ol>
+<p>在驱动入口init函数中，调用<code>spi_register_driver</code> 来注册 spi_driver。  </p>
+<p>在驱动出口exit函数中，调用<code>spi_unregister_driver</code> 来注销 spi_driver</p>
+<ol start="2">
+<li>使用宏定义<code>module_spi_driver</code> 来直接注册spi_driver</li>
+</ol>
+<p>这个宏定义将 spi_register/unregister_driver() 与 module_init 和 module_exit 封装了起来。</p>
+<p>注册完成，匹配成功就可调用probe函数</p>
+<h2 id="SPI-device-与-driver-匹配"><a href="#SPI-device-与-driver-匹配" class="headerlink" title="SPI device 与 driver 匹配"></a>SPI device 与 driver 匹配</h2><p>同样与I2C子系统非常相似，当匹配成功， probe 函数就会被调用。  </p>
+<p>常用compatible属性进行匹配。</p>
+<h2 id="spi-driver设置"><a href="#spi-driver设置" class="headerlink" title="spi_driver设置"></a>spi_driver设置</h2><p>spi设备驱动本质上任属于字符设备驱动范畴。</p>
+<ul>
+<li>在prob函数中</li>
+</ul>
+<p>进行字符设备的注册，设备节点的创建，将<code>file_operations</code>结构体注册进内核，并初始化<code>spi_device</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">spi_device</span> *<span class="title">spi</span>;</span> </span><br><span class="line"></span><br><span class="line">spi-&gt;mode = SPI_MODE_0; <span class="comment">/*MODE0，CPOL=0，CPHA=0*/</span></span><br><span class="line">spi_setup(spi);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在remove函数</li>
+</ul>
+<p>进行与prob函数中顺序相反的注销。</p>
+<ul>
+<li>填充<code>file_operations</code>结构体的open, read, write，release等函数。</li>
+</ul>
+<p>注意：platform_device 中如果不提供 <strong>release</strong> 函数 ，则在调用 platform_device_unregister 时会出现警告，</p>
+<p>如果实在无事可做，可以提供一个空的release 函数。</p>
+<h1 id="SPI-设备树节点"><a href="#SPI-设备树节点" class="headerlink" title="SPI 设备树节点"></a>SPI 设备树节点</h1><p>设备树添加节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&amp;ecspi3 &#123; </span><br><span class="line">    pinctrl-names = &quot;default&quot;;</span><br><span class="line">    pinctrl-0 = &lt;&amp;pinctrl_ecspi3&gt;;</span><br><span class="line">    cs-gpios = &lt;&amp;gpio1 20 GPIO_ACTIVE_LOW&gt;; /* 软件片选 */</span><br><span class="line">    status = &quot;okay&quot;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    spidev: icm20608@0&#123;</span><br><span class="line">        compatible = &quot;invensense,icm20608&quot;;</span><br><span class="line">        interrupt-parent = &lt;&amp;gpio1&gt;;</span><br><span class="line">        interrupts = &lt;1 1&gt;;</span><br><span class="line">        spi-max-frequency = &lt;8000000&gt;; </span><br><span class="line">        reg = &lt;0&gt;; </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>pinctrl子系统修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pinctrl_ecspi3: ecspi3 &#123;              </span><br><span class="line">            fsl,pins = &lt;</span><br><span class="line">        MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI         0x000010B0</span><br><span class="line">        MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO         0x000010B0</span><br><span class="line">        MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK       0x000010B0</span><br><span class="line">        //MX6UL_PAD_UART2_TX_DATA__ECSPI3_SS0        0x000010B0//硬件片选</span><br><span class="line">        MX6UL_PAD_UART2_TX_DATA__GPIO1_IO20        0x000010B0 //软件片选                </span><br><span class="line">    &gt;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>片选引脚使用软件片选，即使用一个GPIO引脚进行CS引脚模拟。</p>
+<h1 id="SPI-通信过程"><a href="#SPI-通信过程" class="headerlink" title="SPI 通信过程"></a>SPI 通信过程</h1><h2 id="spi通信步骤"><a href="#spi通信步骤" class="headerlink" title="spi通信步骤"></a>spi通信步骤</h2><ol>
+<li>申请并初始化 spi_transfer，设置 spi_transfer 的 tx_buf 成员变量， tx_buf 为要发送的数<br>据。然后设置 rx_buf 成员变量， rx_buf 保存着接收到的数据。最后设置 len 成员变量，也就是<br>要进行数据通信的长度。</li>
+<li>使用 spi_message_init 函数初始化 spi_message。</li>
+<li>使用spi_message_add_tail函数将前面设置好的spi_transfer添加到spi_message队列中。</li>
+<li>使用 spi_sync 函数完成 SPI 数据同步传输。   </li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* SPI 多字节发送 */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">spi_send</span><span class="params">(struct spi_device *spi, u8 *buf, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">spi_message</span> <span class="title">message</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">spi_transfer</span> <span class="title">transfer</span> =</span> &#123;</span><br><span class="line">        .tx_buf = buf,</span><br><span class="line">        .len = len,</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    spi_message_init(&amp;message); <span class="comment">/* 初始化 spi_message */</span></span><br><span class="line">    spi_message_add_tail(transfer, &amp;message);<span class="comment">/* 将 spi_transfer 添加到 spi_message 队列 */</span></span><br><span class="line">    ret = spi_sync(spi, &amp;message); <span class="comment">/* 同步传输 */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* SPI 多字节接收 */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">spi_receive</span><span class="params">(struct spi_device *spi, u8 *buf, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">spi_message</span> <span class="title">message</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">spi_transfer</span> <span class="title">transfer</span> =</span> &#123;</span><br><span class="line">        .rx_buf = buf,</span><br><span class="line">        .len = len,</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    spi_message_init(&amp;message); <span class="comment">/* 初始化 spi_message */</span></span><br><span class="line">    spi_message_add_tail(transfer, &amp;message);<span class="comment">/* 将 spi_transfer 添加到 spi_message 队列 */</span></span><br><span class="line">    ret = spi_sync(spi, &amp;message); <span class="comment">/* 同步传输 */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        SPI 数据传输也支持异步传输，异步传输不会阻塞地等到完成，异步传输需要设置 spi_message 中的 complete成员变量， <code>complete</code> 是一个回调函数，当 SPI 异步传输完成以后此函数就会被调用。</p>
+<p> SPI 异步传输函数为 spi_async，函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">spi_async</span><span class="params">(struct spi_device *spi, struct spi_message *message)</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="spi通信函数封装"><a href="#spi通信函数封装" class="headerlink" title="spi通信函数封装"></a>spi通信函数封装</h2><blockquote>
+<p>参考内核源码 /kernel/driver/spi/spi.c spi.h</p>
+</blockquote>
+<p>实际还是 spi_transfer， spi_message进一步封装</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">spi_write</span><span class="params">(struct spi_device *spi, <span class="keyword">const</span> <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> len)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">spi_read</span><span class="params">(struct spi_device *spi, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> len)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">spi_write_then_read</span><span class="params">(struct spi_device *spi,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="keyword">const</span> <span class="keyword">void</span> *txbuf, <span class="keyword">unsigned</span> n_tx,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="keyword">void</span> *rxbuf, <span class="keyword">unsigned</span> n_rx)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">ssize_t</span> <span class="title">spi_w8r8</span><span class="params">(struct spi_device *spi, u8 cmd)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">ssize_t</span> <span class="title">spi_w8r16</span><span class="params">(struct spi_device *spi, u8 cmd)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2197,181 +2331,6 @@
 <p>以在块可视化模式中为多行添加分号为例：</p>
 <p><img src="vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
 <p>处于插入模式期间，任何输入的内容只出现在顶行，然而一旦返回到普通模式，这些修改就会被扩散到其余选中的行上。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E6%8F%92%E5%85%A5%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E6%8F%92%E5%85%A5%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Vim插入模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 12:29:54 / Modified: 12:32:39" itemprop="dateCreated datePublished" datetime="2021-09-12T12:29:54+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Tip13-Make-Corrections-Instantly-from-Insert-Mode"><a href="#Tip13-Make-Corrections-Instantly-from-Insert-Mode" class="headerlink" title="Tip13 Make Corrections Instantly from Insert Mode"></a>Tip13 Make Corrections Instantly from Insert Mode</h1><p>插入模式下进行更正</p>
-<p>在插入模式下更正错误首先想到退格键，它删除光标前的字符。另外还有使用以下组合键：</p>
-<table>
-<thead>
-<tr>
-<th>按键操作</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&lt; C – h &gt;</td>
-<td>删除前一个字符（同退格键）</td>
-</tr>
-<tr>
-<td>&lt; C - w &gt;</td>
-<td>删除前一个单词</td>
-</tr>
-<tr>
-<td>&lt; C - u &gt;</td>
-<td>删至行首</td>
-</tr>
-</tbody></table>
-<p>​    注：这些快捷键不是插入模式独有的，甚至不是vim独有的，在vim命令行模式，以及<code>bash shell , cmd, powershell </code>中也可以使用他们。</p>
-<h1 id="Tip14-Get-Back-to-Normal-Mode"><a href="#Tip14-Get-Back-to-Normal-Mode" class="headerlink" title="Tip14 Get Back to Normal Mode"></a>Tip14 Get Back to Normal Mode</h1><p>返回普通模式</p>
-<p>插入模式只专注于一件事，就是<strong>输入文字</strong>。<strong>普通模式才是我们大部分时间所用的模式</strong>。</p>
-<p>切换会普通模式的经典方式是 <code>&lt;Esc&gt; </code>键，我们也可以用<code>&lt; C – [ &gt;</code>替代，效果完全一样。</p>
-<table>
-<thead>
-<tr>
-<th>按键操作</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&lt; Esc &gt;</td>
-<td>切换回普通模式</td>
-</tr>
-<tr>
-<td>&lt; C – [ &gt;</td>
-<td>切换回普通模式</td>
-</tr>
-<tr>
-<td>&lt; C - o &gt;</td>
-<td>切换至插入  - 普通模式</td>
-</tr>
-</tbody></table>
-<p>插入 - 普通模式：普通模式的一个特例，它能让我们执行一次普通模式命令，执行完毕之后，马上有回到插入模式。</p>
-<p>例：使用<code>zz</code>命令使光标重新位于屏幕中间。键入<code>&lt; C - o &gt; zz</code> ，在普通模式下触发命令，重绘屏幕，此操作完成后会直接回到插入模式，因此可以不中断打字。</p>
-<h1 id="Tip15-Paste-from-a-Register-Without-Leaving-Insert-Mode"><a href="#Tip15-Paste-from-a-Register-Without-Leaving-Insert-Mode" class="headerlink" title="Tip15 Paste from a Register Without Leaving Insert Mode"></a>Tip15 Paste from a Register Without Leaving Insert Mode</h1><p>不离开插入模式，粘贴寄存器中的文本</p>
-<table>
-<thead>
-<tr>
-<th>Keystrokes</th>
-<th>Buffer Contents</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>yt,</td>
-<td>Practical  Vim, by Drew Neil  Read Drew Neil’s</td>
-</tr>
-<tr>
-<td>jA␣</td>
-<td>Practical Vim, by Drew Neil  Read Drew Neil’s</td>
-</tr>
-<tr>
-<td>&lt; C – r &gt;0</td>
-<td>Practical Vim, by Drew Neil  Read Drew Neil’s Practical Vim</td>
-</tr>
-<tr>
-<td>.<Esc></td>
-<td>Practical Vim, by Drew Neil  Read Drew Neil’s Practical Vim.</td>
-</tr>
-</tbody></table>
-<p>yt, - 光标到第一个 “,” 之间的文本放入寄存器</p>
-<p>jA␣ - 光标移动到下一行, 然后定位到行末并切换为插入模式, 再输入一个空格</p>
-<p><C-r>0 - 插入寄存器 0 里的内容, 即刚刚放到寄存器的内容 (:h i_CTRL-R)</p>
-<p>.<Esc> - 句号结尾后退出插入模式 </p>
-<h1 id="Tip-16-Do-Back-of-the-Envelope-Calculations-in-Place"><a href="#Tip-16-Do-Back-of-the-Envelope-Calculations-in-Place" class="headerlink" title="Tip 16 Do Back-of-the-Envelope Calculations in Place"></a>Tip 16 Do Back-of-the-Envelope Calculations in Place</h1><p>数学计算</p>
-<table>
-<thead>
-<tr>
-<th><strong>Keystrokes</strong></th>
-<th><strong>Buffer   Contents</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>6 chairs, each  costing $35, totals $</td>
-</tr>
-<tr>
-<td><C-r>=6*35<CR></td>
-<td>6 chairs, each  costing $35, totals $210.</td>
-</tr>
-</tbody></table>
-<h1 id="Tip-17-Insert-Unusual-Characters-by-Character-Code"><a href="#Tip-17-Insert-Unusual-Characters-by-Character-Code" class="headerlink" title="Tip 17 Insert Unusual Characters by Character Code"></a>Tip 17 Insert Unusual Characters by Character Code</h1><p>用字符编码插入非常用字符。插入一些无法通过键盘输入的字符（目前需求不大）</p>
-<h1 id="Tip-18-Insert-Unusual-Characters-by-Digraph"><a href="#Tip-18-Insert-Unusual-Characters-by-Digraph" class="headerlink" title="Tip 18 Insert Unusual Characters by Digraph"></a>Tip 18 Insert Unusual Characters by Digraph</h1><p>用二合字母插入非常用字符。插入一些无法通过键盘输入的字符（目前需求不大）</p>
-<h1 id="Tip-19-Overwrite-Existing-Text-with-Replace-Mode"><a href="#Tip-19-Overwrite-Existing-Text-with-Replace-Mode" class="headerlink" title="Tip 19 Overwrite Existing Text with Replace Mode"></a>Tip 19 Overwrite Existing Text with Replace Mode</h1><p>覆盖模式</p>
-<p>普通模式下按 <code>R </code>即可开启覆盖模式;  <code>r / gr</code> 仅覆盖一个字符</p>
-<p>用虚拟替换模式替换制表符:</p>
-<p>一些字符使替换模式变得复杂化。以制表符为例，在文件中它以单个字符表示，但在屏幕上它却会占据若干列的宽度，此宽度由 ‘tabstop’ 设置决定。如果把光标移到制表符上，然后进入替换模式，那么我们所输入的下一个字符将会替换制表符。假设 ‘tabstop’ 选项设置为 8（这是缺省值），那么该操作的结果就是把 8 个字符替换成了一个字符，这将大幅缩短当前行的长度。</p>
-<p>Vim 还有另外一种替换模式，称为<strong>虚拟替换模式（Virtual Replace mode）</strong>。该模式可由 <code>gR 命令触发</code>，它会把制表符当成一组空格进行处理。假设我们把光标移到一个占屏幕 8 列宽的制表符上，然后切换到虚拟替换模式，在输入前 7 个字符时，每个字符都会被插入到制表符之前；最后，当输入了第 8 个字符时，该字符将会替换制表符。</p>
-<p>在虚拟替换模式中，我们是按屏幕上实际显示的宽度来替换字符的，而不是按文件中所保存的字符进行替换。这会减少意外情况的发生，因此建议在可能的情况下尽量使用虚拟替换模式。</p>
 
       
     </div>
