@@ -374,13 +374,13 @@
 <p>我们可以用普通模式下的操作符命令来规避此缺点。</p>
 <h2 id="Tip-24-Edit-Tabular-Data-with-Visual-Block-Mode"><a href="#Tip-24-Edit-Tabular-Data-with-Visual-Block-Mode" class="headerlink" title="Tip 24 Edit Tabular Data with Visual-Block Mode"></a>Tip 24 Edit Tabular Data with Visual-Block Mode</h2><p>用面向列块的可视化模式编辑表格数据</p>
 <p>以在列间增加分隔竖线 为例：</p>
-<p><img src="pic/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_01.JPG" alt="img"></p>
+<p><img src="vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_01.JPG" alt="img"></p>
 <h2 id="Tip-25-Change-Columns-of-Text"><a href="#Tip-25-Change-Columns-of-Text" class="headerlink" title="Tip 25 Change Columns of Text"></a>Tip 25 Change Columns of Text</h2><p>修改列文本</p>
 <p>用列块可视模式可以同时往若干行中插入文本。列块可视模式不仅仅对表格数据有用，在编程时我们也时常受惠于此功能。  </p>
 <p><strong>使用<code> &lt; C – v &gt;</code> 模式选中块，可同时修改多行中同一列的数据。</strong></p>
 <h2 id="Tip-26-Append-After-a-Ragged-Visual-Block"><a href="#Tip-26-Append-After-a-Ragged-Visual-Block" class="headerlink" title="Tip 26 Append After a Ragged Visual Block"></a>Tip 26 Append After a Ragged Visual Block</h2><p>在<strong>长短不一</strong>的高亮块后添加文本。</p>
 <p>以在块可视化模式中为多行添加分号为例：</p>
-<p><img src="pic/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
+<p><img src="vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
 <p>处于插入模式期间，任何输入的内容只出现在顶行，然而一旦返回到普通模式，这些修改就会被扩散到其余选中的行上。</p>
 ]]></content>
       <categories>
