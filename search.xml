@@ -212,4 +212,117 @@
         <tag>vim</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Vim插入模式</title>
+    <url>/2021/09/12/vim%E6%8F%92%E5%85%A5%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="Tip13-Make-Corrections-Instantly-from-Insert-Mode"><a href="#Tip13-Make-Corrections-Instantly-from-Insert-Mode" class="headerlink" title="Tip13 Make Corrections Instantly from Insert Mode"></a>Tip13 Make Corrections Instantly from Insert Mode</h1><p>插入模式下进行更正</p>
+<p>在插入模式下更正错误首先想到退格键，它删除光标前的字符。另外还有使用以下组合键：</p>
+<table>
+<thead>
+<tr>
+<th>按键操作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; C – h &gt;</td>
+<td>删除前一个字符（同退格键）</td>
+</tr>
+<tr>
+<td>&lt; C - w &gt;</td>
+<td>删除前一个单词</td>
+</tr>
+<tr>
+<td>&lt; C - u &gt;</td>
+<td>删至行首</td>
+</tr>
+</tbody></table>
+<p>​    注：这些快捷键不是插入模式独有的，甚至不是vim独有的，在vim命令行模式，以及<code>bash shell , cmd, powershell </code>中也可以使用他们。</p>
+<h1 id="Tip14-Get-Back-to-Normal-Mode"><a href="#Tip14-Get-Back-to-Normal-Mode" class="headerlink" title="Tip14 Get Back to Normal Mode"></a>Tip14 Get Back to Normal Mode</h1><p>返回普通模式</p>
+<p>插入模式只专注于一件事，就是<strong>输入文字</strong>。<strong>普通模式才是我们大部分时间所用的模式</strong>。</p>
+<p>切换会普通模式的经典方式是 <code>&lt;Esc&gt; </code>键，我们也可以用<code>&lt; C – [ &gt;</code>替代，效果完全一样。</p>
+<table>
+<thead>
+<tr>
+<th>按键操作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; Esc &gt;</td>
+<td>切换回普通模式</td>
+</tr>
+<tr>
+<td>&lt; C – [ &gt;</td>
+<td>切换回普通模式</td>
+</tr>
+<tr>
+<td>&lt; C - o &gt;</td>
+<td>切换至插入  - 普通模式</td>
+</tr>
+</tbody></table>
+<p>插入 - 普通模式：普通模式的一个特例，它能让我们执行一次普通模式命令，执行完毕之后，马上有回到插入模式。</p>
+<p>例：使用<code>zz</code>命令使光标重新位于屏幕中间。键入<code>&lt; C - o &gt; zz</code> ，在普通模式下触发命令，重绘屏幕，此操作完成后会直接回到插入模式，因此可以不中断打字。</p>
+<h1 id="Tip15-Paste-from-a-Register-Without-Leaving-Insert-Mode"><a href="#Tip15-Paste-from-a-Register-Without-Leaving-Insert-Mode" class="headerlink" title="Tip15 Paste from a Register Without Leaving Insert Mode"></a>Tip15 Paste from a Register Without Leaving Insert Mode</h1><p>不离开插入模式，粘贴寄存器中的文本</p>
+<table>
+<thead>
+<tr>
+<th>Keystrokes</th>
+<th>Buffer Contents</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>yt,</td>
+<td>Practical  Vim, by Drew Neil  Read Drew Neil’s</td>
+</tr>
+<tr>
+<td>jA␣</td>
+<td>Practical Vim, by Drew Neil  Read Drew Neil’s</td>
+</tr>
+<tr>
+<td>&lt; C – r &gt;0</td>
+<td>Practical Vim, by Drew Neil  Read Drew Neil’s Practical Vim</td>
+</tr>
+<tr>
+<td>.<Esc></td>
+<td>Practical Vim, by Drew Neil  Read Drew Neil’s Practical Vim.</td>
+</tr>
+</tbody></table>
+<p>yt, - 光标到第一个 “,” 之间的文本放入寄存器</p>
+<p>jA␣ - 光标移动到下一行, 然后定位到行末并切换为插入模式, 再输入一个空格</p>
+<p><C-r>0 - 插入寄存器 0 里的内容, 即刚刚放到寄存器的内容 (:h i_CTRL-R)</p>
+<p>.<Esc> - 句号结尾后退出插入模式 </p>
+<h1 id="Tip-16-Do-Back-of-the-Envelope-Calculations-in-Place"><a href="#Tip-16-Do-Back-of-the-Envelope-Calculations-in-Place" class="headerlink" title="Tip 16 Do Back-of-the-Envelope Calculations in Place"></a>Tip 16 Do Back-of-the-Envelope Calculations in Place</h1><p>数学计算</p>
+<table>
+<thead>
+<tr>
+<th><strong>Keystrokes</strong></th>
+<th><strong>Buffer   Contents</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>6 chairs, each  costing $35, totals $</td>
+</tr>
+<tr>
+<td><C-r>=6*35<CR></td>
+<td>6 chairs, each  costing $35, totals $210.</td>
+</tr>
+</tbody></table>
+<h1 id="Tip-17-Insert-Unusual-Characters-by-Character-Code"><a href="#Tip-17-Insert-Unusual-Characters-by-Character-Code" class="headerlink" title="Tip 17 Insert Unusual Characters by Character Code"></a>Tip 17 Insert Unusual Characters by Character Code</h1><p>用字符编码插入非常用字符。插入一些无法通过键盘输入的字符（目前需求不大）</p>
+<h1 id="Tip-18-Insert-Unusual-Characters-by-Digraph"><a href="#Tip-18-Insert-Unusual-Characters-by-Digraph" class="headerlink" title="Tip 18 Insert Unusual Characters by Digraph"></a>Tip 18 Insert Unusual Characters by Digraph</h1><p>用二合字母插入非常用字符。插入一些无法通过键盘输入的字符（目前需求不大）</p>
+<h1 id="Tip-19-Overwrite-Existing-Text-with-Replace-Mode"><a href="#Tip-19-Overwrite-Existing-Text-with-Replace-Mode" class="headerlink" title="Tip 19 Overwrite Existing Text with Replace Mode"></a>Tip 19 Overwrite Existing Text with Replace Mode</h1><p>覆盖模式</p>
+<p>普通模式下按 <code>R </code>即可开启覆盖模式;  <code>r / gr</code> 仅覆盖一个字符</p>
+<p>用虚拟替换模式替换制表符:</p>
+<p>一些字符使替换模式变得复杂化。以制表符为例，在文件中它以单个字符表示，但在屏幕上它却会占据若干列的宽度，此宽度由 ‘tabstop’ 设置决定。如果把光标移到制表符上，然后进入替换模式，那么我们所输入的下一个字符将会替换制表符。假设 ‘tabstop’ 选项设置为 8（这是缺省值），那么该操作的结果就是把 8 个字符替换成了一个字符，这将大幅缩短当前行的长度。</p>
+<p>Vim 还有另外一种替换模式，称为<strong>虚拟替换模式（Virtual Replace mode）</strong>。该模式可由 <code>gR 命令触发</code>，它会把制表符当成一组空格进行处理。假设我们把光标移到一个占屏幕 8 列宽的制表符上，然后切换到虚拟替换模式，在输入前 7 个字符时，每个字符都会被插入到制表符之前；最后，当输入了第 8 个字符时，该字符将会替换制表符。</p>
+<p>在虚拟替换模式中，我们是按屏幕上实际显示的宽度来替换字符的，而不是按文件中所保存的字符进行替换。这会减少意外情况的发生，因此建议在可能的情况下尽量使用虚拟替换模式。</p>
+]]></content>
+      <categories>
+        <category>vim实用技巧</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
+      </tags>
+  </entry>
 </search>
