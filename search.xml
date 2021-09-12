@@ -380,7 +380,7 @@
 <p><strong>使用<code> &lt; C – v &gt;</code> 模式选中块，可同时修改多行中同一列的数据。</strong></p>
 <h2 id="Tip-26-Append-After-a-Ragged-Visual-Block"><a href="#Tip-26-Append-After-a-Ragged-Visual-Block" class="headerlink" title="Tip 26 Append After a Ragged Visual Block"></a>Tip 26 Append After a Ragged Visual Block</h2><p>在<strong>长短不一</strong>的高亮块后添加文本。</p>
 <p>以在块可视化模式中为多行添加分号为例：</p>
-<p><img src="/2021/09/12/vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPGg" alt="img"></p>
+<p><img src="/2021/09/12/vim%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
 <p>处于插入模式期间，任何输入的内容只出现在顶行，然而一旦返回到普通模式，这些修改就会被扩散到其余选中的行上。</p>
 ]]></content>
   </entry>
