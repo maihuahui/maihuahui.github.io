@@ -1891,4 +1891,34 @@
         <tag>SPI</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git添加SSH Key</title>
+    <url>/2021/09/12/git-git-sshkey/</url>
+    <content><![CDATA[<h1 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h1><p>先配置git邮箱和用户名</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.email &quot;user@email.com&quot;</span><br><span class="line">git config --global user.name &quot;name&quot;</span><br></pre></td></tr></table></figure>
+<p>可通过以下命令查看配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<h1 id="生成SSH-keys"><a href="#生成SSH-keys" class="headerlink" title="生成SSH keys"></a>生成SSH keys</h1><p>生成SSH keys 密钥</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>默认会在相应路径下（/your_home_path）生成<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件</p>
+<ul>
+<li>输入passphrase（本步骤可以跳过）</li>
+<li><code>id_rsa.pub</code>文件，里面的信息即为SSH key</li>
+</ul>
+<h1 id="添加ssh-key"><a href="#添加ssh-key" class="headerlink" title="添加ssh key"></a>添加ssh key</h1><ol>
+<li><p>在git bash 界面 cat <code>id_rsa.pub</code> 文件</p>
+</li>
+<li><p>将打印信息上传至github <code>setting -&gt; ADD SSH key</code></p>
+</li>
+</ol>
+<h1 id="选择ssh链接"><a href="#选择ssh链接" class="headerlink" title="选择ssh链接"></a>选择ssh链接</h1><p>git clone 代码有HTTP链接和 SSH链接，两者密钥，或者认证方式不同，选择SSH方式链接</p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
 </search>
