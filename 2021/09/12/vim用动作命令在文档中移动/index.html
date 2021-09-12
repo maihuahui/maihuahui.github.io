@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="用动作命令在文档中移动   命令 用途 命令 用途    ( 前移一句 ） 后移一句   { 前移一段（以空格行分辨） } 后移一段（以空格行分辨）   Tip 47 Distinguish Between Real Lines and Display Lines区分实际行与屏幕行 除 Vim 以外，其他大多数文本编辑器都没有实际行的概念，它们只提供操作屏幕行的手段。  vim的 j、 k、 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim用动作命令在文档中移动">
+<meta property="og:url" content="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/index.html">
+<meta property="og:site_name" content="Huahui">
+<meta property="og:description" content="用动作命令在文档中移动   命令 用途 命令 用途    ( 前移一句 ） 后移一句   { 前移一段（以空格行分辨） } 后移一段（以空格行分辨）   Tip 47 Distinguish Between Real Lines and Display Lines区分实际行与屏幕行 除 Vim 以外，其他大多数文本编辑器都没有实际行的概念，它们只提供操作屏幕行的手段。  vim的 j、 k、 0">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/NO1.png">
+<meta property="og:image" content="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/NO2.png">
+<meta property="article:published_time" content="2021-09-12T09:01:22.000Z">
+<meta property="article:modified_time" content="2021-09-12T09:03:53.074Z">
+<meta property="article:author" content="huahui">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/NO1.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/","path":"2021/09/12/vim用动作命令在文档中移动/","title":"Vim用动作命令在文档中移动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vim用动作命令在文档中移动 | Huahui</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Huahui</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">用动作命令在文档中移动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-47-Distinguish-Between-Real-Lines-and-Display-Lines"><span class="nav-number">1.1.</span> <span class="nav-text">Tip 47 Distinguish Between Real Lines and Display Lines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-48-Move-Word-Wise"><span class="nav-number">1.2.</span> <span class="nav-text">Tip 48 Move Word-Wise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-49-Find-by-Character"><span class="nav-number">1.3.</span> <span class="nav-text">Tip 49 Find by Character</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-50-Search-to-Navigate"><span class="nav-number">1.4.</span> <span class="nav-text">Tip 50 Search to Navigate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-51-Trace-Your-Selection-with-Precision-Text-Objects"><span class="nav-number">1.5.</span> <span class="nav-text">Tip 51 Trace Your Selection with Precision Text Objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-52-Delete-Around-or-Change-Inside"><span class="nav-number">1.6.</span> <span class="nav-text">Tip 52 Delete Around, or Change Inside</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-53-Mark-Your-Place-and-Snap-Back-to-It"><span class="nav-number">1.7.</span> <span class="nav-text">Tip 53 Mark Your Place and Snap Back to It</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-54-Jump-Between-Matching-Parentheses"><span class="nav-number">1.8.</span> <span class="nav-text">Tip 54 Jump Between Matching Parentheses</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huahui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim用动作命令在文档中移动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:01:22 / Modified: 17:03:53" itemprop="dateCreated datePublished" datetime="2021-09-12T17:01:22+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="用动作命令在文档中移动"><a href="#用动作命令在文档中移动" class="headerlink" title="用动作命令在文档中移动"></a>用动作命令在文档中移动</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(</td>
+<td>前移一句</td>
+<td>）</td>
+<td>后移一句</td>
+</tr>
+<tr>
+<td>{</td>
+<td>前移一段（以空格行分辨）</td>
+<td>}</td>
+<td>后移一段（以空格行分辨）</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-47-Distinguish-Between-Real-Lines-and-Display-Lines"><a href="#Tip-47-Distinguish-Between-Real-Lines-and-Display-Lines" class="headerlink" title="Tip 47 Distinguish Between Real Lines and Display Lines"></a>Tip 47 Distinguish Between Real Lines and Display Lines</h2><p>区分实际行与屏幕行</p>
+<p>除 Vim 以外，其他大多数文本编辑器都没有实际行的概念，它们只提供操作屏幕行的手段。 </p>
+<p>vim的 j、 k、 0 和 $ 都用于操作实际行，而如果在这些键前加上 g 前缀的话，就会让 Vim 对屏幕行进行操作。</p>
+<p><img src="/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/NO1.png" alt="img"></p>
+<p>以截图为例，假设我们想把光标向上移一行( k )，光标会移到单词“ac”上去，这既是所谓的<strong>实际行</strong>。</p>
+<p>我们按 gk 就会移到单词“vehicula”上，目标单词位于光标之上的一个屏幕行，这就是<strong>屏幕行</strong>。</p>
+<p>Vim 也提供了直接跳到行首及行尾的命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>移动</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>移动到实际行的行首</td>
+</tr>
+<tr>
+<td>g0</td>
+<td>移动到屏幕行的行首</td>
+</tr>
+<tr>
+<td>^</td>
+<td>移动到实际行的第一个非空白字符</td>
+</tr>
+<tr>
+<td>g^</td>
+<td>移动到屏幕行的第一个非空白字符</td>
+</tr>
+<tr>
+<td>$</td>
+<td>移动到实际行的行尾</td>
+</tr>
+<tr>
+<td>g$</td>
+<td>移动到屏幕行的行尾</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-48-Move-Word-Wise"><a href="#Tip-48-Move-Word-Wise" class="headerlink" title="Tip 48 Move Word-Wise"></a>Tip 48 Move Word-Wise</h2><p>基于单词的移动</p>
+<p><img src="/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/NO2.png" alt="img"></p>
+<p><code>w</code> 和<code> </code>b命令，可以把它们想作“<em>word</em>”及“<em>back-word</em>”。</p>
+<p><code>e </code>和 <code>ge</code> 命令是对此命令集的补充</p>
+<p>vim有“单词” <em>word</em> 和“字串” <em>WORD</em> 的区分，以<strong>空白字符为间隔识别字串</strong>。<strong>每个面向单词的动作命令，都有一个面向字串的命令与其对应</strong>，这当中包括 W、 B、 E 和 gE</p>
+<ul>
+<li><p>“单词”（<em>word</em>）：由 字母+数字+下划线 组成。</p>
+</li>
+<li><p>“字串”（<em>WORD</em>）：由 一串非空白字符的字符串组成，以空格为间隔识别字串</p>
+</li>
+</ul>
+<p>空白字符 包括： 空格, 制表符(Tab), 换行</p>
+<h2 id="Tip-49-Find-by-Character"><a href="#Tip-49-Find-by-Character" class="headerlink" title="Tip 49 Find by Character"></a>Tip 49 Find by Character</h2><p>对字符进行查找</p>
+<p>最常用语法 <code>f&#123;char&#125;</code></p>
+<p>vim 里最快的移动技能之一; 行内按字符往后搜索, 如果匹配到, 那么光标直接定位到匹配的字符上, 没匹配就保持原状。但<strong>仅能在行内查找</strong>。</p>
+<p><code>；</code>移动到下一个匹配项（正向查找） <code>，</code>移动到前一个匹配项（反向查找）</p>
+<p>查找字符时，可以包含或是排除目标字符，下表列出了其中的所有命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f{char}</td>
+<td>正向移动到下一个{char}所在之处</td>
+</tr>
+<tr>
+<td>F{char}</td>
+<td>反向移动到下一个{char}所在之处</td>
+</tr>
+<tr>
+<td>t{char}</td>
+<td>正向移动到下一个{char}所在之处的前一个字符上</td>
+</tr>
+<tr>
+<td>T{char}</td>
+<td>反向移动到下一个{char}所在之处的前一个字符上</td>
+</tr>
+<tr>
+<td>；</td>
+<td>重复上一次的查找命令</td>
+</tr>
+<tr>
+<td>，</td>
+<td>反向查找上一次的字符查找命令</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-50-Search-to-Navigate"><a href="#Tip-50-Search-to-Navigate" class="headerlink" title="Tip 50 Search to Navigate"></a>Tip 50 Search to Navigate</h2><p>通过查找进行移动      </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">语法 /&#123;chars&#125; 或 /&#123;patterns&#125;</span><br></pre></td></tr></table></figure>
+
+<p>普通模式下，按下 <code>/</code> 启用搜索命令,</p>
+<p>键入字符后, 可以看到有多处匹配的结果, <code>&lt;CR&gt;</code> 回车定位到了第一次匹配的地方; 可以按 <code>n</code> 跳转到下一个匹配地方, 也可以按<code> N</code> 反向跳转</p>
+<p>匹配到了唯一的结果时, 回车定位直接到匹配的地方</p>
+<p>取消高亮选区，命令模式下，输入<code>:nohlsearch </code>也可以<code>:set nohlsearch</code>； 当然，可以简写，<code>:noh</code>或者<code>set noh</code>。</p>
+<p>在vim配置文件中加入如下配置会非常实用: ~/.vimrc</p>
+<p>set hlsearch  “ 搜索高亮</p>
+<p>set incsearch “增量显示部分匹配</p>
+<p>set ignorecase “忽略大小写</p>
+<h2 id="Tip-51-Trace-Your-Selection-with-Precision-Text-Objects"><a href="#Tip-51-Trace-Your-Selection-with-Precision-Text-Objects" class="headerlink" title="Tip 51 Trace Your Selection with Precision Text Objects"></a>Tip 51 Trace Your Selection with Precision Text Objects</h2><p>用精确的文本对象选择选区</p>
+<p>文本对象允许我们操作<strong>括号、 被引用的文本、 XML 标签以及其他文本</strong>中的常见结构。 </p>
+<table>
+<thead>
+<tr>
+<th><strong>文本对象</strong></th>
+<th><strong>选择区域</strong></th>
+<th><strong>文本对象</strong></th>
+<th><strong>选择区域</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a) or ab</td>
+<td>一对圆括号(parentheses)</td>
+<td>i) or ib</td>
+<td>一对圆括号(parentheses)内部的内容</td>
+</tr>
+<tr>
+<td>a} or aB</td>
+<td>一对花括号{braces}</td>
+<td>i} or iB</td>
+<td>一对花括号{braces}内部的内容</td>
+</tr>
+<tr>
+<td>a]</td>
+<td>一对方括号[brackets]</td>
+<td>i]</td>
+<td>一对方括号[brackets]里的内容</td>
+</tr>
+<tr>
+<td>a&gt;</td>
+<td>尖括号</td>
+<td>i&gt;</td>
+<td>尖括号的内容</td>
+</tr>
+<tr>
+<td>a’</td>
+<td>单引号</td>
+<td>i’</td>
+<td>单引号的内容</td>
+</tr>
+<tr>
+<td>a”</td>
+<td>双引号</td>
+<td>i”</td>
+<td>双引号的内容</td>
+</tr>
+<tr>
+<td>a`</td>
+<td>反引号</td>
+<td>i`</td>
+<td>反引号的内容</td>
+</tr>
+<tr>
+<td>at</td>
+<td>标签</td>
+<td>it</td>
+<td>标签的内容</td>
+</tr>
+</tbody></table>
+<p>为了便于记忆，可以把<code>i</code>想成<code>inside</code>，而把<code>a</code>想成<code>around</code>或<code>all</code>。</p>
+<p>用文本对象执行操作</p>
+<p>文本对象并不仅仅局限于可视化选择，每当在vim命令语法里出现<code>&#123;motion&#125;</code> 时，都可以在这个地方使用文本对象，常见的例子包括<code> d&#123;motion&#125;、c&#123;motion&#125;和 y&#123;motion&#125;</code>。</p>
+<h2 id="Tip-52-Delete-Around-or-Change-Inside"><a href="#Tip-52-Delete-Around-or-Change-Inside" class="headerlink" title="Tip 52 Delete Around, or Change Inside"></a>Tip 52 Delete Around, or Change Inside</h2><p>删除周边，修改内部</p>
+<p>Vim 的文本对象分为两类：</p>
+<ul>
+<li><p>一类是操作分隔符的文本对象，如 i)、 i” 和 it；另</p>
+</li>
+<li><p>一类用于操作文本块，如单词、句子和段落。</p>
+</li>
+<li><p>Tip 51总结前者，Tip 52总结后者。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>文本对象</strong></th>
+<th><strong>匹配区域</strong></th>
+<th><strong>文本对象</strong></th>
+<th><strong>匹配区域</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iw</td>
+<td>一个词 <em>word</em></td>
+<td>aw</td>
+<td>一个词 <em>word</em> 含后面的一个空格</td>
+</tr>
+<tr>
+<td>iW</td>
+<td>一个词 <em>WORD</em></td>
+<td>aW</td>
+<td>一个词 <em>WORD</em> 含空格</td>
+</tr>
+<tr>
+<td>is</td>
+<td>一句话</td>
+<td>as</td>
+<td>一句话含后面的一个空格</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>一段话</td>
+<td>ap</td>
+<td>一段话 含空行</td>
+</tr>
+</tbody></table>
+<p>一般来讲:</p>
+<ul>
+<li>d{motion} 更适合于: aw as ap 场景</li>
+<li>c{motion} 更适合于: iw is ip 场景</li>
+</ul>
+<h2 id="Tip-53-Mark-Your-Place-and-Snap-Back-to-It"><a href="#Tip-53-Mark-Your-Place-and-Snap-Back-to-It" class="headerlink" title="Tip 53 Mark Your Place and Snap Back to It"></a>Tip 53 Mark Your Place and Snap Back to It</h2><p>位置标记和返回标记</p>
+<p>vim 标记可以使我们在文档内快速的进行跳转, 我们可以手动设置标记, vim 也会自动记录我们感兴趣的位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">标记语法 m[a-z / A-Z]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p> [a-z] <em>小写字母</em> 仅在当前缓冲区可访问</p>
+</li>
+<li><p>[A-Z] <em>大写字母</em> 全局生效, 多个缓冲区可访问</p>
+</li>
+</ul>
+<p>跳转语法</p>
+<ul>
+<li><p>`{mark} - 跳转到标记为 {mark} 的精确位置</p>
+</li>
+<li><p>‘{mark} - 跳转到标记为 {mark} 行的行首非空白字符处</p>
+</li>
+</ul>
+<p><code>mm </code>和 ``m `命令是一对便于使用的命令，它们分别设置位置标记 m，以及跳转到该标记</p>
+<p>如果你只想记一条命令，那就记住``{mark} `好了。不论你是想恢复到准确的光标位置，还是只想回到正确的行，这条命令都能做到。</p>
+<p>自动位置标记</p>
+<p>Vim 会自动帮我们设置一些位置标记，这些标记用起来非常方便</p>
+<table>
+<thead>
+<tr>
+<th><strong>Keystrokes</strong></th>
+<th><strong>Buffer Contents</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>``</td>
+<td>当前文件中最后一次跳转前的位置</td>
+</tr>
+<tr>
+<td>`.</td>
+<td>最后修改的位置</td>
+</tr>
+<tr>
+<td>`^</td>
+<td>最后插入的位置</td>
+</tr>
+<tr>
+<td>`[</td>
+<td>最后一次修改/拷贝的起始位置</td>
+</tr>
+<tr>
+<td>`]</td>
+<td>最后一次修改/拷贝的结束位置</td>
+</tr>
+<tr>
+<td>`&lt;</td>
+<td>最后一次可视化块的起始位置</td>
+</tr>
+<tr>
+<td>`&gt;</td>
+<td>最后一次可视化块的结束位置</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-54-Jump-Between-Matching-Parentheses"><a href="#Tip-54-Jump-Between-Matching-Parentheses" class="headerlink" title="Tip 54 Jump Between Matching Parentheses"></a>Tip 54 Jump Between Matching Parentheses</h2><p>在匹配括号之间跳转</p>
+<p><code>%</code> 可以再匹配的括号间进行跳转; 比如:<code> () &#123;&#125; [] &lt;&gt;</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vim/" rel="tag"># vim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/12/vim%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6/" rel="prev" title="Vim管理多个文件">
+                  <i class="fa fa-chevron-left"></i> Vim管理多个文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/12/vim%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC/" rel="next" title="Vim在文件中跳转">
+                  Vim在文件中跳转 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huahui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

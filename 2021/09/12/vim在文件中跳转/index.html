@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在文件中跳转Tip 55 Traverse the Jump List遍历跳转列表 Vim 在跳转之前和之后记录我们的位置，并提供一些命令来回溯我们的步骤，类似于Web浏览器中的前进和后退。对vim来说：  &lt; C - o &gt; - 后退, 跳转到上一个位置  &lt; C - i &gt; - 前进, 后退之后就可以往前了   :jumps命令可以查看跳转列表，效果类似于 :ls  跳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim在文件中跳转">
+<meta property="og:url" content="http://example.com/2021/09/12/vim%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC/index.html">
+<meta property="og:site_name" content="Huahui">
+<meta property="og:description" content="在文件中跳转Tip 55 Traverse the Jump List遍历跳转列表 Vim 在跳转之前和之后记录我们的位置，并提供一些命令来回溯我们的步骤，类似于Web浏览器中的前进和后退。对vim来说：  &lt; C - o &gt; - 后退, 跳转到上一个位置  &lt; C - i &gt; - 前进, 后退之后就可以往前了   :jumps命令可以查看跳转列表，效果类似于 :ls  跳">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-12T09:06:44.000Z">
+<meta property="article:modified_time" content="2021-09-12T09:07:32.268Z">
+<meta property="article:author" content="huahui">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/09/12/vim%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/12/vim%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC/","path":"2021/09/12/vim在文件中跳转/","title":"Vim在文件中跳转"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vim在文件中跳转 | Huahui</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Huahui</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC"><span class="nav-number">1.</span> <span class="nav-text">在文件中跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-55-Traverse-the-Jump-List"><span class="nav-number">1.1.</span> <span class="nav-text">Tip 55 Traverse the Jump List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-56-Traverse-the-Change-List"><span class="nav-number">1.2.</span> <span class="nav-text">Tip 56 Traverse the Change List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-57-Jump-to-the-Filename-Under-the-Cursor"><span class="nav-number">1.3.</span> <span class="nav-text">Tip 57 Jump to the Filename Under the Cursor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-58-Snap-Between-Files-Using-Global-Marks"><span class="nav-number">1.4.</span> <span class="nav-text">Tip 58 Snap Between Files Using Global Marks</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huahui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E8%B7%B3%E8%BD%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim在文件中跳转
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:06:44 / Modified: 17:07:32" itemprop="dateCreated datePublished" datetime="2021-09-12T17:06:44+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="在文件中跳转"><a href="#在文件中跳转" class="headerlink" title="在文件中跳转"></a>在文件中跳转</h1><h2 id="Tip-55-Traverse-the-Jump-List"><a href="#Tip-55-Traverse-the-Jump-List" class="headerlink" title="Tip 55 Traverse the Jump List"></a>Tip 55 Traverse the Jump List</h2><p>遍历跳转列表</p>
+<p>Vim 在跳转之前和之后记录我们的位置，并提供一些命令来回溯我们的步骤，类似于Web浏览器中的前进和后退。对vim来说：</p>
+<ul>
+<li><p>&lt; C - o &gt; - 后退, 跳转到上一个位置</p>
+</li>
+<li><p>&lt; C - i &gt; - 前进, 后退之后就可以往前了</p>
+</li>
+</ul>
+<p><code>:jumps</code>命令可以查看跳转列表，效果类似于<code> :ls</code></p>
+<blockquote>
+<p>跳转位置的定义：Any command that changes the active file for the current window can be described as a jump.</p>
+</blockquote>
+<p>任何更改当前窗口的活动文件的命令都可以描述为跳转。Vim 会把执行跳转命令之前和之后的光标位置，记录到跳转列表中。例如：</p>
+<p>如果我们运行<code>:edit</code>命令打开了一个新文件，那么就可以用 <code>&lt;C-o&gt; 和 &lt;C-i&gt; </code>命令在这个新文件以及原本的文件之间来回跳转。</p>
+<p>用<code>[count]G</code>命令直接跳到指定的行号也会被当成一次跳转，但每次向上或向下移动一行则不算。面向句子的动作及面向段落的动作都算跳转，但面向字符及面向单词的动作则不算。用一句话来概括，<strong>我们可以说大范围的动作命令可能会被当成跳转，但小范围的动作命令则只能算移动。</strong></p>
+<p>下表节选了一些跳转动作：</p>
+<table>
+<thead>
+<tr>
+<th>[count]G</th>
+<th>行跳转</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/pattern<CR> 或  ?pattern<Cr></td>
+<td>跳转到 下一个/上一个 匹配的 <em>pattern</em> 位置</td>
+</tr>
+<tr>
+<td>n / N</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>%</td>
+<td>跳转到 配对的括号位置 <em>()</em> <em>[]</em> <em>{}</em> <em>&lt;&gt;</em></td>
+</tr>
+<tr>
+<td>( / )</td>
+<td>跳转到 前/后 一句内容</td>
+</tr>
+<tr>
+<td>{ / }</td>
+<td>跳转到 前/后 一段内容</td>
+</tr>
+<tr>
+<td>H / M / L</td>
+<td>跳转到 上/中/下 屏幕</td>
+</tr>
+<tr>
+<td>gf</td>
+<td>跳转到 光标处的文件</td>
+</tr>
+<tr>
+<td>&lt;C-]&gt;</td>
+<td>跳转到 光标处关键词定义的地方</td>
+</tr>
+<tr>
+<td>`{mark} / ‘{mark}</td>
+<td>跳转到 标记 / 标记非空白行首 位置</td>
+</tr>
+</tbody></table>
+<p><C-o> 和 <C-i> 命令本身不会被当成动作命令。也就是说，我们既不能用它们扩大可视模式的选区，也不能在操作符待决模式中使用它们。</p>
+<p>​    Vim 可以同时维护多份跳转列表。实际上，<strong>每个单独的窗口都拥有一份自己的跳转列表</strong>。如果你正在使用分割窗口或多标签页，那么 <C-o> 和 <C-i> 命令会<strong>始终在当前活动窗口的跳转列表范围内进行跳转</strong>。</p>
+<p>注意：试着在插入模式中按一下 &lt; C- i &gt;，你会发现这和按 <Tab> 键的效果是一样的，</p>
+<p>因为 Vim 本来就把 <C-i> 和 <Tab> 当成同一个东西。如果重新映射 <Tab> 键的话，那么也应该意识到，当你按下 <C-i> 时，该映射项也会被触发（反之亦然）。跳转的缺省行为将会被改变，只能单向遍历。</p>
+<h2 id="Tip-56-Traverse-the-Change-List"><a href="#Tip-56-Traverse-the-Change-List" class="headerlink" title="Tip 56 Traverse the Change List"></a>Tip 56 Traverse the Change List</h2><p>遍历改变列表</p>
+<p>每当对文档做出修改后， Vim 都会记录当时光标所在的位置。遍历改变列表的方法很简单，并且这大概是跳到你要去的地方的最快方式。</p>
+<p>撤销/重做 命令：</p>
+<ul>
+<li><p>u - 撤销变更 （相当于 win &lt;C - z&gt;）</p>
+</li>
+<li><p><C-r> - 撤销之前的撤销  （相当于 win &lt;C - y&gt;）</p>
+</li>
+</ul>
+<p>Vim 会在编辑会话期间维护一张表，里面记载我们对每个缓冲区所做的修改，此表就是所谓的改变列表，使用 <code>:change </code>命令可以查看其内容。</p>
+<p>Vim 为每次修改都记录了行号与列号，我们可以用<code> g; 和 g,</code>命令反向或正向遍历改变列表。可以拿<code>; 和 ,</code>命令当参考，来帮你记忆 g; 与 g, 命令。前两条命令分别用来正向及反向重复 f{char} 命令，加上<strong>g前缀</strong>。</p>
+<p>标识上次修改方位的位置标记，Vim 会自动创建一些位置标记，它们是对改变列表的一个有用补充。</p>
+<ul>
+<li><p>`. 标记总是指向上次修改的位置</p>
+</li>
+<li><p><strong>`^ 标记则会指向上次退出插入模式时光标所在的位置  ( gi 命令)</strong></p>
+</li>
+</ul>
+<p>Vim 会为编辑会话中的每个单独缓冲区维护一个改变列表，而与之不同的是，每个窗口都会创建一个单独的跳转列表。</p>
+<p>在大多数场景下，跳转到 `` . <code>的效果与使用</code> g; <code>命令相同。不过位置标记只指向最后修改的位置，而改变列表中则保存了多组位置。我们可以多次按 g; 命令，每次它都会把我们带到改变列表中较早的一个位置，而 </code> . 则总是把我们带到改变列表的最后一项。</p>
+<p>​    ``^ <code>标记指向上次插入的位置，它比上次修改的位置更具体一点。如果我们先退出插入模式，接着又在文档中四处移动，然后，当我们又想快速回到退出的地方继续编辑时，用 **gi （g前缀 i插入**）命令就行了。此命令会用 </code>^ 标记恢复光标位置，并切换到插入模式，这真是省时省力的好办法！</p>
+<h2 id="Tip-57-Jump-to-the-Filename-Under-the-Cursor"><a href="#Tip-57-Jump-to-the-Filename-Under-the-Cursor" class="headerlink" title="Tip 57 Jump to the Filename Under the Cursor"></a>Tip 57 Jump to the Filename Under the Cursor</h2><p> 跳转到光标下的文件</p>
+<p>Vim 将文档中的文件名视为一种超链接。如果配置正确, 我们可以使用 <code>gf</code> 命令转到光标下的文件名。</p>
+<p>指定文件的扩展名</p>
+<p>​    <code>suffixesadd</code> 选项允许我们指定一个或多个文件扩展名，当 Vim 用 <code>gf </code>命令搜寻文件名时，会尝试使用这些扩展名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:set suffixesadd+=.rb      //添加.rb的文件扩展名</span><br></pre></td></tr></table></figure>
+
+<p>每次用 gf 命令时， Vim 都会在跳转列表中增添一条记录，因此我们总是可以用**<C-o> 命令返回原处**。</p>
+<p>指定要搜寻的目录</p>
+<p>​    引用的文件不位于工作目录的相对路径中，要引用第三方库的时候，需添加路径<code>path</code>。我们可以把它配置成一个以逗号分隔的目录列表。 当使用 <code>gf </code>命令时， Vim 会检查<code>path</code>列表中的每一个目录，看看该目录中是否包含一个匹配光标下文本的文件名。<code>path</code>设置也会作用域 <code>:find </code>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">:set path+=app/**   //添加路径</span><br><span class="line"></span><br><span class="line">:set path?            //查看路径</span><br><span class="line"></span><br><span class="line">❮ path=.,/usr/include, ,</span><br><span class="line"></span><br><span class="line">. : 表示 当前文件所在目录</span><br><span class="line"></span><br><span class="line">/usr/include : 这个很明显了</span><br><span class="line"></span><br><span class="line">空 : 两个 , , 中间的空 就表示当前工作目录 （注意，一个文件所在，一个当前工作）</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Tip-58-Snap-Between-Files-Using-Global-Marks"><a href="#Tip-58-Snap-Between-Files-Using-Global-Marks" class="headerlink" title="Tip 58 Snap Between Files Using Global Marks"></a>Tip 58 Snap Between Files Using Global Marks</h2><p>用全局位置标记在文件间快速跳转</p>
+<p><strong>标记语法 m{letter}</strong></p>
+<ul>
+<li>m[a-z] - 小写字母的, 创建一个可以在当前文件(缓冲区)进行跳转的标签</li>
+<li>m[A-Z] - 大写字母的, 创建一个可以全局的标签, 可以在多个文件之前跳转</li>
+</ul>
+<p><strong>跳转语法 `{letter}</strong> </p>
+<p><strong>编码之前设置全局标记，全局标记在多个文件切换时非常有用。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vim/" rel="tag"># vim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/12/vim%E7%94%A8%E5%8A%A8%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E7%A7%BB%E5%8A%A8/" rel="prev" title="Vim用动作命令在文档中移动">
+                  <i class="fa fa-chevron-left"></i> Vim用动作命令在文档中移动
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/12/vim%E6%9F%A5%E6%89%BE/" rel="next" title="Vim查找">
+                  Vim查找 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huahui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

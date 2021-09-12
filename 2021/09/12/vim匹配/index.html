@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="按模式匹配还是按原义匹配Tip 72 Tune the Case Sensitivity of Search Patterns调整搜索大小写敏感度 全局区分大小写 通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。 每次搜索区分大小写 可以使用以下选项来覆盖默认的是否忽略大小写:  \c - 忽略大小写  \C - 区分大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim匹配">
+<meta property="og:url" content="http://example.com/2021/09/12/vim%E5%8C%B9%E9%85%8D/index.html">
+<meta property="og:site_name" content="Huahui">
+<meta property="og:description" content="按模式匹配还是按原义匹配Tip 72 Tune the Case Sensitivity of Search Patterns调整搜索大小写敏感度 全局区分大小写 通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。 每次搜索区分大小写 可以使用以下选项来覆盖默认的是否忽略大小写:  \c - 忽略大小写  \C - 区分大">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-12T09:13:11.000Z">
+<meta property="article:modified_time" content="2021-09-12T09:13:37.981Z">
+<meta property="article:author" content="huahui">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/09/12/vim%E5%8C%B9%E9%85%8D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/12/vim%E5%8C%B9%E9%85%8D/","path":"2021/09/12/vim匹配/","title":"Vim匹配"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vim匹配 | Huahui</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Huahui</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%89%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E8%BF%98%E6%98%AF%E6%8C%89%E5%8E%9F%E4%B9%89%E5%8C%B9%E9%85%8D"><span class="nav-number">1.</span> <span class="nav-text">按模式匹配还是按原义匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><span class="nav-number">1.1.</span> <span class="nav-text">Tip 72 Tune the Case Sensitivity of Search Patterns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><span class="nav-number">1.2.</span> <span class="nav-text">Tip 73 Use the \v Pattern Switch for Regex Searches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><span class="nav-number">1.3.</span> <span class="nav-text">Tip 74 Use the \V Literal Switch for Verbatim Searches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-76-Stake-the-Boundaries-of-a-Ward"><span class="nav-number">1.4.</span> <span class="nav-text">Tip 76 Stake the Boundaries of a Ward</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-78-Escape-Problem-Characters"><span class="nav-number">1.5.</span> <span class="nav-text">Tip 78 Escape Problem Characters</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huahui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim匹配
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:13:11 / Modified: 17:13:37" itemprop="dateCreated datePublished" datetime="2021-09-12T17:13:11+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="按模式匹配还是按原义匹配"><a href="#按模式匹配还是按原义匹配" class="headerlink" title="按模式匹配还是按原义匹配"></a>按模式匹配还是按原义匹配</h1><h2 id="Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><a href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns" class="headerlink" title="Tip 72 Tune the Case Sensitivity of Search Patterns"></a>Tip 72 Tune the Case Sensitivity of Search Patterns</h2><p>调整搜索大小写敏感度</p>
+<p><strong>全局区分大小写</strong></p>
+<p>通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。</p>
+<p><strong>每次搜索区分大小写</strong></p>
+<p>可以使用以下选项来覆盖默认的是否忽略大小写:</p>
+<ul>
+<li><p>\c - 忽略大小写</p>
+</li>
+<li><p>\C - 区分大小写</p>
+</li>
+</ul>
+<p>每次搜索的时候都可以强制指定是否区分大小写。注意：在替换时\c标志位为手工确认。</p>
+<p><strong>启用智能大小写</strong></p>
+<p>Vim 提供了预测我们大小写敏感意图的 smartcase 选项， :set smartcase</p>
+<p>启用此选项后进行搜索时,</p>
+<ul>
+<li><p>如果输入的全部是小写字母, 那么就不区分大小写;</p>
+</li>
+<li><p>但只要包含大写字母, 那么就是大小写敏感的</p>
+</li>
+</ul>
+<h2 id="Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><a href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches" class="headerlink" title="Tip 73 Use the \v Pattern Switch for Regex Searches"></a>Tip 73 Use the \v Pattern Switch for Regex Searches</h2><p>按正则表达式查找时，使用 \v 模式开关  （开启字符的特殊含义）</p>
+<p>我们可以使用 \v 模式(very magic search)开关规范所有的特殊符号, 启用之后, 除了下划线 _, 大小写字母, 和数字外, 所有的字符都具有特殊含义。</p>
+<h2 id="Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><a href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches" class="headerlink" title="Tip 74 Use the \V Literal Switch for Verbatim Searches"></a>Tip 74 Use the \V Literal Switch for Verbatim Searches</h2><p>按原义查找文本时，使用 \V 原义开关  (开启字符的特殊含义)</p>
+<p>在正则表达式中使用的特殊字符，在按模式查找时用起来很顺手，但如果我们想</p>
+<p>按原义查找文本时，它们就变成了阻碍。使用 very nomagic 原义开关，可以消除附</p>
+<p>加在 .、 * 以及 ? 等大多数字符上的特殊含义。</p>
+<p><strong>使用原义开关 \V，即可激活 very nomagic 搜索模式</strong></p>
+<p>例如：搜索匹配“a.k.a.”字符串</p>
+<p>/ \Va.k.a.</p>
+<p>我们也可以使用转义的方式来消除字符的特殊含义。例如：</p>
+<p>/ a.k.a.</p>
+<p><strong>使用 “\V” 会使得其后的模式中只有反斜杠有特殊的意义,显然更方便。</strong></p>
+<h2 id="Tip-76-Stake-the-Boundaries-of-a-Ward"><a href="#Tip-76-Stake-the-Boundaries-of-a-Ward" class="headerlink" title="Tip 76 Stake the Boundaries of a Ward"></a>Tip 76 Stake the Boundaries of a Ward</h2><p>界定单词的边界</p>
+<p>定义一个搜索模型时, 指定单词的开始和结束位置可能很有用, Vim 给我们提供了单词分隔的选项。</p>
+<p>例如执行搜索 /the<CR> 的时候, 是会把 these they their 等单词一起搜索出来的。</p>
+<p>如果我们想只搜索 the 完整的单词, 而不需要包含 the 片段的词, 那么我们需要指定 词的边界。</p>
+<p>在 \v 模式下（开启字符特殊含义）, <strong>&lt; 和 &gt;</strong> 即代表词边界的符号. 所以我们可以使用 /\v<the><CR> 来达到我们的预期。</p>
+<p>需要注意的是, 如果我们在 \v 模式下需要匹配 &lt;&gt; 字符, 那么就得加反斜杠来进行转义了。</p>
+<h2 id="Tip-78-Escape-Problem-Characters"><a href="#Tip-78-Escape-Problem-Characters" class="headerlink" title="Tip 78 Escape Problem Characters"></a>Tip 78 Escape Problem Characters</h2><p>转义问题字符</p>
+<p>在 /V 纯文本模式下可以很容易的来进行纯文本的搜索匹配, 因为绝大部分的字符(如:. + *等)的特殊含义都被禁用了, 但是仍然有极少字符仍然有特殊的含义。</p>
+<p>这时要用 \ 进行转义。</p>
+<p>正向搜索转义斜杠 ‘/ ’</p>
+<p>正向搜索时, 斜杠 / 字符被解释为终止符, 所有在此字符之后的内容都会被忽略，替换模式下在 \ 字符后添加标志位。</p>
+<p>在 \v 和 \V 模式下, 如果要匹配 / 字符, 那么需要进行转义。</p>
+<p>反向搜索转义问号 ‘ ? ’</p>
+<p>当使用反向搜索的时候, 问号 ? 就是搜索的终止符。如果要匹配 ？号，需要转义 ?</p>
+<p>每次都转义反斜杠 ‘ \ ’</p>
+<p>\ 是需要进行转义的. 通常情况下, 反斜杠 \ 之后的那个字符表示被转义的特殊含义. 所以要匹配反斜杠字符的话就需要加转义, 也就是: \</p>
+<p>而且，不管正向还是反向搜索，要匹配 \ 都是需要转义的。</p>
+<p>终止符( / 或 ? )</p>
+<p>Vim 允许在搜索字段终止符后面追加某些标志来调整搜索命令的行为</p>
+<p>例如 /vim/e<CR> 将把光标放到高亮匹配位置的最后而不是前面</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vim/" rel="tag"># vim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/12/vim%E6%9B%BF%E6%8D%A2/" rel="prev" title="Vim替换">
+                  <i class="fa fa-chevron-left"></i> Vim替换
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huahui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
