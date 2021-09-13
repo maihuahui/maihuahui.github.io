@@ -1926,17 +1926,92 @@
     <url>/2021/09/13/C%E7%BC%96%E7%A8%8B-%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A/</url>
     <content><![CDATA[<p>在阅读一些开源代码时，常会在注释中碰到诸如：<code>TODO、FIXME 和 XXX</code>的单词，它们是有其特殊含义的。在编写代码的时候我们可以利用这些公认的特殊注释方式快速简介表达自己的目地。</p>
 <p>TODO: &lt;说明&gt;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常出现在一些函数的上方或者内部，它表示该注释标识处，有一些代码功能还未实现，未来会实现。&lt;说明&gt; 中应该简单描述下该功能。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常出现在一些函数的上方或者内部，它表示该注释标识处，有一些代码功能还未实现，未来会实现。</span><br><span class="line">&lt;说明&gt; 中应该简单描述下该功能。</span><br></pre></td></tr></table></figure>
 <p>FIXME: &lt;说明&gt;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码需要修正，甚至代码是错误的，有可能无法正常工作，需要修复，&lt;说明&gt; 中应该简单描述下如何修复该问题。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码需要修正，甚至代码是错误的，有可能无法正常工作，需要修复，</span><br><span class="line">&lt;说明&gt; 中应该简单描述下如何修复该问题。</span><br></pre></td></tr></table></figure>
 
 <p>XXX: &lt;说明&gt;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码虽然实现了功能，但是实现的方法有待商榷，将来可以进行一些改进优化，&lt;说明&gt; 中应该简单描述下改进优化的策略。</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码虽然实现了功能，但是实现的方法有待商榷，将来可以进行一些改进优化，</span><br><span class="line">&lt;说明&gt; 中应该简单描述下改进优化的策略。</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>C编程</category>
       </categories>
       <tags>
         <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux查看修改环境变量</title>
+    <url>/2021/09/13/Linux-shell-Linux%E6%9F%A5%E7%9C%8B%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<h1 id="linux变量的种类"><a href="#linux变量的种类" class="headerlink" title="linux变量的种类"></a>linux变量的种类</h1><p>按变量的生存周期来划分，Linux变量可分为两类：</p>
+<ol>
+<li>永久的：需要修改配置文件，变量永久生效。</li>
+<li>临时的：使用export命令声明即可，变量在关闭shell时失效。</li>
+</ol>
+<p>设置变量有三种方法：</p>
+<ol>
+<li>在<code>/etc/profile</code>文件中添加变量，对所有用户永久生效</li>
+<li>在用户目录下对<code>.bashrc</code>文件进行修改，对单一用户永久生效</li>
+<li>直接运行<code>export</code>命令定义变量，只是临时对当前<code>shell</code>有效，<code>shell</code>退出后变量失效</li>
+</ol>
+<h1 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h1><ol>
+<li>可用 export 命令查看PATH值<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export</span><br><span class="line">//但这种方式会显示一大堆数据</span><br></pre></td></tr></table></figure></li>
+<li>单独查看PATH环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//应用较多</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure></li>
+<li>使用env查看所有环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">env</span><br></pre></td></tr></table></figure></li>
+<li>使用set查看所有本地定义的环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="临时添加环境变量"><a href="#临时添加环境变量" class="headerlink" title="临时添加环境变量"></a>临时添加环境变量</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export PATH=/opt/STM/STLinux-2.3/devkit/sh4/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>PATH 设置会在终端关闭后就会消失。</p>
+<h1 id="永久添加环境变量，"><a href="#永久添加环境变量，" class="headerlink" title="永久添加环境变量，"></a>永久添加环境变量，</h1><ol>
+<li>当前用户生效<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line"></span><br><span class="line">//在文档最后，添加:</span><br><span class="line"></span><br><span class="line">export PATH=&quot;/opt/STM/STLinux-2.3/devkit/sh4/bin:$PATH&quot;</span><br><span class="line"></span><br><span class="line">//保存，退出，然后运行：</span><br><span class="line"></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li>
+<li>所有用户生效<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">//在文档最后，添加:</span><br><span class="line"></span><br><span class="line">export PATH=&quot;/opt/STM/STLinux-2.3/devkit/sh4/bin:$PATH&quot;</span><br><span class="line"></span><br><span class="line">//保存，退出，然后运行：</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+不报错则成功。</li>
+</ol>
+<blockquote>
+<p>注意：当然$PATH是放在开头还是最后是没有影响的,要注意 ：的使用</p>
+</blockquote>
+<h1 id="常用的环境变量"><a href="#常用的环境变量" class="headerlink" title="常用的环境变量"></a>常用的环境变量</h1><ul>
+<li>PATH 决定了shell将到哪些目录中寻找命令或程序</li>
+<li>HOME 当前用户主目录</li>
+<li>HISTSIZE　历史记录数</li>
+<li>LOGNAME 当前用户的登录名</li>
+<li>HOSTNAME　指主机的名称</li>
+<li>SHELL 当前用户Shell类型</li>
+<li>LANGUGE 　语言相关的环境变量，多语言可以修改此环境变量</li>
+<li>MAIL　当前用户的邮件存放目录</li>
+<li>PS1　基本提示符，对于root用户是#，对于普通用户是$</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>1、执行多次source /etc/profile之后，打印PATH的值会出现重复</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编译安装三部曲</title>
+    <url>/2021/09/13/Linux-shell-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%89%E9%83%A8%E6%9B%B2/</url>
+    <content><![CDATA[<h1 id="编译安装与卸载-make-install-与-make-uninstall"><a href="#编译安装与卸载-make-install-与-make-uninstall" class="headerlink" title="编译安装与卸载 make install 与 make uninstall"></a>编译安装与卸载 make install 与 make uninstall</h1><h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><p>通用过程</p>
+<ol>
+<li>./configure</li>
+<li>make</li>
+<li>make install</li>
+</ol>
+<p>注意：第一步<code>./configure</code>时，可以加<code>--prefix</code>的参数指定安装路径<br>更多参数自己参考</p>
+<h2 id="make-uninstall-卸载安装的软件"><a href="#make-uninstall-卸载安装的软件" class="headerlink" title="make uninstall 卸载安装的软件"></a>make uninstall 卸载安装的软件</h2><blockquote>
+<p>注意 Makefile 文件里的指令<br>一般 install 对应 uninstall ,大部分的作者会写有卸载的部分，这时只要简单地执行</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make unistall</span><br></pre></td></tr></table></figure>
+
+<p>就可以，如果作者懒没有写，那就只有根据<code>make install</code>中的步骤，看它把什么文件拷到哪去了，然后分别手动删除。</p>
+<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。 </p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
