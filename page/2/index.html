@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,308 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/vim/vim%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Vim命令行模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 16:31:13 / Modified: 16:46:27" itemprop="dateCreated datePublished" datetime="2021-09-12T16:31:13+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Command-Line-Mode"><a href="#Command-Line-Mode" class="headerlink" title="Command-Line Mode"></a>Command-Line Mode</h1><p>命令行模式</p>
+<p>Vim 的先祖是 vi，正是 vi 开创了区分模式编辑的范例。而 vi 则奉一个名为 ex的行编辑器为先祖，这就是为什么称在命令行模式输入为<code>Ex</code>命令。</p>
+<h2 id="Tip-27-Meet-Command-Line-Mode"><a href="#Tip-27-Meet-Command-Line-Mode" class="headerlink" title="Tip 27 Meet Command-Line Mode"></a>Tip 27 Meet Command-Line Mode</h2><p>结识命令行模式</p>
+<p>命令行模式会提示我们输入</p>
+<ol>
+<li>一条 <code>Ex</code> 命令</li>
+<li>一个查找模式</li>
+<li>一个表达式。</li>
+</ol>
+<p>按下<code> ：</code>键进入命令行模式，输入一条命令按<code>&lt; CR &gt;</code>执行它。</p>
+<p>常用Ex命令: 读写文件<code> :edit 和 :write</code>，创建新标签页<code>:tabnew</code>及分割窗口<code> :split</code>， 或是操作参数列表<code>:prev/:next</code>及缓冲区列表<code> :bprev/:bnext</code>。事实上， Vim 为几乎所有功能都提供了相应的 Ex 命令。</p>
+<p>操作缓冲区文本的 Ex 命令</p>
+<table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Effect</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:[range]delete [x]</td>
+<td>行区间删除 [内容存入寄存器 x]</td>
+</tr>
+<tr>
+<td>:[range]yank [x]</td>
+<td>行区间拷贝 [内容存入寄存器 x]</td>
+</tr>
+<tr>
+<td>:[line]put [x]</td>
+<td>指定行追加寄存器 x 的内容</td>
+</tr>
+<tr>
+<td>:[range]copy {address}</td>
+<td>行区间拷贝后并张贴到指定的位置</td>
+</tr>
+<tr>
+<td>:[range]move {address}</td>
+<td>行区间移动到指定的位置</td>
+</tr>
+<tr>
+<td>:[range]join</td>
+<td>合并行，连接指定范围内的行</td>
+</tr>
+<tr>
+<td>:[range]normal  {commands}</td>
+<td>区间内执行常规模式的命令</td>
+</tr>
+<tr>
+<td>:[range]substitute/{pattern}/{string}/[flags]</td>
+<td>区间内按匹配的替换</td>
+</tr>
+<tr>
+<td>:[range]global/{pattern}/[cmd]</td>
+<td>区间内匹配的行里执行 Ex 命令: cmd</td>
+</tr>
+</tbody></table>
+<p>在命令行模式中，文本出现在命令行上。命令行模式中也可以用组合键触发命令。</p>
+<p>有些命令在插入模式和命令行模式中通用。例如，可以用<code>&lt;C-w&gt;</code>和 <code>&lt;C-u&gt;</code>分别删除至上个单词的开头及行首，也可以用 <code>&lt;C-v&gt;</code> 或<code>&lt;C-k&gt;</code>来插入键盘上找不到的字符，还可以用 <code>&lt;C-r&gt;&#123;register&#125; </code>命令把任意寄存器的内容插入到命令行。</p>
+<h2 id="Tip-28-Execute-a-Command-on-One-or-More-Consececutive-Lines"><a href="#Tip-28-Execute-a-Command-on-One-or-More-Consececutive-Lines" class="headerlink" title="Tip 28 Execute a Command on One or More Consececutive Lines"></a>Tip 28 Execute a Command on One or More Consececutive Lines</h2><p>在一行或多行上执行Ex命令</p>
+<p>很多<code>Ex</code>命令可以用 <strong>[range]</strong> 指定要操作的范围。我们可以用<strong>行号、位置标记或是查找模式</strong>来指定范围的开始位置及结束位置。</p>
+<p><code>Ex </code>命令的优点之一是它们可以在某一范围内的所有行上执行。</p>
+<p>通常，一个范围具有如下的形式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">：&#123; start &#125; , &#123; end &#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义范围的语法非常灵活，既可以混合搭配行号、位置标记以及查找模式，也可以对它们加以偏移。</p>
+<p>偏移地址的一半形式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">：&#123; address &#125; + n</span><br></pre></td></tr></table></figure>
+
+<p>如果n被省略，那么缺省的偏移量为1。例如：</p>
+<table>
+<thead>
+<tr>
+<th>.p</th>
+<th>p : print ( 打印简写 )  ，打印当前行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.+p</td>
+<td>打印当前行的下一行</td>
+</tr>
+</tbody></table>
+<p> 特殊符号</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>文件第一行</td>
+</tr>
+<tr>
+<td>$</td>
+<td>文件最后一行</td>
+</tr>
+<tr>
+<td>0</td>
+<td>虚拟行，文件第0行，位于第一行上方</td>
+</tr>
+<tr>
+<td>.</td>
+<td>文件当前行</td>
+</tr>
+<tr>
+<td>‘m</td>
+<td>包含位置标记m的行</td>
+</tr>
+<tr>
+<td>‘&lt;</td>
+<td>高亮选区的起始行</td>
+</tr>
+<tr>
+<td>‘&gt;</td>
+<td>高亮选区的结束行</td>
+</tr>
+<tr>
+<td>%</td>
+<td>当前文件中的所有行，相当于 : 1 , $</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-29-Duplicate-or-Move-Lines-Using-‘-t’-and-‘-m’-Commands"><a href="#Tip-29-Duplicate-or-Move-Lines-Using-‘-t’-and-‘-m’-Commands" class="headerlink" title="Tip 29 Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands"></a>Tip 29 Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands</h2><p>使用 <code>:t </code>和<code> :m</code> 命令来复制或移动行</p>
+<p><code>:copy </code>命令（及其简写形式<code> :co</code> 以及<code> :t</code>）让我们可以把一行或多行从文档的一部分复制到另一部分。</p>
+<p>而<code>:move</code>（简写形式<code> :m</code>）命令则可以让我们把文档移动到其他地方。</p>
+<p>为了更好地记忆，可以把<code>：t</code>命令想成“复制到<code> copy TO</code>。</p>
+<p>下表展示了<code>:t </code>命令的一些应用实例：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:6t.</td>
+<td>把第6行复制到当前行下方</td>
+</tr>
+<tr>
+<td>:t6</td>
+<td>把当前行复制到第6行下方</td>
+</tr>
+<tr>
+<td>:t.</td>
+<td>为当前行创建一个副本，类似于普通模式下 yyp</td>
+</tr>
+<tr>
+<td>:t$</td>
+<td>把当前行复制到文件末尾</td>
+</tr>
+<tr>
+<td>:’&lt;,’&gt;t0</td>
+<td>把高亮选中的行复制到文件开头</td>
+</tr>
+</tbody></table>
+<p><strong><code>:t. </code>与 <code>yyp</code> 的区别：<code>yyp</code>会使用寄存器，而 <code>:t. </code>不会</strong></p>
+<p>在复制距离较远的行时，<code>:t</code>命令通常更加高效。</p>
+<p><code>:move </code>命令看上去和<code>:copy </code>命令很相似，只是他是移动文本。</p>
+<p>重复上次的<code> Ex</code> 命令非常简单，只需按 <code>@:</code> 即可</p>
+<h2 id="Tip-30-Run-Normal-Mode-Command-Across-a-Range"><a href="#Tip-30-Run-Normal-Mode-Command-Across-a-Range" class="headerlink" title="Tip 30 Run Normal Mode Command Across a Range"></a>Tip 30 Run Normal Mode Command Across a Range</h2><p>在指定范围上执行普通模式命令</p>
+<p>如果想在一系列连续行上执行一条普通模式命令，我们可以用 <code>:normal </code>命令。此命令在与<code> .</code> 命令或宏结合使用时，我们只需花费很少的努力就能完成大量重复性任务。</p>
+<p>语法如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:[range]normal &#123;commands&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tip-31-Repeat-the-Last-Ex-Command"><a href="#Tip-31-Repeat-the-Last-Ex-Command" class="headerlink" title="Tip 31 Repeat the Last Ex Command"></a>Tip 31 Repeat the Last Ex Command</h2><p>重复上一次<code>Ex</code>命令</p>
+<p><code>.</code>命令可重复上次的修改。但是，<code>.</code>命令不会重复由 <strong>Vim 命令行</strong>中做出的修改。 </p>
+<p>作为替代， 我们可以用 <code>@:</code> 来重复上次的 <code>Ex </code>命令</p>
+<h2 id="Tip-32-Tab-Complete-Your-Ex-Commands"><a href="#Tip-32-Tab-Complete-Your-Ex-Commands" class="headerlink" title="Tip 32 Tab-Complete Your Ex Commands"></a>Tip 32 Tab-Complete Your Ex Commands</h2><p><code>Tab </code>自动补全Ex命令</p>
+<p>如同在 shell 中一样，在命令行上也可以用<code>&lt;Tab&gt;</code>键自动补全命令。</p>
+<p>Vim 在选取Tab 补全的补全项时非常智能，它会检查命令行上已经输入的上下文，然后再构建合适的补全列表。例如，可以这样输入：</p>
+<p><img src="NO1.JPG" alt="img"></p>
+<p><code>&lt;C-d&gt;</code> 命令会让 Vim 显示可用的补全列表，我们多次按<code>&lt;Tab&gt;</code>键的话，命令行上会依次显示 colder、 colorscheme，然后再回到最初的 col，如此循环往复。要想反向遍历补全列表，可以按 <code>&lt;S-Tab&gt;</code>。</p>
+<p>假设我们想改配色方案，但是不太记得要用的配色方案的名称，这时可以用<code>&lt;C-d&gt;</code> 命令列出所有的可用选项。</p>
+<p>不过在neovim中貌似以及封装好了</p>
+<h2 id="Tip-33-Insert-the-Current-Word-at-the-Command-Prompt"><a href="#Tip-33-Insert-the-Current-Word-at-the-Command-Prompt" class="headerlink" title="Tip 33 Insert the Current Word at the Command Prompt"></a>Tip 33 Insert the Current Word at the Command Prompt</h2><p>将当前单词插入命令行</p>
+<p>即使是在命令行模式下， Vim 也始终知道光标位于何处以及哪个分割窗口处于活动状态。为节省时间，我们可以把活动窗口中的当前单词（或字串）插入到命令行中。</p>
+<p> 在 Vim 的命令行下，<code> &lt;C-r&gt;&lt;C-w&gt; (word)</code>映射项会复制光标下的<strong>单词</strong>并把它插入到命令行中。我们可以利用这一功能减少击键的次数。</p>
+<p>而<code>&lt;C-r&gt;&lt;C-a&gt;(WORD)</code>把当前<strong>字串</strong>插入到命令行</p>
+<h2 id="Tip-34-Recall-Commands-from-history"><a href="#Tip-34-Recall-Commands-from-history" class="headerlink" title="Tip 34 Recall Commands from history"></a>Tip 34 Recall Commands from history</h2><p>回溯历史命令</p>
+<p>我们先按<code>:</code>键切换到命令行模式，在保持提示符为空的情况下按<code>&lt;Up&gt;</code>键，此时最后执行的那条<code>Ex</code>命令就会被填充到命令行上。再接着按 <code>&lt;Up&gt;</code> 键的话，就可以回到更早的<code> Ex</code> 历史命令；按 <code>&lt;Down&gt; </code>键的话，则会沿相反方向滚动。上下方向键也是可以。</p>
+<p>结识命令行窗口</p>
+<p>在命令行模式下按 <code>&lt;Ctrl-f&gt; </code>从命令行模式切换到命令行窗口。</p>
+<p>​    Vim 会打开一个新的窗口，当命令行窗口处于打开状态时，它会始终拥有焦点。这意味着，除非关闭命令行窗口，否则我们无法切换到其他窗口。要想关闭命令行窗口，我们可以执行<code> :q</code> 命令（就像关闭普通 Vim 窗口那样），或是按<code> &lt;CR&gt;</code>。</p>
+<p>下表总结了打开命令行窗口的几种方式</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>q/</td>
+<td>打开查找命令历史的命令行窗口（注意是查找命令）</td>
+</tr>
+<tr>
+<td>q:</td>
+<td>打开Ex命令历史的命令行窗口</td>
+</tr>
+<tr>
+<td>&lt; C - f &gt;</td>
+<td>从命令行模式切换到命令行窗口</td>
+</tr>
+</tbody></table>
+<p><code>q:</code> 命令和<code> :q</code> 命令很容易被搞混。</p>
+<h2 id="Tip-35-Run-Command-in-the-shell"><a href="#Tip-35-Run-Command-in-the-shell" class="headerlink" title="Tip 35 Run Command in the shell"></a>Tip 35 Run Command in the shell</h2><p>运行shell命令</p>
+<p>在 Vim 的命令行模式中，给命令加一个叹号<code>! </code>前缀就可以调用外部程序。</p>
+<p>注意区分<code>:!ls</code>和<code>:ls</code>的不同之处。前者调用的是 shell 中的 ls 命令，而<code> :ls</code>调用的是 Vim 的内置命令，用来显示缓冲区列表的内容。</p>
+<p><code>   :!&#123;cmd&#125;</code>这种语法适用于执行一次性命令，而<code>:shell</code>命令会启动一个交互的 shell 会话，可在 shell 中执行数条命令，用 <code>exit</code> 命令可以退出此 shell 并返回 Vim界面。</p>
+<p> Vim挂起，即Vim 后台执行: 此方式比 <code>:shell </code>方式要方便一点。<code>&lt;C-z&gt; </code>会把 vim 挂起, 然后切换到终端。</p>
+<p>在 Vim 中操作时，我们能很方便地调用 shell 命令  。</p>
+<ul>
+<li><code>:shell</code> 启动一个 shell (输入 exit 返回 Vim)  </li>
+<li><code>:!&#123;cmd&#125;</code> 在 shell 中执行 {cmd}  </li>
+</ul>
+<p>使用缓冲区的内容进行标准输入或输出:</p>
+<ul>
+<li><p><code>:read !&#123;cmd&#125;</code> - 把 <em>cmd</em> 执行的结果(标准输出)写入当前文件(缓冲区) 如: :read !ls</p>
+</li>
+<li><p><code>:write !&#123;cmd&#125;</code> - 和上面相反, 把当前文件(缓冲区)内容当做标准输入传给了 <em>cmd</em> 命令 </p>
+</li>
+</ul>
+<p>! 符号的位置不同有不同的含义:</p>
+<ul>
+<li><p><code>:[range]write ! sh</code> - 把缓冲区当做标准输入传给了 <em>sh</em> 命令</p>
+</li>
+<li><p><code>:[range]write! filename</code> - 表示把 <em>filename</em> 内容强制覆盖掉; 相当于内容另存为一个文件   </p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

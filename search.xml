@@ -1921,4 +1921,22 @@
         <tag>git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>代码中特殊注释</title>
+    <url>/2021/09/13/C%E7%BC%96%E7%A8%8B-%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A/</url>
+    <content><![CDATA[<p>在阅读一些开源代码时，常会在注释中碰到诸如：<code>TODO、FIXME 和 XXX</code>的单词，它们是有其特殊含义的。在编写代码的时候我们可以利用这些公认的特殊注释方式快速简介表达自己的目地。</p>
+<p>TODO: &lt;说明&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常出现在一些函数的上方或者内部，它表示该注释标识处，有一些代码功能还未实现，未来会实现。&lt;说明&gt; 中应该简单描述下该功能。</span><br></pre></td></tr></table></figure>
+<p>FIXME: &lt;说明&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码需要修正，甚至代码是错误的，有可能无法正常工作，需要修复，&lt;说明&gt; 中应该简单描述下如何修复该问题。</span><br></pre></td></tr></table></figure>
+
+<p>XXX: &lt;说明&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码虽然实现了功能，但是实现的方法有待商榷，将来可以进行一些改进优化，&lt;说明&gt; 中应该简单描述下改进优化的策略。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C编程</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
 </search>
