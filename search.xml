@@ -1956,7 +1956,7 @@
 <h1 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h1><ol>
 <li>可用 export 命令查看PATH值<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export</span><br><span class="line">//但这种方式会显示一大堆数据</span><br></pre></td></tr></table></figure></li>
 <li>单独查看PATH环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//应用较多</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure></li>
-<li>使用env查看所有环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">env</span><br></pre></td></tr></table></figure></li>
+<li>使用printenv打印环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printenv</span><br></pre></td></tr></table></figure></li>
 <li>使用set查看所有本地定义的环境变量<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h1 id="临时添加环境变量"><a href="#临时添加环境变量" class="headerlink" title="临时添加环境变量"></a>临时添加环境变量</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export PATH=/opt/STM/STLinux-2.3/devkit/sh4/bin:$PATH</span><br></pre></td></tr></table></figure>
@@ -2014,6 +2014,43 @@
       <tags>
         <tag>Linux</tag>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim配置</title>
+    <url>/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="win10-右键菜单添加使用-Neovim-打开方式"><a href="#win10-右键菜单添加使用-Neovim-打开方式" class="headerlink" title="win10 右键菜单添加使用 Neovim 打开方式"></a>win10 右键菜单添加使用 Neovim 打开方式</h1><ol>
+<li><p>打开注册表编辑器，开始–&gt;运行–&gt;regedit</p>
+</li>
+<li><p>定位到：HKEY_CLASSSES_ROOT—&gt; * —&gt;Shell，在Shell 上右击，新建—&gt; 项，输入：  Open With Neovim（使用Neovim打开）</p>
+</li>
+<li><p>在 Open With Neovim 右键—&gt;新建—&gt;字符串值，数值名称设置为：Icon，数值数据设置为：xxx\nvim-qt.exe,0 (替换成自己的路径地址)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/* 以 Gvim 举例，两者类似，注意应用时候替换路劲</span><br><span class="line">*  数值名称：Icon</span><br><span class="line">*  数值数据：C:\MyProgram\gvim73\gVimPortable\vim\vim73\gvim.exe,0</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/vim_01.png"></p>
+</li>
+</ol>
+<p>上面的设置会带来一个小问题：当文件名的最后一个字符为空格时，使用VIM打开某个文件时会新建一个空白的文件，而不是直接打开该文件。</p>
+<ul>
+<li>解决方法：加引号，如下图所示，注意应用时候替换路径<blockquote>
+<p>xxxx.exe “%1”</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/vim_02.png"></p>
+<h1 id="80字符提示条"><a href="#80字符提示条" class="headerlink" title="80字符提示条"></a>80字符提示条</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; 设置编码最长80字符提示条，额外高亮显示第80列</span><br><span class="line">set cc=80</span><br><span class="line">&quot; 超过长度自动折行 default ,根据屏幕长度</span><br><span class="line">&quot; Tjis option changes how text is displayed. It do not change the text</span><br><span class="line">set wrap</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="vim-开启错误信息一闪而过-可使用命令查看"><a href="#vim-开启错误信息一闪而过-可使用命令查看" class="headerlink" title="vim 开启错误信息一闪而过,可使用命令查看"></a>vim 开启错误信息一闪而过,可使用命令查看</h1><blockquote>
+<p><code>:messages</code></p>
+</blockquote>
+<h1 id="使用silent静默执行命令"><a href="#使用silent静默执行命令" class="headerlink" title="使用silent静默执行命令"></a>使用silent静默执行命令</h1><p>如果不希望显示提示信息，那么可以使用<code>:silent</code>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对于*`git` executable not found. Most commands will not be available. To suppress this message, prepend `silent!` to `call plug#begin(...)`.*错误</span><br></pre></td></tr></table></figure>
+<p>在vim配置文件中修改为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">silent! call plug#begin</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>vim实用技巧</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
       </tags>
   </entry>
 </search>
