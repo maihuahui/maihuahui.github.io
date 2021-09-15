@@ -284,7 +284,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-09-15 20:29:27 / Modified: 20:34:03" itemprop="dateCreated datePublished" datetime="2021-09-15T20:29:27+08:00">2021-09-15</time>
+      <time title="Created: 2021-09-15 20:29:27 / Modified: 20:53:49" itemprop="dateCreated datePublished" datetime="2021-09-15T20:29:27+08:00">2021-09-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -313,7 +313,7 @@
 </li>
 <li><p>在 Open With Neovim 右键—&gt;新建—&gt;字符串值，数值名称设置为：Icon，数值数据设置为：xxx\nvim-qt.exe,0 (替换成自己的路径地址)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 以 Gvim 举例，两者类似，注意应用时候替换路劲</span><br><span class="line">*  数值名称：Icon</span><br><span class="line">*  数值数据：C:\MyProgram\gvim73\gVimPortable\vim\vim73\gvim.exe,0</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p><img src="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/vim_01.png"></p>
+<p><img src="vim_01.png"></p>
 </li>
 </ol>
 <p>上面的设置会带来一个小问题：当文件名的最后一个字符为空格时，使用VIM打开某个文件时会新建一个空白的文件，而不是直接打开该文件。</p>
@@ -323,7 +323,7 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/vim_02.png"></p>
+<p><img src="vim_02.png"></p>
 <h1 id="80字符提示条"><a href="#80字符提示条" class="headerlink" title="80字符提示条"></a>80字符提示条</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot; 设置编码最长80字符提示条，额外高亮显示第80列</span><br><span class="line">set cc=80</span><br><span class="line">&quot; 超过长度自动折行 default ,根据屏幕长度</span><br><span class="line">&quot; Tjis option changes how text is displayed. It do not change the text</span><br><span class="line">set wrap</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="vim-开启错误信息一闪而过-可使用命令查看"><a href="#vim-开启错误信息一闪而过-可使用命令查看" class="headerlink" title="vim 开启错误信息一闪而过,可使用命令查看"></a>vim 开启错误信息一闪而过,可使用命令查看</h1><blockquote>
@@ -333,6 +333,21 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于*`git` executable not found. Most commands will not be available. To suppress this message, prepend `silent!` to `call plug#begin(...)`.*错误</span><br></pre></td></tr></table></figure>
 <p>在vim配置文件中修改为:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">silent! call plug#begin</span><br></pre></td></tr></table></figure>
+
+<h1 id="neovim-qt-标签栏显示有问题"><a href="#neovim-qt-标签栏显示有问题" class="headerlink" title="neovim-qt 标签栏显示有问题"></a>neovim-qt 标签栏显示有问题</h1><p>neovim 还有一个配置文件，ginit.vim ，与init.vim 同一个目录下。</p>
+<ul>
+<li>gitee : <a target="_blank" rel="noopener" href="https://gitee.com/mirrors/neovim-qt">https://gitee.com/mirrors/neovim-qt</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/equalsraf/neovim-qt">https://github.com/equalsraf/neovim-qt</a></li>
+<li>wiki: <a target="_blank" rel="noopener" href="https://github.com/equalsraf/neovim-qt/wiki/Configuration-Options#GuiFont">https://github.com/equalsraf/neovim-qt/wiki/Configuration-Options#GuiFont</a></li>
+</ul>
+<p>These options are specific to Neovim Qt. The options cannot be set from <code>init.vim</code>, they must be set from <code>ginit.vim</code>.</p>
+<p>Recommended <code>ginit.vim</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&quot; Enable Mouse</span><br><span class="line">set mouse=a</span><br><span class="line"></span><br><span class="line">&quot; Set Editor Font</span><br><span class="line">if exists(&#x27;:GuiFont&#x27;)</span><br><span class="line">    &quot; Use GuiFont! to ignore font errors</span><br><span class="line">    GuiFont &#123;font_name&#125;:h&#123;size&#125;</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Disable GUI Tabline</span><br><span class="line">if exists(&#x27;:GuiTabline&#x27;)</span><br><span class="line">    GuiTabline 0</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Disable GUI Popupmenu</span><br><span class="line">if exists(&#x27;:GuiPopupmenu&#x27;)</span><br><span class="line">    GuiPopupmenu 0</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Enable GUI ScrollBar</span><br><span class="line">if exists(&#x27;:GuiScrollBar&#x27;)</span><br><span class="line">    GuiScrollBar 1</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Right Click Context Menu (Copy-Cut-Paste)</span><br><span class="line">nnoremap &lt;silent&gt;&lt;RightMouse&gt; :call GuiShowContextMenu()&lt;CR&gt;</span><br><span class="line">inoremap &lt;silent&gt;&lt;RightMouse&gt; &lt;Esc&gt;:call GuiShowContextMenu()&lt;CR&gt;</span><br><span class="line">vnoremap &lt;silent&gt;&lt;RightMouse&gt; :call GuiShowContextMenu()&lt;CR&gt;gv</span><br></pre></td></tr></table></figure>
+
+<p>For more options, try <code>:help nvim_gui_shim</code> and scroll down to <code>Commands</code></p>
+<h1 id="使用powerline-字体斜体导致状态栏消失"><a href="#使用powerline-字体斜体导致状态栏消失" class="headerlink" title="使用powerline 字体斜体导致状态栏消失"></a>使用powerline 字体斜体导致状态栏消失</h1><p>增大行距</p>
+<p>set linespace=5</p>
+
       
     </div>
 
