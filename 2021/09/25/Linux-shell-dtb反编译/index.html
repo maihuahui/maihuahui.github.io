@@ -20,29 +20,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="编译安装与卸载 make install 与 make uninstall编译安装通用过程  .&#x2F;configure make make install  注意：第一步.&#x2F;configure时，可以加--prefix的参数指定安装路径更多参数自己参考 make uninstall 卸载安装的软件 注意 Makefile 文件里的指令一般 install 对应 uninstall ,大部分的作者会写">
+<meta name="description" content="dts←→dtb  反编译dtb 1dtc -I dtb -O dts -o *.dts  *.dtb 正编译dts 1dtc -I dts -O dtb -o *.dtb  *.dts dtc -help   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编译安装三部曲">
-<meta property="og:url" content="http://example.com/2021/09/13/Linux-shell-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%89%E9%83%A8%E6%9B%B2/index.html">
+<meta property="og:title" content="Dtb反编译">
+<meta property="og:url" content="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/index.html">
 <meta property="og:site_name" content="Huahui">
-<meta property="og:description" content="编译安装与卸载 make install 与 make uninstall编译安装通用过程  .&#x2F;configure make make install  注意：第一步.&#x2F;configure时，可以加--prefix的参数指定安装路径更多参数自己参考 make uninstall 卸载安装的软件 注意 Makefile 文件里的指令一般 install 对应 uninstall ,大部分的作者会写">
+<meta property="og:description" content="dts←→dtb  反编译dtb 1dtc -I dtb -O dts -o *.dts  *.dtb 正编译dts 1dtc -I dts -O dtb -o *.dtb  *.dts dtc -help   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-13T14:44:40.000Z">
-<meta property="article:modified_time" content="2021-09-13T14:50:13.231Z">
+<meta property="article:published_time" content="2021-09-25T11:43:11.000Z">
+<meta property="article:modified_time" content="2021-09-25T11:47:54.324Z">
 <meta property="article:author" content="huahui">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="shell">
+<meta property="article:tag" content="dts">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/09/13/Linux-shell-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%89%E9%83%A8%E6%9B%B2/">
+<link rel="canonical" href="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/13/Linux-shell-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%89%E9%83%A8%E6%9B%B2/","path":"2021/09/13/Linux-shell-编译安装三部曲/","title":"编译安装三部曲"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/","path":"2021/09/25/Linux-shell-dtb反编译/","title":"Dtb反编译"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>编译安装三部曲 | Huahui</title>
+<title>Dtb反编译 | Huahui</title>
   
 
 
@@ -107,7 +107,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -120,7 +120,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD-make-install-%E4%B8%8E-make-uninstall"><span class="nav-number">1.</span> <span class="nav-text">编译安装与卸载 make install 与 make uninstall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-uninstall-%E5%8D%B8%E8%BD%BD%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">make uninstall 卸载安装的软件</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -183,7 +182,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/Linux-shell-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%89%E9%83%A8%E6%9B%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -196,7 +195,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          编译安装三部曲
+          Dtb反编译
         </h1>
 
         <div class="post-meta-container">
@@ -208,7 +207,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-09-13 22:44:40 / Modified: 22:50:13" itemprop="dateCreated datePublished" datetime="2021-09-13T22:44:40+08:00">2021-09-13</time>
+      <time title="Created: 2021-09-25 19:43:11 / Modified: 19:47:54" itemprop="dateCreated datePublished" datetime="2021-09-25T19:43:11+08:00">2021-09-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -230,21 +229,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="编译安装与卸载-make-install-与-make-uninstall"><a href="#编译安装与卸载-make-install-与-make-uninstall" class="headerlink" title="编译安装与卸载 make install 与 make uninstall"></a>编译安装与卸载 make install 与 make uninstall</h1><h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><p>通用过程</p>
+        <p>dts←→dtb</p>
 <ol>
-<li>./configure</li>
-<li>make</li>
-<li>make install</li>
+<li><p>反编译dtb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dtb -O dts -o *.dts  *.dtb</span><br></pre></td></tr></table></figure></li>
+<li><p>正编译dts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dts -O dtb -o *.dtb  *.dts</span><br></pre></td></tr></table></figure></li>
+<li><p>dtc -help</p>
+</li>
 </ol>
-<p>注意：第一步<code>./configure</code>时，可以加<code>--prefix</code>的参数指定安装路径<br>更多参数自己参考</p>
-<h2 id="make-uninstall-卸载安装的软件"><a href="#make-uninstall-卸载安装的软件" class="headerlink" title="make uninstall 卸载安装的软件"></a>make uninstall 卸载安装的软件</h2><blockquote>
-<p>注意 Makefile 文件里的指令<br>一般 install 对应 uninstall ,大部分的作者会写有卸载的部分，这时只要简单地执行</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make unistall</span><br></pre></td></tr></table></figure>
-
-<p>就可以，如果作者懒没有写，那就只有根据<code>make install</code>中的步骤，看它把什么文件拷到哪去了，然后分别手动删除。</p>
-<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。 </p>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Usage: dtc [options] &lt;input file&gt;</span><br><span class="line"></span><br><span class="line">Options: -[qI:O:o:V:d:R:S:p:a:fb:i:H:sW:E:@AThv]</span><br><span class="line">  -q, --quiet                </span><br><span class="line">	Quiet: -q suppress warnings, -qq errors, -qqq all</span><br><span class="line">  -I, --in-format &lt;arg&gt;      </span><br><span class="line">	Input formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		fs  - /proc/device-tree style directory</span><br><span class="line">  -o, --out &lt;arg&gt;            </span><br><span class="line">	Output file</span><br><span class="line">  -O, --out-format &lt;arg&gt;     </span><br><span class="line">	Output formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		asm - assembler source</span><br><span class="line">  -V, --out-version &lt;arg&gt;    </span><br><span class="line">	Blob version to produce, defaults to 17 (for dtb and asm output)</span><br><span class="line">  -d, --out-dependency &lt;arg&gt; </span><br><span class="line">	Output dependency file</span><br><span class="line">  -R, --reserve &lt;arg&gt;        </span><br><span class="line">	Make space for &lt;number&gt; reserve map entries (for dtb and asm output)</span><br><span class="line">  -S, --space &lt;arg&gt;          </span><br><span class="line">	Make the blob at least &lt;bytes&gt; long (extra space)</span><br><span class="line">  -p, --pad &lt;arg&gt;            </span><br><span class="line">	Add padding to the blob of &lt;bytes&gt; long (extra space)</span><br><span class="line">  -a, --align &lt;arg&gt;          </span><br><span class="line">	Make the blob align to the &lt;bytes&gt; (extra space)</span><br><span class="line">  -b, --boot-cpu &lt;arg&gt;       </span><br><span class="line">	Set the physical boot cpu</span><br><span class="line">  -f, --force                </span><br><span class="line">	Try to produce output even if the input tree has errors</span><br><span class="line">  -i, --include &lt;arg&gt;        </span><br><span class="line">	Add a path to search for include files</span><br><span class="line">  -s, --sort                 </span><br><span class="line">	Sort nodes and properties before outputting (useful for comparing trees)</span><br><span class="line">  -H, --phandle &lt;arg&gt;        </span><br><span class="line">	Valid phandle formats are:</span><br><span class="line">		legacy - &quot;linux,phandle&quot; properties only</span><br><span class="line">		epapr  - &quot;phandle&quot; properties only</span><br><span class="line">		both   - Both &quot;linux,phandle&quot; and &quot;phandle&quot; properties</span><br><span class="line">  -W, --warning &lt;arg&gt;        </span><br><span class="line">	Enable/disable warnings (prefix with &quot;no-&quot;)</span><br><span class="line">  -E, --error &lt;arg&gt;          </span><br><span class="line">	Enable/disable errors (prefix with &quot;no-&quot;)</span><br><span class="line">  -@, --symbols              </span><br><span class="line">	Enable generation of symbols</span><br><span class="line">  -A, --auto-alias           </span><br><span class="line">	Enable auto-alias of labels</span><br><span class="line">  -T, --annotate             </span><br><span class="line">	Annotate output .dts with input source file and line (-T -T for more details)</span><br><span class="line">  -h, --help                 </span><br><span class="line">	Print this help and exit</span><br><span class="line">  -v, --version              </span><br><span class="line">	Print version and exit</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -254,21 +248,18 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/dts/" rel="tag"># dts</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/09/13/Linux-shell-Linux%E6%9F%A5%E7%9C%8B%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" rel="prev" title="Linux查看修改环境变量">
-                  <i class="fa fa-chevron-left"></i> Linux查看修改环境变量
+                <a href="/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/" rel="prev" title="If判断指针非空">
+                  <i class="fa fa-chevron-left"></i> If判断指针非空
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/" rel="next" title="Vim配置">
-                  Vim配置 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
