@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,6 +166,282 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">I2C子系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 18:42:44 / Modified: 18:54:14" itemprop="dateCreated datePublished" datetime="2021-09-12T18:42:44+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="I2C通信"><a href="#I2C通信" class="headerlink" title="I2C通信"></a>I2C通信</h1><h2 id="I2C协议"><a href="#I2C协议" class="headerlink" title="I2C协议"></a>I2C协议</h2><p>I2C协议运用已经非常广泛，直接看图，一图胜前言。</p>
+<p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/NO1.png" alt="image"></p>
+<h2 id="I2C设备驱动数据处理"><a href="#I2C设备驱动数据处理" class="headerlink" title="I2C设备驱动数据处理"></a>I2C设备驱动数据处理</h2><ul>
+<li>Linux内核代码：<code>drivers\i2c\i2c-core.c</code></li>
+</ul>
+<p>数据处理函数:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_transfer - execute a single or combined I2C message</span></span><br><span class="line"><span class="comment"> * @adap: Handle to I2C bus</span></span><br><span class="line"><span class="comment"> * @msgs: One or more messages to execute before STOP is issued to</span></span><br><span class="line"><span class="comment"> *	terminate the operation; each message begins with a START.</span></span><br><span class="line"><span class="comment"> * @num: Number of messages to be executed.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Returns negative errno, else the number of messages executed.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Note that there is no requirement that each message be sent to</span></span><br><span class="line"><span class="comment"> * the same slave address, although that is the most common model.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i2c_transfer</span><span class="params">(struct i2c_adapter *adap, struct i2c_msg *msgs, <span class="keyword">int</span> num)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>i2c_transfer</code>函数发送数据之前要先构建好<code> i2c_msg</code>  。 </p>
+<p><code>i2c_msg</code> 结构体定义在文件 <code>include/uapi/linux/i2c.h </code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">i2c_msg</span> &#123;</span></span><br><span class="line">	__u16 addr;	<span class="comment">/* slave address			*/</span></span><br><span class="line">	__u16 flags;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_RD		0x0001	<span class="comment">/* read data, from slave to master */</span></span></span><br><span class="line">					<span class="comment">/* I2C_M_RD is guaranteed to be 0x0001! */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_TEN		0x0010	<span class="comment">/* this is a ten bit chip address */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_RECV_LEN		0x0400	<span class="comment">/* length will be first received byte */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_NO_RD_ACK		0x0800	<span class="comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_IGNORE_NAK	0x1000	<span class="comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_REV_DIR_ADDR	0x2000	<span class="comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_NOSTART		0x4000	<span class="comment">/* if I2C_FUNC_NOSTART */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I2C_M_STOP		0x8000	<span class="comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span></span><br><span class="line">	__u16 len;		<span class="comment">/* msg length				*/</span></span><br><span class="line">	__u8 *buf;		<span class="comment">/* pointer to msg data			*/</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>以读取 I2C 设备寄存器数据为例：</p>
+<p>(参考正点原子)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">i2c_msg</span> <span class="title">msg</span>[2];</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* msg[0]，第一条写消息，发送要读取的寄存器地址 */</span></span><br><span class="line">msg[<span class="number">0</span>].addr = addr; <span class="comment">/* I2C 设备地址 */</span></span><br><span class="line">msg[<span class="number">0</span>].flags = <span class="number">0</span>; <span class="comment">/* 标记为发送数据 */</span></span><br><span class="line">msg[<span class="number">0</span>].buf = &amp;reg; <span class="comment">/* 读取的首地址 */</span></span><br><span class="line">msg[<span class="number">0</span>].len = <span class="number">1</span>; <span class="comment">/* reg 长度 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* msg[1]，第二条读消息，读取寄存器数据 */</span></span><br><span class="line">msg[<span class="number">1</span>].addr = addr; <span class="comment">/* I2C 设备地址 */</span></span><br><span class="line">msg[<span class="number">1</span>].flags = I2C_M_RD; <span class="comment">/* 标记为读取数据 */</span></span><br><span class="line">msg[<span class="number">1</span>].buf = val; <span class="comment">/* 读取数据缓冲区 */</span></span><br><span class="line">msg[<span class="number">1</span>].len = len; <span class="comment">/* 要读取的数据长度 */</span></span><br><span class="line"></span><br><span class="line">ret = i2c_transfer(adapter, msg, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>向 I2C 设备寄存器写入数据：</p>
+<p>(参考正点原子)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line">u8 b[<span class="number">256</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">i2c_msg</span> <span class="title">msg</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">i2c_client</span> *<span class="title">client</span> =</span> (struct i2c_client *)</span><br><span class="line">dev-&gt;private_data;</span><br><span class="line"></span><br><span class="line">b[<span class="number">0</span>] = reg; <span class="comment">/* 寄存器首地址 */</span></span><br><span class="line"><span class="built_in">memcpy</span>(&amp;b[<span class="number">1</span>],buf,len); <span class="comment">/* 将要发送的数据拷贝到数组 b 里面 */</span></span><br><span class="line"></span><br><span class="line">msg.addr = addr; <span class="comment">/* I2C 设备地址 */</span></span><br><span class="line">msg.flags = <span class="number">0</span>; <span class="comment">/* 标记为写数据 */</span></span><br><span class="line"></span><br><span class="line">msg.buf = b; <span class="comment">/* 要发送的数据缓冲区 */</span></span><br><span class="line">msg.len = len + <span class="number">1</span>;   <span class="comment">/* 实际数据长度 + 寄存器地址长度*/</span></span><br><span class="line"></span><br><span class="line">ret = i2c_transfer(client-&gt;adapter, &amp;msg, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Linux内核对<code>i2c_transfer</code>进一步封装，形成两个API函数分别用于I2C数据的接收和发送操作  。代码位于：<code>drivers\i2c\i2c-core.c</code></p>
+<ul>
+<li>i2c_master_recv</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_master_recv - issue a single I2C message in master receive mode</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @buf: Where to store data read from slave</span></span><br><span class="line"><span class="comment"> * @count: How many bytes to read, must be less than 64k since msg.len is u16</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Returns negative errno, or else the number of bytes read.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i2c_master_recv</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, <span class="keyword">char</span> *buf, <span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>i2c_master_send</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_master_send - issue a single I2C message in master transmit mode</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @buf: Data that will be written to the slave</span></span><br><span class="line"><span class="comment"> * @count: How many bytes to write, must be less than 64k since msg.len is u16</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Returns negative errno, or else the number of bytes written.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i2c_master_send</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, <span class="keyword">const</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> count)</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="kernel中i2c驱动"><a href="#kernel中i2c驱动" class="headerlink" title="kernel中i2c驱动"></a>kernel中i2c驱动</h1><h2 id="核心-i2c-driver-结构体"><a href="#核心-i2c-driver-结构体" class="headerlink" title="核心  i2c_driver 结构体"></a>核心  i2c_driver 结构体</h2><p>分配、设置、注册一个i2c_driver结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">i2c_driver</span> <span class="title">i2c_example_driver</span> =</span> &#123;</span><br><span class="line">	.driver = &#123;</span><br><span class="line">		.name = <span class="string">&quot;example&quot;</span>,</span><br><span class="line">		.of_match_table = of_match_ids_example,</span><br><span class="line">	&#125;,</span><br><span class="line">	.probe = i2c_example_driver_probe,</span><br><span class="line">	.remove = i2c_example_driver_remove,</span><br><span class="line">	.id_table = example_ids,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>出入口函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*入口函数 注册一个i2c_drvier */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> __init <span class="title">i2c_driver_init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i2c_add_driver(&amp;i2c_example_driver);</span><br><span class="line">&#125;</span><br><span class="line">module_init(i2c_driver_init);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**出口函数 del一个i2c_drvier */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> __exit <span class="title">i2c_driver_exit</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	i2c_del_driver(&amp;i2c_example_driver);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="i2c-driver表明能支持哪些设备"><a href="#i2c-driver表明能支持哪些设备" class="headerlink" title="i2c_driver表明能支持哪些设备"></a>i2c_driver表明能支持哪些设备</h2><p>i2c_driver表明能支持哪些设备：</p>
+<ul>
+<li><p>使用of_match_table来判断</p>
+<ul>
+<li>设备树中，某个I2C控制器节点下可以创建I2C设备的节点<ul>
+<li>如果I2C设备节点的compatible属性跟of_match_table的某项兼容，则匹配成功</li>
+</ul>
+</li>
+<li>i2c_client.name跟某个of_match_table[i].compatible值相同，则匹配成功</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">of_match_ids_example</span>[] =</span> &#123;</span><br><span class="line">	&#123; .compatible = <span class="string">&quot;com_name,chip_name&quot;</span>,   .data = <span class="literal">NULL</span>&#125;,</span><br><span class="line">	&#123; <span class="comment">/* END OF LIST */</span> &#125;  <span class="comment">/*最后空一项为必须，空闲为end 判断条件*/</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// of_ 开头一般与设备树关联</span></span><br></pre></td></tr></table></figure></li>
+<li><p>使用id_table来判断</p>
+<ul>
+<li>i2c_client.name跟某个id_table[i].name值相同，则匹配成功</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">i2c_device_id</span> <span class="title">example_ids</span>[] =</span> &#123;</span><br><span class="line">	&#123; <span class="string">&quot;chip_name&quot;</span>,  (<span class="keyword">kernel_ulong_t</span>)<span class="literal">NULL</span> &#125;,</span><br><span class="line">	&#123; <span class="comment">/* END OF LIST */</span> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>i2c_driver跟i2c_client匹配成功后，就调用<strong>i2c_driver.probe</strong>函数。</p>
+<h2 id="i2c-client"><a href="#i2c-client" class="headerlink" title="i2c_client"></a>i2c_client</h2><p>参考资料 Linux内核文档: 5.0版本内核</p>
+<ul>
+<li><code>Documentation\i2c\instantiating-devices.rst</code></li>
+<li><code>Documentation\i2c\writing-clients.rst</code></li>
+</ul>
+<p>i2c_client表示一个I2C设备，创建i2c_client的方法有4种：</p>
+<ul>
+<li><p>方法1</p>
+<ul>
+<li>通过I2C bus number来创建</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i2c_register_board_info</span><span class="params">(<span class="keyword">int</span> busnum, struct i2c_board_info <span class="keyword">const</span> *info, <span class="keyword">unsigned</span> len)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过设备树结点</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 在某个I2C控制器的节点下，添加如下代码： */</span>		</span><br><span class="line">		ap3216c@<span class="number">1</span>e &#123;</span><br><span class="line">			compatible = <span class="string">&quot;lite-on,ap3216c&quot;</span>;</span><br><span class="line">			reg = &lt;<span class="number">0x1e</span>&gt;;</span><br><span class="line">		&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>方法2</p>
+<p>有时候无法知道该设备挂载哪个I2C bus下，无法知道它对应的I2C bus number。<br>但是可以通过其他方法知道对应的i2c_adapter结构体。<br>可以使用下面两个函数来创建i2c_client：</p>
+<ul>
+<li>i2c_new_device</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">i2c_client</span> *<span class="title">ap3216c_client</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> __init <span class="title">i2c_client_ap3216c_init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">i2c_adapter</span> *<span class="title">adapter</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">i2c_board_info</span> <span class="title">board_info</span> =</span> &#123;</span><br><span class="line">        I2C_BOARD_INFO(<span class="string">&quot;ap3216c&quot;</span>, <span class="number">0x1e</span>),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    printk(<span class="string">&quot;%s %s %d\n&quot;</span>, __FILE__, __FUNCTION__, __LINE__);</span><br><span class="line">    <span class="comment">/* register I2C device */</span></span><br><span class="line">    adapter = i2c_get_adapter(<span class="number">0</span>);</span><br><span class="line">    ap3216c_client = i2c_new_device(adapter, &amp;board_info);</span><br><span class="line">    i2c_put_adapter(adapter);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>i2c_new_probed_device</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">i2c_client</span> *<span class="title">ap3216c_client</span>;</span></span><br><span class="line"><span class="comment">/* 罗列出所有可能的地址,这里只有一个*/</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> normal_i2c[] = &#123; <span class="number">0x1e</span>, I2C_CLIENT_END &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> __init <span class="title">i2c_client_ap3216c_init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">i2c_adapter</span> *<span class="title">adapter</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">i2c_board_info</span> <span class="title">i2c_info</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 将名字信息写入i2c_info,先清0 */</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;i2c_info, <span class="number">0</span>, <span class="keyword">sizeof</span>(struct i2c_board_info));</span><br><span class="line">	strscpy(i2c_info.type, <span class="string">&quot;ap3216c&quot;</span>, <span class="keyword">sizeof</span>(i2c_info.type));</span><br><span class="line"></span><br><span class="line">    adapter = i2c_get_adapter(<span class="number">0</span>); <span class="comment">/* 第0根i2c总线 */</span></span><br><span class="line">	ap3216c_client = i2c_new_probed_device(adapter, &amp;i2c_info,</span><br><span class="line">						   normal_i2c, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	i2c_put_adapter(adapter);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>差别</p>
+<ul>
+<li><p>i2c_new_device：</p>
+<p>会创建i2c_client，即使该设备并不存在</p>
+</li>
+<li><p>i2c_new_probed_device：</p>
+<p>它成功的话，会创建i2c_client，并且表示这个设备肯定存在</p>
+<p>I2C设备的地址可能发生变化，比如AT24C02的引脚A2A1A0电平不一样时，设备地址就不一样</p>
+<p>可以罗列出可能的地址</p>
+<p>i2c_new_probed_device使用这些地址判断设备是否存在</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方法3 (不推荐)：由i2c_driver.detect函数来判断是否有对应的I2C设备并生成i2c_client</p>
+</li>
+<li><p>方法4 : 通过用户空间(user-space)生成</p>
+<p>调试时、或者不方便通过代码明确地生成i2c_client时，可以通过用户空间来生成。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个i2c_client, .name = &quot;eeprom&quot;, .addr=0x50, .adapter是i2c-3</span></span><br><span class="line"><span class="meta"># echo eeprom 0x50 &gt; /sys/bus/i2c/devices/i2c-3/new_device</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除一个i2c_client</span></span><br><span class="line"><span class="meta"># echo 0x50 &gt; /sys/bus/i2c/devices/i2c-3/delete_device</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="SMBus协议"><a href="#SMBus协议" class="headerlink" title="SMBus协议"></a>SMBus协议</h1><p>参考资料：</p>
+<ul>
+<li><p>Linux内核文档：<code>Documentation\i2c\smbus-protocol.rst</code></p>
+</li>
+<li><p>Linux内核代码：<code>drivers\i2c\i2c-core.c</code></p>
+</li>
+<li><p>SMBus协议：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.smbus.org/specs/">http://www.smbus.org/specs/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="SMBus是I2C协议的一个子集。"><a href="#SMBus是I2C协议的一个子集。" class="headerlink" title="SMBus是I2C协议的一个子集。"></a>SMBus是I2C协议的一个子集。</h2><p>SMBus: System Management Bus，系统管理总线。</p>
+<p>SMBus最初的目的是为智能电池、充电电池、其他微控制器之间的通信链路而定义的。<br>SMBus也被用来连接各种设备，包括电源相关设备，系统传感器，EEPROM通讯设备等等。<br>SMBus 为系统和电源管理这样的任务提供了一条控制总线，使用 SMBus 的系统，设备之间发送和接收消息都是通过 SMBus，而不是使用单独的控制线，这样可以节省设备的管脚数。<br>SMBus是基于I2C协议的，但SMBus要求更严格。</p>
+<p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/NO2.png" alt="image"></p>
+<p>如今很多设备都实现了SMBus，即使I2C控制器没有实现SMBus，软件方面也是可以使用I2C协议来模拟SMBus。<br><strong>在Linux上建议优先使用SMBus</strong>。</p>
+<h2 id="SMBus与一般I2C协议的差别"><a href="#SMBus与一般I2C协议的差别" class="headerlink" title="SMBus与一般I2C协议的差别"></a>SMBus与一般I2C协议的差别</h2><ul>
+<li><p>VDD的极限值不一样</p>
+<ul>
+<li>I2C协议：范围很广，甚至讨论了高达12V的情况</li>
+<li>SMBus：1.8V~5V</li>
+</ul>
+</li>
+<li><p>最小时钟频率、最大的<code>Clock Stretching </code></p>
+<ul>
+<li><p>Clock Stretching含义：某个设备需要更多时间进行内部的处理时，它可以把SCL拉低占住I2C总线</p>
+</li>
+<li><p>I2C协议：时钟频率最小值无限制，Clock Stretching时长也没有限制</p>
+</li>
+<li><p>SMBus：时钟频率最小值是10KHz，Clock Stretching的最大时间值也有限制</p>
+</li>
+</ul>
+</li>
+<li><p>地址回应(Address Acknowledge)</p>
+<ul>
+<li>I2C协议：没有强制要求必须发出回应信号</li>
+<li>SMBus：强制要求必须发出回应信号，这样对方才知道该设备的状态：busy，failed，或是被移除了</li>
+</ul>
+</li>
+<li><p>SMBus协议明确了数据的传输格式</p>
+<ul>
+<li>I2C协议：它只定义了怎么传输数据，但是并没有定义数据的格式，这完全由设备来定义</li>
+<li>SMBus：定义了几种数据格式</li>
+</ul>
+</li>
+<li><p>REPEATED START Condition(重复发出S信号)</p>
+<ul>
+<li>比如读EEPROM时，涉及2个操作：<ul>
+<li>把存储地址发给设备</li>
+<li>读数据</li>
+</ul>
+</li>
+<li>在写、读之间，可以不发出P信号，而是直接发出S信号：这个S信号就是<code>REPEATED START</code></li>
+<li>如下图所示<br><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/NO3.png" alt="image"></li>
+</ul>
+</li>
+<li><p>SMBus Low Power Version </p>
+<ul>
+<li>SMBus也有低功耗的版本</li>
+</ul>
+</li>
+</ul>
+<h2 id="SMBus通信"><a href="#SMBus通信" class="headerlink" title="SMBus通信"></a>SMBus通信</h2><p>Linux内核上集成了SMBus，可以认为是对I2C的进一步封装，在与外设使用I2C子系统进行数据传输时，建议使用SMBus协议。</p>
+<p>以下是常用的SMBus函数，更多资料参考内核源码：<code>drivers\i2c\i2c-core.c</code></p>
+<h3 id="Receive-Byte"><a href="#Receive-Byte" class="headerlink" title="Receive Byte"></a>Receive Byte</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/04_smbus_receive_byte.png" alt="image"></p>
+<p>读取一个字节，主机接收到一个字节后不需要回应(上图中N表示不回应)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_read_byte - SMBus &quot;receive byte&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;receive byte&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else the byte received from the device.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_read_byte</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client)</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Send-Byte"><a href="#Send-Byte" class="headerlink" title="Send Byte"></a>Send Byte</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/05_smbus_send_byte.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_write_byte - SMBus &quot;send byte&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @value: Byte to be sent</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;send byte&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else zero on success.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_write_byte</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, u8 value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i2c_smbus_xfer(client-&gt;adapter, client-&gt;addr, client-&gt;flags,</span><br><span class="line">	                      I2C_SMBUS_WRITE, value, I2C_SMBUS_BYTE, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Read-Byte"><a href="#Read-Byte" class="headerlink" title="Read Byte"></a>Read Byte</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/06_smbus_read_byte.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_read_byte_data - SMBus &quot;read byte&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @command: Byte interpreted by slave</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;read byte&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else a data byte received from the device.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_read_byte_data</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, u8 command)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">i2c_smbus_data</span> <span class="title">data</span>;</span></span><br><span class="line">	<span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">	status = i2c_smbus_xfer(client-&gt;adapter, client-&gt;addr, client-&gt;flags,</span><br><span class="line">				I2C_SMBUS_READ, command,</span><br><span class="line">				I2C_SMBUS_BYTE_DATA, &amp;data);</span><br><span class="line">	<span class="keyword">return</span> (status &lt; <span class="number">0</span>) ? status : data.byte;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Read-Word"><a href="#Read-Word" class="headerlink" title="Read Word"></a>Read Word</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/07_smbus_read_word.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_read_word_data - SMBus &quot;read word&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @command: Byte interpreted by slave</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;read word&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else a 16-bit unsigned &quot;word&quot; received from the device.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_read_word_data</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, u8 command)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">i2c_smbus_data</span> <span class="title">data</span>;</span></span><br><span class="line">	<span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">	status = i2c_smbus_xfer(client-&gt;adapter, client-&gt;addr, client-&gt;flags,</span><br><span class="line">				I2C_SMBUS_READ, command,</span><br><span class="line">				I2C_SMBUS_WORD_DATA, &amp;data);</span><br><span class="line">	<span class="keyword">return</span> (status &lt; <span class="number">0</span>) ? status : data.word;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Write-Byte"><a href="#Write-Byte" class="headerlink" title="Write Byte"></a>Write Byte</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/08_smbus_write_byte.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_write_byte_data - SMBus &quot;write byte&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @command: Byte interpreted by slave</span></span><br><span class="line"><span class="comment"> * @value: Byte being written</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;write byte&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else zero on success.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_write_byte_data</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, u8 command,</span></span></span><br><span class="line"><span class="params"><span class="function">			      u8 value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">i2c_smbus_data</span> <span class="title">data</span>;</span></span><br><span class="line">	data.byte = value;</span><br><span class="line">	<span class="keyword">return</span> i2c_smbus_xfer(client-&gt;adapter, client-&gt;addr, client-&gt;flags,</span><br><span class="line">			      I2C_SMBUS_WRITE, command,</span><br><span class="line">			      I2C_SMBUS_BYTE_DATA, &amp;data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Write-Word"><a href="#Write-Word" class="headerlink" title="Write Word"></a>Write Word</h3><p><img src="/2021/09/12/Linux%E9%A9%B1%E5%8A%A8-I2C%E5%AD%90%E7%B3%BB%E7%BB%9F/09_smbus_write_word.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * i2c_smbus_write_word_data - SMBus &quot;write word&quot; protocol</span></span><br><span class="line"><span class="comment"> * @client: Handle to slave device</span></span><br><span class="line"><span class="comment"> * @command: Byte interpreted by slave</span></span><br><span class="line"><span class="comment"> * @value: 16-bit &quot;word&quot; being written</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This executes the SMBus &quot;write word&quot; protocol, returning negative errno</span></span><br><span class="line"><span class="comment"> * else zero on success.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">s32 <span class="title">i2c_smbus_write_word_data</span><span class="params">(<span class="keyword">const</span> struct i2c_client *client, u8 command,</span></span></span><br><span class="line"><span class="params"><span class="function">			      u16 value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">i2c_smbus_data</span> <span class="title">data</span>;</span></span><br><span class="line">	data.word = value;</span><br><span class="line">	<span class="keyword">return</span> i2c_smbus_xfer(client-&gt;adapter, client-&gt;addr, client-&gt;flags,</span><br><span class="line">			      I2C_SMBUS_WRITE, command,</span><br><span class="line">			      I2C_SMBUS_WORD_DATA, &amp;data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2096,262 +2372,6 @@
 <p>一些字符使替换模式变得复杂化。以制表符为例，在文件中它以单个字符表示，但在屏幕上它却会占据若干列的宽度，此宽度由 ‘tabstop’ 设置决定。如果把光标移到制表符上，然后进入替换模式，那么我们所输入的下一个字符将会替换制表符。假设 ‘tabstop’ 选项设置为 8（这是缺省值），那么该操作的结果就是把 8 个字符替换成了一个字符，这将大幅缩短当前行的长度。</p>
 <p>Vim 还有另外一种替换模式，称为<strong>虚拟替换模式（Virtual Replace mode）</strong>。该模式可由 <code>gR 命令触发</code>，它会把制表符当成一组空格进行处理。假设我们把光标移到一个占屏幕 8 列宽的制表符上，然后切换到虚拟替换模式，在输入前 7 个字符时，每个字符都会被插入到制表符之前；最后，当输入了第 8 个字符时，该字符将会替换制表符。</p>
 <p>在虚拟替换模式中，我们是按屏幕上实际显示的宽度来替换字符的，而不是按文件中所保存的字符进行替换。这会减少意外情况的发生，因此建议在可能的情况下尽量使用虚拟替换模式。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">Vim解决问题的方式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 12:11:55 / Modified: 12:19:03" itemprop="dateCreated datePublished" datetime="2021-09-12T12:11:55+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Tip1：Meet-the-Dot-Command"><a href="#Tip1：Meet-the-Dot-Command" class="headerlink" title="Tip1：Meet the Dot Command"></a>Tip1：Meet the Dot Command</h1><p>结识 . 命令</p>
-<p><strong>.</strong> 命令可以重复上次的修改， Vim 中最为强大的多面手。</p>
-<p>每次我们进入插入模式时，就会形成一次修改。从进入插入模式的那一刻起，直到返回普通模式， Vim 会记录每一个按键操作。做出这样一个修改后再用 . 命令的话，它将会重新执行所有这些按键操作 。</p>
-<h1 id="Tip2-Don’t-Repeat-Yourself"><a href="#Tip2-Don’t-Repeat-Yourself" class="headerlink" title="Tip2: Don’t Repeat Yourself"></a>Tip2: Don’t Repeat Yourself</h1><p>不要自我重复，不少vim命令是两个甚至多个命令的组合</p>
-<p>例如：</p>
-<p>行移动：</p>
-<ul>
-<li><p>$: 将光标移动到当前行的行尾</p>
-</li>
-<li><p>0: 将光标移动到当前行的行首</p>
-</li>
-<li><p>^: 将光标移动到当前行的第一个非空字符（行首和当前行非空字符不是一个位置）</p>
-</li>
-</ul>
-<p>文本操作：</p>
-<ul>
-<li><p>i: 在当前光标的前面插入字符</p>
-</li>
-<li><p>a: 在当前光标的后面追加字符</p>
-</li>
-<li><p>o: 在当前光标的下一行行首插入字符</p>
-</li>
-<li><p>I: 在一行的开头添加文本</p>
-</li>
-<li><p>A: 在一行的结尾处添加文本</p>
-</li>
-<li><p>O: 在光标当前行的上一行插入文本</p>
-</li>
-<li><p>s: 删除当前光标处的字符并进入到插入模式</p>
-</li>
-<li><p>S: 删除光标所在处的行，并进入到插入模式</p>
-</li>
-<li><p>u: 撤销修改</p>
-</li>
-<li><p>c or C : 表示修改当前行上光标后面的部分. 进入编辑状态.</p>
-</li>
-</ul>
-<h1 id="Tip4-Act-Repeat-Reverse"><a href="#Tip4-Act-Repeat-Reverse" class="headerlink" title="Tip4 Act, Repeat, Reverse"></a>Tip4 Act, Repeat, Reverse</h1><p>执行、重复、回退</p>
-<p> 在面对重复性工作时，我们需要让移动动作和修改都能够重复，这样就可以达到 一个最佳编辑模式。 Vim会记住我们的操作，使最常见的操作触手可及。</p>
-<p>​    . 命令会重复上次修改。@: 可以用来重复任意 Ex 命令，或者我们也可以输入 &amp;来重复上次的:substitute命令（它本身也是一条 Ex 命令）。</p>
-<p>​    当 Vim 让一个操作或移动可以很方便地重复时，它总是会提供某种方式，让我们在不小心做过头时能回退回来。</p>
-<p> 对 . 命令而言，我们永远可以按 u 键撤销上次的修改。如果在使用 f{char} 命令后，不小心按了太多次 ; 键，就会偏离我们的目标。不过我们可以再按 , 键跳回去，这个命令会反方向查找上次 f{char}所查找的字符。</p>
-<table>
-<thead>
-<tr>
-<th>目的</th>
-<th>操作</th>
-<th>重复</th>
-<th>回退</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>做出一个修改</td>
-<td>{edit}</td>
-<td>.</td>
-<td>u</td>
-</tr>
-<tr>
-<td>在行内查找下一个指定字符</td>
-<td>f{char}/t{char}</td>
-<td>;</td>
-<td>,</td>
-</tr>
-<tr>
-<td>在行内查找上一个指定字符</td>
-<td>F{char}/T{char}</td>
-<td>;</td>
-<td>,</td>
-</tr>
-<tr>
-<td>在文档中查找下一个匹配项</td>
-<td>/pattern<CR></td>
-<td>n</td>
-<td>N</td>
-</tr>
-<tr>
-<td>在文档中查找上一个匹配项</td>
-<td>?pattern<CR></td>
-<td>n</td>
-<td>N</td>
-</tr>
-<tr>
-<td>执行替换</td>
-<td>:/s/target/replacement</td>
-<td>&amp;</td>
-<td>u</td>
-</tr>
-<tr>
-<td>执行一系列修改</td>
-<td>qx{changes}q</td>
-<td>@x</td>
-<td>u</td>
-</tr>
-</tbody></table>
-<h1 id="Tip5-Find-and-Replace-by-Hand"><a href="#Tip5-Find-and-Replace-by-Hand" class="headerlink" title="Tip5 Find and Replace by Hand"></a>Tip5 Find and Replace by Hand</h1><p>查找并手动替换</p>
-<p>一般的查找替换命令<code>:%s/content/copy/g</code>（以copy替换所有行中的content）。</p>
-<p>偷懒方法：无需输入就可进行查找。<code>* </code>命令。</p>
-<p>把光标移动到<code>content</code>单词上，然后用 <code>* </code>命令对他进行查找。</p>
-<p>这会产生两个结果：</p>
-<ul>
-<li>一是光标会跳到下一个匹配项</li>
-<li>二是所有出现这个词的地方都会被高亮显示。</li>
-</ul>
-<p>执行一次查找后，只需按 n 键就可以跳转到下一个匹配项。使修改可重复</p>
-<h2 id="Tip7-Pause-with-Your-Brush-Off-the-Page"><a href="#Tip7-Pause-with-Your-Brush-Off-the-Page" class="headerlink" title="Tip7 Pause with Your Brush Off the Page"></a>Tip7 Pause with Your Brush Off the Page</h2><p>停顿时请移开画笔</p>
-<p>​    插入模式专注于<strong>文本修改</strong>，停顿时进入普通模式。</p>
-<h2 id="Tip8-Chunk-Your-Undos"><a href="#Tip8-Chunk-Your-Undos" class="headerlink" title="Tip8 Chunk Your Undos"></a>Tip8 Chunk Your Undos</h2><p>大步撤销，把撤销单元切成块</p>
-<p> u键会撤销最新的修改。一次修改可以是改变文档内文本的任意操作，其中包括在普通模式、可视模式以及命令行模式中触发的命令。</p>
-<p> 在vim中，可以控制撤销的力度。从进入插入模式开始到返回普通模式，在期间插入或删除任何内容都会被当成一次修改。因此，只要控制对<code>&lt;Esc&gt;</code>键的使用就可以使撤销作用于句子、段落或单词。</p>
-<p> 注：在插入模式中，使用<code>&lt;up&gt; &lt;Down&gt; &lt;Left&gt; &lt;Right&gt;</code>移动光标会重置修改状态，将会产生一个新的撤销块。</p>
-<h1 id="Tip9-Compose-Repeatable-Changes"><a href="#Tip9-Compose-Repeatable-Changes" class="headerlink" title="Tip9 Compose Repeatable Changes"></a>Tip9 Compose Repeatable Changes</h1><p>构造可重复的修改</p>
-<p>配合 . 命令选择最优的方案</p>
-<p>以删除一个单词为例：</p>
-<ul>
-<li><p>反向删除 <code>dbx </code></p>
-</li>
-<li><p>正向删除 <code>bdw</code>    </p>
-</li>
-<li><p>删除整个单词 <code>daw</code></p>
-</li>
-</ul>
-<p> 命令有助于 . 命令发挥最大威力。反向删除 . == x ; 正向删除 . == dx;  删除整个单词 . == daw</p>
-<h1 id="Tip11-Don’t-Count-If-You-Can-Repeat"><a href="#Tip11-Don’t-Count-If-You-Can-Repeat" class="headerlink" title="Tip11 Don’t Count If You Can Repeat"></a>Tip11 Don’t Count If You Can Repeat</h1><p>能重复，就不要用数数</p>
-<p>以删除5个单词为例,有两种风格:</p>
-<ul>
-<li>次数风格（d5w）</li>
-<li>重复风格（dw….）</li>
-</ul>
-<p>对于两种风格的使用存在争议，各有优缺，作者鼓励重复风格，数完估计都操作完了。应用过程中由程序员自由选。</p>
-<h1 id="Tip12-Combine-and-Conquer"><a href="#Tip12-Combine-and-Conquer" class="headerlink" title="Tip12 Combine and Conquer"></a>Tip12 Combine and Conquer</h1><p>动作组合</p>
-<p>在Vim 中，<strong>操作符 + 动作命令 = 操作</strong></p>
-<p><code>d&#123;motion&#125;</code> 命令可以对一个字符<code> dl</code>、一个完整单词<code> daw</code>或一整个段落<code> dap</code> 进行删除操作，它作用的范围由动作命令决定。 <code>c&#123;motion&#125;</code>、 <code>y&#123;motion&#125;</code>以及其他一些命令 也类似，它们被统称为操作符<strong>operator</strong></p>
-<p>g~、 gu 和 gU 命令要用两次按键来调用，我们可以把上述命令中的 g 当做一个 前缀字符，用以改变其后面的按键行为。</p>
-<p>学习新的动作命令及操作符，就像是在学习 Vim 的词汇一样。如果掌握了这一简单的语法规则，在词汇量增长时，就能表达更多的想法。用 <code>daw</code> 删除一个单词，然后又学到<code> gU</code> 命令。它也是个操作符，所以我们可以用 <code>gUaw </code>把当前单词转换成大写形式。进一步扩充，学会了作用于段落的 <code>ap </code>动作命令，就会发现我们可以进行两个新的操作：用 <code>dap</code> 删除整个段落，或者用 <code>gUap </code>把整段文字转换为大写。</p>
-<p>常见VIM操作符命令</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>c</td>
-<td>修改</td>
-</tr>
-<tr>
-<td>d</td>
-<td>删除</td>
-</tr>
-<tr>
-<td>y</td>
-<td>复制到寄存器</td>
-</tr>
-<tr>
-<td>g~</td>
-<td>反转大小写</td>
-</tr>
-<tr>
-<td>gu</td>
-<td>转换为小写</td>
-</tr>
-<tr>
-<td>gU</td>
-<td>转换为大写</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>增加缩进</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>减小缩进</td>
-</tr>
-<tr>
-<td>=</td>
-<td>自动缩进</td>
-</tr>
-<tr>
-<td>!</td>
-<td>使用外部程序过滤{motion}所跨越的行</td>
-</tr>
-</tbody></table>
 
       
     </div>
