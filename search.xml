@@ -2370,7 +2370,7 @@
 <p>软重置。<strong>仅改变当前head指针</strong></p>
 <p>–soft参数，Git只是单纯的把本地HEAD更改到你指定的版本，仅HEAD的定义发生了变化。</p>
 <p>Working Copy 和Index的修改得以保留。</p>
-<p>因为只回退了commit的信息。如果还要提交，可直接commit即可；</p>
+<p>因为只回退了commit的信息。如果还要提交，可直接commit即可。</p>
 <h1 id="–hard（更改三者）"><a href="#–hard（更改三者）" class="headerlink" title="–hard（更改三者）"></a>–hard（更改三者）</h1><p>–hard 参数将当前 HEAD, INDEX(STAGING), WORKING COPY 全部改变。</p>
 <p>不仅工作区修改的代码会还原，暂存区的信息也会丢弃。</p>
 <h1 id="–mixed-default）"><a href="#–mixed-default）" class="headerlink" title="–mixed(default）"></a>–mixed(default）</h1><p>恢复git add的操作，包含恢复git commit的操作</p>
