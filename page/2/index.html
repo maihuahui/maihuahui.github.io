@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,132 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">Vim匹配</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:13:11 / Modified: 17:13:37" itemprop="dateCreated datePublished" datetime="2021-09-12T17:13:11+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="按模式匹配还是按原义匹配"><a href="#按模式匹配还是按原义匹配" class="headerlink" title="按模式匹配还是按原义匹配"></a>按模式匹配还是按原义匹配</h1><h2 id="Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><a href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns" class="headerlink" title="Tip 72 Tune the Case Sensitivity of Search Patterns"></a>Tip 72 Tune the Case Sensitivity of Search Patterns</h2><p>调整搜索大小写敏感度</p>
+<p><strong>全局区分大小写</strong></p>
+<p>通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。</p>
+<p><strong>每次搜索区分大小写</strong></p>
+<p>可以使用以下选项来覆盖默认的是否忽略大小写:</p>
+<ul>
+<li><p>\c - 忽略大小写</p>
+</li>
+<li><p>\C - 区分大小写</p>
+</li>
+</ul>
+<p>每次搜索的时候都可以强制指定是否区分大小写。注意：在替换时\c标志位为手工确认。</p>
+<p><strong>启用智能大小写</strong></p>
+<p>Vim 提供了预测我们大小写敏感意图的 smartcase 选项， :set smartcase</p>
+<p>启用此选项后进行搜索时,</p>
+<ul>
+<li><p>如果输入的全部是小写字母, 那么就不区分大小写;</p>
+</li>
+<li><p>但只要包含大写字母, 那么就是大小写敏感的</p>
+</li>
+</ul>
+<h2 id="Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><a href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches" class="headerlink" title="Tip 73 Use the \v Pattern Switch for Regex Searches"></a>Tip 73 Use the \v Pattern Switch for Regex Searches</h2><p>按正则表达式查找时，使用 \v 模式开关  （开启字符的特殊含义）</p>
+<p>我们可以使用 \v 模式(very magic search)开关规范所有的特殊符号, 启用之后, 除了下划线 _, 大小写字母, 和数字外, 所有的字符都具有特殊含义。</p>
+<h2 id="Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><a href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches" class="headerlink" title="Tip 74 Use the \V Literal Switch for Verbatim Searches"></a>Tip 74 Use the \V Literal Switch for Verbatim Searches</h2><p>按原义查找文本时，使用 \V 原义开关  (开启字符的特殊含义)</p>
+<p>在正则表达式中使用的特殊字符，在按模式查找时用起来很顺手，但如果我们想</p>
+<p>按原义查找文本时，它们就变成了阻碍。使用 very nomagic 原义开关，可以消除附</p>
+<p>加在 .、 * 以及 ? 等大多数字符上的特殊含义。</p>
+<p><strong>使用原义开关 \V，即可激活 very nomagic 搜索模式</strong></p>
+<p>例如：搜索匹配“a.k.a.”字符串</p>
+<p>/ \Va.k.a.</p>
+<p>我们也可以使用转义的方式来消除字符的特殊含义。例如：</p>
+<p>/ a.k.a.</p>
+<p><strong>使用 “\V” 会使得其后的模式中只有反斜杠有特殊的意义,显然更方便。</strong></p>
+<h2 id="Tip-76-Stake-the-Boundaries-of-a-Ward"><a href="#Tip-76-Stake-the-Boundaries-of-a-Ward" class="headerlink" title="Tip 76 Stake the Boundaries of a Ward"></a>Tip 76 Stake the Boundaries of a Ward</h2><p>界定单词的边界</p>
+<p>定义一个搜索模型时, 指定单词的开始和结束位置可能很有用, Vim 给我们提供了单词分隔的选项。</p>
+<p>例如执行搜索 /the<CR> 的时候, 是会把 these they their 等单词一起搜索出来的。</p>
+<p>如果我们想只搜索 the 完整的单词, 而不需要包含 the 片段的词, 那么我们需要指定 词的边界。</p>
+<p>在 \v 模式下（开启字符特殊含义）, <strong>&lt; 和 &gt;</strong> 即代表词边界的符号. 所以我们可以使用 /\v<the><CR> 来达到我们的预期。</p>
+<p>需要注意的是, 如果我们在 \v 模式下需要匹配 &lt;&gt; 字符, 那么就得加反斜杠来进行转义了。</p>
+<h2 id="Tip-78-Escape-Problem-Characters"><a href="#Tip-78-Escape-Problem-Characters" class="headerlink" title="Tip 78 Escape Problem Characters"></a>Tip 78 Escape Problem Characters</h2><p>转义问题字符</p>
+<p>在 /V 纯文本模式下可以很容易的来进行纯文本的搜索匹配, 因为绝大部分的字符(如:. + *等)的特殊含义都被禁用了, 但是仍然有极少字符仍然有特殊的含义。</p>
+<p>这时要用 \ 进行转义。</p>
+<p>正向搜索转义斜杠 ‘/ ’</p>
+<p>正向搜索时, 斜杠 / 字符被解释为终止符, 所有在此字符之后的内容都会被忽略，替换模式下在 \ 字符后添加标志位。</p>
+<p>在 \v 和 \V 模式下, 如果要匹配 / 字符, 那么需要进行转义。</p>
+<p>反向搜索转义问号 ‘ ? ’</p>
+<p>当使用反向搜索的时候, 问号 ? 就是搜索的终止符。如果要匹配 ？号，需要转义 ?</p>
+<p>每次都转义反斜杠 ‘ \ ’</p>
+<p>\ 是需要进行转义的. 通常情况下, 反斜杠 \ 之后的那个字符表示被转义的特殊含义. 所以要匹配反斜杠字符的话就需要加转义, 也就是: \</p>
+<p>而且，不管正向还是反向搜索，要匹配 \ 都是需要转义的。</p>
+<p>终止符( / 或 ? )</p>
+<p>Vim 允许在搜索字段终止符后面追加某些标志来调整搜索命令的行为</p>
+<p>例如 /vim/e<CR> 将把光标放到高亮匹配位置的最后而不是前面</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2244,84 +2370,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/vim/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/vim/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-08 23:38:55" itemprop="dateCreated datePublished" datetime="2021-09-08T23:38:55+08:00">2021-09-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>

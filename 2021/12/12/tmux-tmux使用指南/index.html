@@ -20,28 +20,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="if(p)和if(!p)含义对于 int *p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; NULL)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; NULL)  对于 int p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; 0)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; 0)  在c语言中，0 被认为是假，非0 被认为是真 如果p的值为0，!p判定为真； 如果">
+<meta name="description" content="tmux使用指南tmux快捷指令tmux的所有指令，都包含同一个前缀，默认为Ctrl+b，但两按键相隔甚远，推荐Ctrl+a  系统指令     前缀 指令 描述    Ctrl + a ? 显示快捷键帮助文档   Ctrl + a d 断开当前会话   Ctrl + a D 选择要断开的会话   Ctrl + a Ctrl+z 挂起当前会话   Ctrl + a r 强制重载当前会话   Ctr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="If判断指针非空">
-<meta property="og:url" content="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/index.html">
+<meta property="og:title" content="Tmux使用指南">
+<meta property="og:url" content="http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.html">
 <meta property="og:site_name" content="Huahui">
-<meta property="og:description" content="if(p)和if(!p)含义对于 int *p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; NULL)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; NULL)  对于 int p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; 0)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; 0)  在c语言中，0 被认为是假，非0 被认为是真 如果p的值为0，!p判定为真； 如果">
+<meta property="og:description" content="tmux使用指南tmux快捷指令tmux的所有指令，都包含同一个前缀，默认为Ctrl+b，但两按键相隔甚远，推荐Ctrl+a  系统指令     前缀 指令 描述    Ctrl + a ? 显示快捷键帮助文档   Ctrl + a d 断开当前会话   Ctrl + a D 选择要断开的会话   Ctrl + a Ctrl+z 挂起当前会话   Ctrl + a r 强制重载当前会话   Ctr">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-15T12:39:27.000Z">
-<meta property="article:modified_time" content="2021-09-15T12:46:34.321Z">
+<meta property="article:published_time" content="2021-12-12T11:18:27.000Z">
+<meta property="article:modified_time" content="2021-12-12T11:37:49.787Z">
 <meta property="article:author" content="huahui">
-<meta property="article:tag" content="C">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="tmux">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/">
+<link rel="canonical" href="http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/","path":"2021/09/15/C编程-if判断指针非空/","title":"If判断指针非空"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/","path":"2021/12/12/tmux-tmux使用指南/","title":"Tmux使用指南"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>If判断指针非空 | Huahui</title>
+<title>Tmux使用指南 | Huahui</title>
   
 
 
@@ -119,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#if-p-%E5%92%8Cif-p-%E5%90%AB%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">if(p)和if(!p)含义</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">tmux使用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">tmux快捷指令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">灵活配置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -182,7 +183,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -195,7 +196,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          If判断指针非空
+          Tmux使用指南
         </h1>
 
         <div class="post-meta-container">
@@ -207,16 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-09-15 20:39:27 / Modified: 20:46:34" itemprop="dateCreated datePublished" datetime="2021-09-15T20:39:27+08:00">2021-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">C编程</span></a>
-        </span>
+      <time title="Created: 2021-12-12 19:18:27 / Modified: 19:37:49" itemprop="dateCreated datePublished" datetime="2021-12-12T19:18:27+08:00">2021-12-12</time>
     </span>
 
   
@@ -229,18 +221,219 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="if-p-和if-p-含义"><a href="#if-p-和if-p-含义" class="headerlink" title="if(p)和if(!p)含义"></a>if(p)和if(!p)含义</h1><p>对于 <code>int *p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == NULL)</span><br><span class="line">if (p)  ==&gt; if (p != NULL)</span><br></pre></td></tr></table></figure>
-
-<p>对于 <code>int p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == 0)</span><br><span class="line">if (p)  ==&gt; if (p != 0)</span><br></pre></td></tr></table></figure>
-
-<p><strong>在c语言中，0 被认为是假，非0 被认为是真</strong></p>
-<p>如果p的值为0，!p判定为真；</p>
-<p>如果p的值不是0，!p的判定为假</p>
-<p>如果是一个指针，指针有内容，即：p的值不是0，!p的判定为假</p>
-<p>如果指针没有内容，NULL，即：p的值为0，!p判定为真；</p>
-
+        <h1 id="tmux使用指南"><a href="#tmux使用指南" class="headerlink" title="tmux使用指南"></a>tmux使用指南</h1><h2 id="tmux快捷指令"><a href="#tmux快捷指令" class="headerlink" title="tmux快捷指令"></a>tmux快捷指令</h2><p>tmux的所有指令，都包含同一个前缀，默认为<code>Ctrl+b</code>，但两按键相隔甚远，推荐<code>Ctrl+a</code></p>
+<ol>
+<li>系统指令</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl + a</td>
+<td>?</td>
+<td>显示快捷键帮助文档</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>d</td>
+<td>断开当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>D</td>
+<td>选择要断开的会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>Ctrl+z</td>
+<td>挂起当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>r</td>
+<td>强制重载当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>s</td>
+<td>显示会话列表用于选择并切换</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>:</td>
+<td>进入命令行模式，此时可直接输入ls等命令</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>[</td>
+<td>进入复制模式，按q退出</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>]</td>
+<td>粘贴复制模式中复制的文本</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>~</td>
+<td>列出提示信息缓存</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li><p>窗口指令（window）</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+a</td>
+<td>c</td>
+<td>新建窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>&amp;</td>
+<td>关闭当前窗口（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>0~9</td>
+<td>切换到指定窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>p</td>
+<td>切换到上一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>n</td>
+<td>切换到下一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>w</td>
+<td>打开窗口列表，用于且切换窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>,</td>
+<td>重命名当前窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>.</td>
+<td>修改当前窗口编号（适用于窗口重新排序）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>f</td>
+<td>快速定位到窗口（输入关键字匹配窗口名称）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>面板指令(panel)</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+b</td>
+<td>“</td>
+<td>当前面板上下一分为二，下侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>%</td>
+<td>当前面板左右一分为二，右侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>x</td>
+<td>关闭当前面板（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>z</td>
+<td>最大化当前面板，再重复一次按键后恢复正常（v1.8版本新增）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>!</td>
+<td>将当前面板移动到新的窗口打开（原窗口中存在两个及以上面板有效）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>;</td>
+<td>切换到最后一次使用的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>q</td>
+<td>显示面板编号，在编号消失前输入对应的数字可切换到相应的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>{</td>
+<td>向前置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>}</td>
+<td>向后置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+o</td>
+<td>顺时针旋转当前窗口中的所有面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>方向键</td>
+<td>移动光标切换面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>o</td>
+<td>选择下一面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>空格键</td>
+<td>在自带的面板布局中循环切换</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Alt+方向键</td>
+<td>以5个单元格为单位调整当前面板边缘</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+方向键</td>
+<td>以1个单元格为单位调整当前面板边缘（Mac下被系统快捷键覆盖）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>t</td>
+<td>显示时钟</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h1 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h1><h1 id="灵活配置"><a href="#灵活配置" class="headerlink" title="灵活配置"></a>灵活配置</h1>
     </div>
 
     
@@ -249,21 +442,19 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/tmux/" rel="tag"># tmux</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/" rel="prev" title="Vim配置">
-                  <i class="fa fa-chevron-left"></i> Vim配置
+                <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="prev" title="Dtb反编译">
+                  <i class="fa fa-chevron-left"></i> Dtb反编译
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="next" title="Dtb反编译">
-                  Dtb反编译 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
