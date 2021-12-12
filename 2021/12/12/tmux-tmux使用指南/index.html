@@ -28,7 +28,7 @@
 <meta property="og:description" content="tmux使用指南tmux快捷指令tmux的所有指令，都包含同一个前缀，默认为Ctrl+b，但两按键相隔甚远，推荐Ctrl+a 系统指令   前缀 指令 描述    Ctrl + a ? 显示快捷键帮助文档   Ctrl + a d 断开当前会话   Ctrl + a D 选择要断开的会话   Ctrl + a Ctrl+z 挂起当前会话   Ctrl + a r 强制重载当前会话   Ctrl +">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-12T11:18:27.000Z">
-<meta property="article:modified_time" content="2021-12-12T11:44:19.021Z">
+<meta property="article:modified_time" content="2021-12-12T12:08:15.059Z">
 <meta property="article:author" content="huahui">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="tmux">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">tmux使用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">tmux快捷指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.</span> <span class="nav-text">系统指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E6%8C%87%E4%BB%A4%EF%BC%88window%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">窗口指令（window）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E6%9D%BF%E6%8C%87%E4%BB%A4-panel"><span class="nav-number">1.1.3.</span> <span class="nav-text">面板指令(panel)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">灵活配置</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">tmux使用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">tmux快捷指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.</span> <span class="nav-text">系统指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E6%8C%87%E4%BB%A4%EF%BC%88window%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">窗口指令（window）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E6%9D%BF%E6%8C%87%E4%BB%A4-panel"><span class="nav-number">1.1.3.</span> <span class="nav-text">面板指令(panel)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D-session"><span class="nav-number">2.</span> <span class="nav-text">会话 session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.1.</span> <span class="nav-text">新建会话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AD%E5%BC%80%E5%BD%93%E5%89%8D%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.2.</span> <span class="nav-text">断开当前会话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E4%B9%8B%E5%89%8D%E7%9A%84%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.3.</span> <span class="nav-text">进入之前的会话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.4.</span> <span class="nav-text">关闭会话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E7%9A%84%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.5.</span> <span class="nav-text">查看所有的会话</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">灵活配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E9%BC%A0%E6%A0%87%E6%94%AF%E6%8C%81"><span class="nav-number">3.1.</span> <span class="nav-text">开启鼠标支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E9%9D%A2%E6%9D%BF%E5%88%87%E6%8D%A2"><span class="nav-number">3.2.</span> <span class="nav-text">快速面板切换</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-12-12 19:18:27 / Modified: 19:44:19" itemprop="dateCreated datePublished" datetime="2021-12-12T19:18:27+08:00">2021-12-12</time>
+      <time title="Created: 2021-12-12 19:18:27 / Modified: 20:08:15" itemprop="dateCreated datePublished" datetime="2021-12-12T19:18:27+08:00">2021-12-12</time>
     </span>
 
   
@@ -424,7 +424,35 @@
 <td>显示时钟</td>
 </tr>
 </tbody></table>
-<h1 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h1><h1 id="灵活配置"><a href="#灵活配置" class="headerlink" title="灵活配置"></a>灵活配置</h1>
+<h1 id="会话-session"><a href="#会话-session" class="headerlink" title="会话 session"></a>会话 session</h1><h2 id="新建会话"><a href="#新建会话" class="headerlink" title="新建会话"></a>新建会话</h2><p>新建一个<code>tmux session</code>非常简单，语法为<code>tmux new -s session-name</code>，也可以简写为<code>tmux</code>，为了方便管理，建议指定会话名称，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux # 新建一个无名称的会话</span><br><span class="line">tmux new -s demo # 新建一个名称为demo的会话</span><br></pre></td></tr></table></figure>
+<h2 id="断开当前会话"><a href="#断开当前会话" class="headerlink" title="断开当前会话"></a>断开当前会话</h2><p>会话中操作了一段时间，我希望断开会话同时下次还能接着用，可以使用<code>detach</code>命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux detach # 断开当前会话</span><br><span class="line">Ctrl+b + d # tmux的会话中，断开快捷键</span><br></pre></td></tr></table></figure>
+<p>TODO: <code>Ctrl+b + d</code>与<code>Ctrl+b + z</code>区别</p>
+<h2 id="进入之前的会话"><a href="#进入之前的会话" class="headerlink" title="进入之前的会话"></a>进入之前的会话</h2><p>断开会话后，想要接着上次留下的现场继续工作，就要使用到tmux的<code>attach</code>命令了，语法为<code>tmux attach-session -t session-name</code>，可简写为<code>tmux a -t session-name</code> 或 <code>tmux a</code>。通常我们使用如下两种方式之一即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux a # 默认进入第一个会话</span><br><span class="line">tmux a -t demo # 进入到名称为demo的会话</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭会话"><a href="#关闭会话" class="headerlink" title="关闭会话"></a>关闭会话</h2><p>会话的使命完成后，一定是要关闭的。我们可以使用tmux的<code>kill</code>命令，kill命令有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kill-pane、kill-server、kill-session 和 kill-window共四种，其中kill-session的语法为tmux kill-session -t session-name。如下：</span><br><span class="line"></span><br><span class="line">tmux kill-session -t demo # 关闭demo会话</span><br><span class="line">tmux kill-server # 关闭服务器，所有的会话都将关闭</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看所有的会话"><a href="#查看所有的会话" class="headerlink" title="查看所有的会话"></a>查看所有的会话</h2><p>管理会话的第一步就是要查看所有的会话，我们可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux list-session # 查看所有会话</span><br><span class="line">tmux ls # 查看所有会话，提倡使用简写形式</span><br></pre></td></tr></table></figure>
+
+<p>如果刚好处于会话中，可以使用对应的tmux快捷键<code>Ctrl+b + s</code>，此时tmux将打开一个会话列表，按上下键或者鼠标滚轮，可选中目标会话，按左右键可收起或展开会话的窗口，选中目标会话或窗口后，按回车键即可完成切换。</p>
+<h1 id="灵活配置"><a href="#灵活配置" class="headerlink" title="灵活配置"></a>灵活配置</h1><h2 id="开启鼠标支持"><a href="#开启鼠标支持" class="headerlink" title="开启鼠标支持"></a>开启鼠标支持</h2><p>默认情况下，tmux的多窗口之间的切换以及面板大小调整，需要输入指令才能完成，这一过程，涉及到的指令较多，而且操作麻烦，特别是面板大小调整，指令难以一步到位，这个时候开启鼠标支持就完美了。</p>
+<p>对于tmux v2.1(2015.10.28)之前的版本，需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setw -g mode-mouse on # 支持鼠标选取文本等</span><br><span class="line">setw -g mouse-resize-pane on # 支持鼠标拖动调整面板的大小(通过拖动面板间的分割线)</span><br><span class="line">setw -g mouse-select-pane on # 支持鼠标选中并切换面板</span><br><span class="line">setw -g mouse-select-window on # 支持鼠标选中并切换窗口(通过点击状态栏窗口名称)</span><br></pre></td></tr></table></figure>
+
+<p>有的地方可能会出现set-window-option的写法，setw就是它的别名。</p>
+<p>对于tmux v2.1及以上的版本，仅需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set-option -g mouse on # 等同于以上4个指令的效果</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，开启鼠标支持后，iTem2默认的鼠标选中即复制功能需要同时按下 Alt 键，才会生效。</p>
+<h2 id="快速面板切换"><a href="#快速面板切换" class="headerlink" title="快速面板切换"></a>快速面板切换</h2><p>鼠标支持确实能带来很大的便捷性，特别是对于习惯了鼠标操作的tmux新手，但对于键盘爱好者而言，这不是什么好消息，对他们而言，双手不离键盘是基本素质。</p>
+<p>虽然指令前缀加方向键可以切换面板，但方向键太远，不够快，不够Geek。没关系，我们可以将面板切换升级为熟悉的h、j、k、l键位。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 绑定hjkl键为面板切换的上下左右键</span><br><span class="line">bind -r k select-pane -U # 绑定k为↑</span><br><span class="line">bind -r j select-pane -D # 绑定j为↓</span><br><span class="line">bind -r h select-pane -L # 绑定h为←</span><br><span class="line">bind -r l select-pane -R # 绑定l为→</span><br></pre></td></tr></table></figure>
+
+<p>-r表示可重复按键，大概500ms之内，重复的h、j、k、l按键都将有效，完美支持了快速切换的Geek需求。</p>
+
     </div>
 
     
