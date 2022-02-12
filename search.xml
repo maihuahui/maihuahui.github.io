@@ -2388,4 +2388,37 @@
         <tag>git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Post</title>
+    <url>/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-container-of/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>List</title>
+    <url>/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-linux-list/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Linux驱动</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>list</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git Error</title>
+    <url>/2022/02/12/git-git-error/</url>
+    <content><![CDATA[<h1 id="“error-invalid-path”"><a href="#“error-invalid-path”" class="headerlink" title="“error: invalid path”"></a>“error: invalid path”</h1><h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>The Git cloning of repository succeeds on a Linux client but fails on a Windows client with an “invalid path” error.</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>Depending on the filename, configuring Git to ignore NTFS naming may workaround the issue.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global core.protectNTFS false</span><br></pre></td></tr></table></figure>
+
+<p>Turning off protectNTFS will stop Git from complaining about files that have a base name that is reserved but will not prevent an error if the filename is one of the reserved names.</p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
 </search>
