@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/048_singble_buffer.png">
 <meta property="og:image" content="http://example.com/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/049_drv_app_use_double_buff.png">
 <meta property="article:published_time" content="2022-02-13T07:58:36.000Z">
-<meta property="article:modified_time" content="2022-02-13T08:01:36.133Z">
+<meta property="article:modified_time" content="2022-02-13T08:05:09.756Z">
 <meta property="article:author" content="huahui">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="driver">
@@ -138,7 +138,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -213,7 +213,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-13 15:58:36 / Modified: 16:01:36" itemprop="dateCreated datePublished" datetime="2022-02-13T15:58:36+08:00">2022-02-13</time>
+      <time title="Created: 2022-02-13 15:58:36 / Modified: 16:05:09" itemprop="dateCreated datePublished" datetime="2022-02-13T15:58:36+08:00">2022-02-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -221,7 +221,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
         </span>
     </span>
 
@@ -246,7 +246,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/002_rgb.png"></p>
+<p><img src="002_rgb.png"></p>
 <p>注：有些LCD控制器可以设置红绿蓝三原色的位置，比如24位的数据里，可能是RGB888，也可能是BGR888</p>
 <h1 id="Framebuffer"><a href="#Framebuffer" class="headerlink" title="Framebuffer"></a>Framebuffer</h1><p>存储像素数据的一块特殊内存，<strong>显存</strong></p>
 <ul>
@@ -269,7 +269,7 @@
 </ul>
 <p>LCD controler，驱动工程师很大一部分工作既是设置初始化LCD controler</p>
 <h1 id="统一的硬件模型"><a href="#统一的硬件模型" class="headerlink" title="统一的硬件模型"></a>统一的硬件模型</h1><p>LCD接口众多，但硬件模型一致，原理一致</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/004_lcd_hardware_block.png"></p>
+<p><img src="004_lcd_hardware_block.png"></p>
 <h2 id="MCU常用的8080接口LCD模组"><a href="#MCU常用的8080接口LCD模组" class="headerlink" title="MCU常用的8080接口LCD模组"></a>MCU常用的8080接口LCD模组</h2><p>内存，LCD控制器，LCD屏幕组合成一个<strong>LCM模组</strong>，单片机F103直接跟模组通信</p>
 <p>F103一般通过以下信号线跟LCM模组通信</p>
 <ul>
@@ -415,7 +415,7 @@
 <li><p>LCD控制器继续读取数据，于是LCD上就会显示半屏幕蓝色、半屏幕红色</p>
 </li>
 <li><p>人眼就会感觉到屏幕闪烁、撕裂</p>
-<img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/048_singble_buffer.png" style="zoom:53%;"></li>
+<img src="048_singble_buffer.png" style="zoom:53%;" /></li>
 </ul>
 </li>
 </ul>
@@ -428,7 +428,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 假设有2个Framebuffer：FB0、FB1</span><br><span class="line">* LCD控制器正在读取FB0</span><br><span class="line">* APP写FB1</span><br><span class="line">* 写好FB1后，让LCD控制器切换到FB1</span><br><span class="line">* APP写FB0</span><br><span class="line">* 写好FB0后，让LCD控制器切换到FB0	</span><br></pre></td></tr></table></figure>
 
 <p>具体流程：</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/049_drv_app_use_double_buff.png"></p>
+<p><img src="049_drv_app_use_double_buff.png"></p>
 <ul>
 <li>驱动：分配多个buffer</li>
 </ul>
@@ -490,6 +490,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/" rel="next" title="Inline">
+                  Inline <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

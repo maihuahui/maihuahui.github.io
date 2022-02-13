@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,6 +175,114 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/" class="post-title-link" itemprop="url">Inline</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-02-13 16:08:56 / Modified: 16:10:31" itemprop="dateCreated datePublished" datetime="2022-02-13T16:08:56+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">C编程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><p>有些函数短小精悍而且调用频繁，调用开销大，经常保护现场，恢复现场，算下来性价比不高。这时就可以将这个函数声明为内联函数。编译器在编译过程中遇到内联函数，<strong>像宏一样，将内联函数直接在调用处展开</strong>，这样就可以减少函数调用的开支：<strong>直接执行内联函数展开的代码，不用再保存现场和恢复现场</strong>。</p>
+<h2 id="内联函数和宏"><a href="#内联函数和宏" class="headerlink" title="内联函数和宏"></a>内联函数和宏</h2><p>内联函数和宏的功能差不多，为什么不直接定义一个宏定义？而是定义一个内联函数？</p>
+<p>存在即合理，内联函数在 C 语言中有广泛运用，自然有其原因。与宏相比，内联函数有以下优势：</p>
+<ul>
+<li><p>参数类型检查</p>
+<pre><code>    内联函数随有宏的展开特性，但其本质仍是函数，在编译过程中，编译器仍可以对其进行参数检查，而宏不具备这个功能。
+</code></pre>
+</li>
+<li><p>便于调试</p>
+<p>​        函数支持的调试功能有断点、单步等，内联函数同样支持。        </p>
+</li>
+<li><p>返回值</p>
+<p>​        内联函数有返回值，返回一个结果给调用者。这个优势是相对 ANSI C 说的，因为现在宏也可以有返回值和类型了，如前面使用语句表达式的宏。</p>
+</li>
+<li><p>接口封装</p>
+<p>​        有些内联函数可以用来封装一个接口，而宏不具备这个功能。</p>
+</li>
+</ul>
+<h2 id="编译器对内联函数的处理"><a href="#编译器对内联函数的处理" class="headerlink" title="编译器对内联函数的处理"></a>编译器对内联函数的处理</h2><p>我们通过 <code>inline</code>关键字将一个函数声明为内联函数，但编译器不一定会对这个内联函数在进行展开。编译器也要根据实际情况进行评估，主要考虑如下因素：</p>
+<ul>
+<li>函数体积大小</li>
+<li>函数体内调用是否有指针</li>
+<li>调用频繁</li>
+</ul>
+<h3 id="属性声明：noinline"><a href="#属性声明：noinline" class="headerlink" title="属性声明：noinline"></a>属性声明：noinline</h3><p>明确告诉编译器不展开内联函数</p>
+<h3 id="属性声明：always-inline"><a href="#属性声明：always-inline" class="headerlink" title="属性声明：always_inline"></a>属性声明：always_inline</h3><p>明确告诉编译器展开内联函数</p>
+<h2 id="内联函数定义在头文件中"><a href="#内联函数定义在头文件中" class="headerlink" title="内联函数定义在头文件中"></a>内联函数定义在头文件中</h2><p>在Linux 内核中，有大量的内联函数被定义在头文件中，而且经常使用 <code>static</code>修饰。</p>
+<p>Q: 为什么内联函数要定义在头文件中？</p>
+<blockquote>
+<p> A: 因为它是一个内联函数，可以像宏一样展开，任何像使用这个内联函数的源文件，都不必亲自去定义一遍，直接包含这个头文件即可，即像宏定义一样使用。</p>
+</blockquote>
+<p>Q：为什么要加<code>static</code>修饰</p>
+<blockquote>
+<p>inline 定义的内联函数不一定会展开，当一个工程中多个文件都包含这个内联函数的定义时，编译时就有可能报重定义错误。使用 static 关键字修饰，则可以将这个函数的作用域限制在各自的文件内，避免重定义错误的发生。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -200,7 +308,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-13 15:58:36 / Modified: 16:01:36" itemprop="dateCreated datePublished" datetime="2022-02-13T15:58:36+08:00">2022-02-13</time>
+      <time title="Created: 2022-02-13 15:58:36 / Modified: 16:05:09" itemprop="dateCreated datePublished" datetime="2022-02-13T15:58:36+08:00">2022-02-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,7 +316,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
         </span>
     </span>
 
@@ -233,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/002_rgb.png"></p>
+<p><img src="002_rgb.png"></p>
 <p>注：有些LCD控制器可以设置红绿蓝三原色的位置，比如24位的数据里，可能是RGB888，也可能是BGR888</p>
 <h1 id="Framebuffer"><a href="#Framebuffer" class="headerlink" title="Framebuffer"></a>Framebuffer</h1><p>存储像素数据的一块特殊内存，<strong>显存</strong></p>
 <ul>
@@ -256,7 +364,7 @@
 </ul>
 <p>LCD controler，驱动工程师很大一部分工作既是设置初始化LCD controler</p>
 <h1 id="统一的硬件模型"><a href="#统一的硬件模型" class="headerlink" title="统一的硬件模型"></a>统一的硬件模型</h1><p>LCD接口众多，但硬件模型一致，原理一致</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/004_lcd_hardware_block.png"></p>
+<p><img src="004_lcd_hardware_block.png"></p>
 <h2 id="MCU常用的8080接口LCD模组"><a href="#MCU常用的8080接口LCD模组" class="headerlink" title="MCU常用的8080接口LCD模组"></a>MCU常用的8080接口LCD模组</h2><p>内存，LCD控制器，LCD屏幕组合成一个<strong>LCM模组</strong>，单片机F103直接跟模组通信</p>
 <p>F103一般通过以下信号线跟LCM模组通信</p>
 <ul>
@@ -402,7 +510,7 @@
 <li><p>LCD控制器继续读取数据，于是LCD上就会显示半屏幕蓝色、半屏幕红色</p>
 </li>
 <li><p>人眼就会感觉到屏幕闪烁、撕裂</p>
-<img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/048_singble_buffer.png" style="zoom:53%;"></li>
+<img src="048_singble_buffer.png" style="zoom:53%;" /></li>
 </ul>
 </li>
 </ul>
@@ -415,7 +523,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 假设有2个Framebuffer：FB0、FB1</span><br><span class="line">* LCD控制器正在读取FB0</span><br><span class="line">* APP写FB1</span><br><span class="line">* 写好FB1后，让LCD控制器切换到FB1</span><br><span class="line">* APP写FB0</span><br><span class="line">* 写好FB0后，让LCD控制器切换到FB0	</span><br></pre></td></tr></table></figure>
 
 <p>具体流程：</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/049_drv_app_use_double_buff.png"></p>
+<p><img src="049_drv_app_use_double_buff.png"></p>
 <ul>
 <li>驱动：分配多个buffer</li>
 </ul>
@@ -1773,90 +1881,6 @@
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Usage: dtc [options] &lt;input file&gt;</span><br><span class="line"></span><br><span class="line">Options: -[qI:O:o:V:d:R:S:p:a:fb:i:H:sW:E:@AThv]</span><br><span class="line">  -q, --quiet                </span><br><span class="line">	Quiet: -q suppress warnings, -qq errors, -qqq all</span><br><span class="line">  -I, --in-format &lt;arg&gt;      </span><br><span class="line">	Input formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		fs  - /proc/device-tree style directory</span><br><span class="line">  -o, --out &lt;arg&gt;            </span><br><span class="line">	Output file</span><br><span class="line">  -O, --out-format &lt;arg&gt;     </span><br><span class="line">	Output formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		asm - assembler source</span><br><span class="line">  -V, --out-version &lt;arg&gt;    </span><br><span class="line">	Blob version to produce, defaults to 17 (for dtb and asm output)</span><br><span class="line">  -d, --out-dependency &lt;arg&gt; </span><br><span class="line">	Output dependency file</span><br><span class="line">  -R, --reserve &lt;arg&gt;        </span><br><span class="line">	Make space for &lt;number&gt; reserve map entries (for dtb and asm output)</span><br><span class="line">  -S, --space &lt;arg&gt;          </span><br><span class="line">	Make the blob at least &lt;bytes&gt; long (extra space)</span><br><span class="line">  -p, --pad &lt;arg&gt;            </span><br><span class="line">	Add padding to the blob of &lt;bytes&gt; long (extra space)</span><br><span class="line">  -a, --align &lt;arg&gt;          </span><br><span class="line">	Make the blob align to the &lt;bytes&gt; (extra space)</span><br><span class="line">  -b, --boot-cpu &lt;arg&gt;       </span><br><span class="line">	Set the physical boot cpu</span><br><span class="line">  -f, --force                </span><br><span class="line">	Try to produce output even if the input tree has errors</span><br><span class="line">  -i, --include &lt;arg&gt;        </span><br><span class="line">	Add a path to search for include files</span><br><span class="line">  -s, --sort                 </span><br><span class="line">	Sort nodes and properties before outputting (useful for comparing trees)</span><br><span class="line">  -H, --phandle &lt;arg&gt;        </span><br><span class="line">	Valid phandle formats are:</span><br><span class="line">		legacy - &quot;linux,phandle&quot; properties only</span><br><span class="line">		epapr  - &quot;phandle&quot; properties only</span><br><span class="line">		both   - Both &quot;linux,phandle&quot; and &quot;phandle&quot; properties</span><br><span class="line">  -W, --warning &lt;arg&gt;        </span><br><span class="line">	Enable/disable warnings (prefix with &quot;no-&quot;)</span><br><span class="line">  -E, --error &lt;arg&gt;          </span><br><span class="line">	Enable/disable errors (prefix with &quot;no-&quot;)</span><br><span class="line">  -@, --symbols              </span><br><span class="line">	Enable generation of symbols</span><br><span class="line">  -A, --auto-alias           </span><br><span class="line">	Enable auto-alias of labels</span><br><span class="line">  -T, --annotate             </span><br><span class="line">	Annotate output .dts with input source file and line (-T -T for more details)</span><br><span class="line">  -h, --help                 </span><br><span class="line">	Print this help and exit</span><br><span class="line">  -v, --version              </span><br><span class="line">	Print version and exit</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/" class="post-title-link" itemprop="url">If判断指针非空</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-15 20:39:27 / Modified: 20:46:34" itemprop="dateCreated datePublished" datetime="2021-09-15T20:39:27+08:00">2021-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">C编程</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="if-p-和if-p-含义"><a href="#if-p-和if-p-含义" class="headerlink" title="if(p)和if(!p)含义"></a>if(p)和if(!p)含义</h1><p>对于 <code>int *p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == NULL)</span><br><span class="line">if (p)  ==&gt; if (p != NULL)</span><br></pre></td></tr></table></figure>
-
-<p>对于 <code>int p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == 0)</span><br><span class="line">if (p)  ==&gt; if (p != 0)</span><br></pre></td></tr></table></figure>
-
-<p><strong>在c语言中，0 被认为是假，非0 被认为是真</strong></p>
-<p>如果p的值为0，!p判定为真；</p>
-<p>如果p的值不是0，!p的判定为假</p>
-<p>如果是一个指针，指针有内容，即：p的值不是0，!p的判定为假</p>
-<p>如果指针没有内容，NULL，即：p的值为0，!p判定为真；</p>
-
       
     </div>
 

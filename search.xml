@@ -2916,7 +2916,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/002_rgb.png"></p>
+<p><img src="002_rgb.png"></p>
 <p>注：有些LCD控制器可以设置红绿蓝三原色的位置，比如24位的数据里，可能是RGB888，也可能是BGR888</p>
 <h1 id="Framebuffer"><a href="#Framebuffer" class="headerlink" title="Framebuffer"></a>Framebuffer</h1><p>存储像素数据的一块特殊内存，<strong>显存</strong></p>
 <ul>
@@ -2939,7 +2939,7 @@
 </ul>
 <p>LCD controler，驱动工程师很大一部分工作既是设置初始化LCD controler</p>
 <h1 id="统一的硬件模型"><a href="#统一的硬件模型" class="headerlink" title="统一的硬件模型"></a>统一的硬件模型</h1><p>LCD接口众多，但硬件模型一致，原理一致</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/004_lcd_hardware_block.png"></p>
+<p><img src="004_lcd_hardware_block.png"></p>
 <h2 id="MCU常用的8080接口LCD模组"><a href="#MCU常用的8080接口LCD模组" class="headerlink" title="MCU常用的8080接口LCD模组"></a>MCU常用的8080接口LCD模组</h2><p>内存，LCD控制器，LCD屏幕组合成一个<strong>LCM模组</strong>，单片机F103直接跟模组通信</p>
 <p>F103一般通过以下信号线跟LCM模组通信</p>
 <ul>
@@ -3085,7 +3085,7 @@
 <li><p>LCD控制器继续读取数据，于是LCD上就会显示半屏幕蓝色、半屏幕红色</p>
 </li>
 <li><p>人眼就会感觉到屏幕闪烁、撕裂</p>
-<img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/048_singble_buffer.png" style="zoom:53%;"></li>
+<img src="048_singble_buffer.png" style="zoom:53%;" /></li>
 </ul>
 </li>
 </ul>
@@ -3098,7 +3098,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">* 假设有2个Framebuffer：FB0、FB1</span><br><span class="line">* LCD控制器正在读取FB0</span><br><span class="line">* APP写FB1</span><br><span class="line">* 写好FB1后，让LCD控制器切换到FB1</span><br><span class="line">* APP写FB0</span><br><span class="line">* 写好FB0后，让LCD控制器切换到FB0	</span><br></pre></td></tr></table></figure>
 
 <p>具体流程：</p>
-<p><img src="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/049_drv_app_use_double_buff.png"></p>
+<p><img src="049_drv_app_use_double_buff.png"></p>
 <ul>
 <li>驱动：分配多个buffer</li>
 </ul>
@@ -3140,11 +3140,57 @@
 
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Linux驱动</category>
       </categories>
       <tags>
         <tag>Linux</tag>
         <tag>driver</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Inline</title>
+    <url>/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/</url>
+    <content><![CDATA[<h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><p>有些函数短小精悍而且调用频繁，调用开销大，经常保护现场，恢复现场，算下来性价比不高。这时就可以将这个函数声明为内联函数。编译器在编译过程中遇到内联函数，<strong>像宏一样，将内联函数直接在调用处展开</strong>，这样就可以减少函数调用的开支：<strong>直接执行内联函数展开的代码，不用再保存现场和恢复现场</strong>。</p>
+<h2 id="内联函数和宏"><a href="#内联函数和宏" class="headerlink" title="内联函数和宏"></a>内联函数和宏</h2><p>内联函数和宏的功能差不多，为什么不直接定义一个宏定义？而是定义一个内联函数？</p>
+<p>存在即合理，内联函数在 C 语言中有广泛运用，自然有其原因。与宏相比，内联函数有以下优势：</p>
+<ul>
+<li><p>参数类型检查</p>
+<pre><code>    内联函数随有宏的展开特性，但其本质仍是函数，在编译过程中，编译器仍可以对其进行参数检查，而宏不具备这个功能。
+</code></pre>
+</li>
+<li><p>便于调试</p>
+<p>​        函数支持的调试功能有断点、单步等，内联函数同样支持。        </p>
+</li>
+<li><p>返回值</p>
+<p>​        内联函数有返回值，返回一个结果给调用者。这个优势是相对 ANSI C 说的，因为现在宏也可以有返回值和类型了，如前面使用语句表达式的宏。</p>
+</li>
+<li><p>接口封装</p>
+<p>​        有些内联函数可以用来封装一个接口，而宏不具备这个功能。</p>
+</li>
+</ul>
+<h2 id="编译器对内联函数的处理"><a href="#编译器对内联函数的处理" class="headerlink" title="编译器对内联函数的处理"></a>编译器对内联函数的处理</h2><p>我们通过 <code>inline</code>关键字将一个函数声明为内联函数，但编译器不一定会对这个内联函数在进行展开。编译器也要根据实际情况进行评估，主要考虑如下因素：</p>
+<ul>
+<li>函数体积大小</li>
+<li>函数体内调用是否有指针</li>
+<li>调用频繁</li>
+</ul>
+<h3 id="属性声明：noinline"><a href="#属性声明：noinline" class="headerlink" title="属性声明：noinline"></a>属性声明：noinline</h3><p>明确告诉编译器不展开内联函数</p>
+<h3 id="属性声明：always-inline"><a href="#属性声明：always-inline" class="headerlink" title="属性声明：always_inline"></a>属性声明：always_inline</h3><p>明确告诉编译器展开内联函数</p>
+<h2 id="内联函数定义在头文件中"><a href="#内联函数定义在头文件中" class="headerlink" title="内联函数定义在头文件中"></a>内联函数定义在头文件中</h2><p>在Linux 内核中，有大量的内联函数被定义在头文件中，而且经常使用 <code>static</code>修饰。</p>
+<p>Q: 为什么内联函数要定义在头文件中？</p>
+<blockquote>
+<p> A: 因为它是一个内联函数，可以像宏一样展开，任何像使用这个内联函数的源文件，都不必亲自去定义一遍，直接包含这个头文件即可，即像宏定义一样使用。</p>
+</blockquote>
+<p>Q：为什么要加<code>static</code>修饰</p>
+<blockquote>
+<p>inline 定义的内联函数不一定会展开，当一个工程中多个文件都包含这个内联函数的定义时，编译时就有可能报重定义错误。使用 static 关键字修饰，则可以将这个函数的作用域限制在各自的文件内，避免重定义错误的发生。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C编程</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
       </tags>
   </entry>
 </search>
