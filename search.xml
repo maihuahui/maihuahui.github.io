@@ -2465,7 +2465,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Post</title>
+    <title>Dma_buf</title>
     <url>/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-dma-buf/</url>
     <content><![CDATA[<h1 id="dma-buf"><a href="#dma-buf" class="headerlink" title="dma-buf"></a>dma-buf</h1><p>dma-buf的出现是为了解决各驱动之间buffer共享的问题，因此它本质上是<strong>buffer和file的结合</strong>，即它既是一块物理连续的buffer，<br>也是一个linux file。buffer是内容，file是媒介，通过file这个媒介来实现buffer的共享。</p>
 <p>一个典型的dma-buf的应用框架如下：<br><img src="/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-dma-buf/dma-buf1.png"></p>
@@ -2656,5 +2656,245 @@
 <li>Usespace 通过 DMA_BUF_IOCTL_SYNC 来触发 begin / end 操作；</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>U-BOOT DM驱动模型</title>
+    <url>/2022/02/13/uboot-uboot-dirver-model/</url>
+    <content><![CDATA[<h1 id="U-BOOT-DM驱动模型"><a href="#U-BOOT-DM驱动模型" class="headerlink" title="U-BOOT DM驱动模型"></a>U-BOOT DM驱动模型</h1><h2 id="Before-driver-model"><a href="#Before-driver-model" class="headerlink" title="Before driver model"></a>Before driver model</h2><ul>
+<li>U-Boot has 10 useful design principles (e.g. small, fast, simple, portable)<ul>
+<li>Huge community, over 1000 boards supported by the end of 2011</li>
+<li>But Ad-hoc driver model started to bite</li>
+</ul>
+</li>
+<li>Drivers were invoked through direct C calls<ul>
+<li>i2c_read() is implemented by whichever driver is compiled in</li>
+<li>CONFIG option select which I2C driver to use, clock speed, bus number, etc.</li>
+</ul>
+</li>
+<li>Hard to scale<ul>
+<li>Multiple I2C drivers must be munged into a single driver</li>
+<li>Or an ad-hoc framework created to handle this requirements</li>
+</ul>
+</li>
+<li>Configuration becoming unwieldy<ul>
+<li>6000 CONFIG options at its peak</li>
+<li>Kconfig conversion helps, but that’s still a lot of options</li>
+</ul>
+</li>
+</ul>
+<h3 id="dm-u-boot-pdf"><a href="#dm-u-boot-pdf" class="headerlink" title="dm-u-boot.pdf"></a>dm-u-boot.pdf</h3><p>U-Boot Mini Summit talk on driver model at ELCE 2014</p>
+<p>Why driver model?</p>
+<ul>
+<li>Device init and access is ad-hoc<br>  – scsi_init(), mmc_init(), nand_init()</li>
+<li>Many subsystems only allow one driver<br>  – But I have USB2 and USB3!</li>
+<li>Communication between subsystems is tricky<br>  – How does an I2C expander or PMIC provide a GPIO?</li>
+<li>Hard to answer simple questions<br>  – How many GPIOs? What is my serial console?</li>
+<li>Board file functions provide the glue<br>  – What GPIO provides my MMC card detect?</li>
+</ul>
+<h2 id="Architecture-体系结构"><a href="#Architecture-体系结构" class="headerlink" title="Architecture 体系结构"></a>Architecture 体系结构</h2><p>DM (Driver Model)是 U-Boot 中的驱动框架。</p>
+<ul>
+<li><p>udevice 描述具体的某一个硬件设备。</p>
+<ul>
+<li>Instance of a driver</li>
+<li>Created from some platform-specific information bound to a driver</li>
+</ul>
+</li>
+<li><p>driver 是与这个设备匹配的驱动。</p>
+<ul>
+<li>Code to talk to a peripheral type (e.g. Ethernet switch, I2C controller, LCD)</li>
+</ul>
+</li>
+<li><p>uclass 是同一类设备的抽象，提供管理同一类设备的抽象接口。</p>
+<ul>
+<li>A way of grouping devices which operate the same way</li>
+</ul>
+</li>
+<li><p>Device tree and hierarchy</p>
+<ul>
+<li>设备树和层次结构</li>
+</ul>
+</li>
+<li><p>Memory allocation</p>
+</li>
+<li><p>Sequence numbers</p>
+<ul>
+<li>序列号</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/02/13/uboot-uboot-dirver-model/hierarchy.png"></p>
+<p>像 Kernel 中的驱动三要素 device 、bus 、driver 一样，DM 也有自己的三要素：udevice、uclass、driver。以 serial 驱动为例：</p>
+<p><img src="/2022/02/13/uboot-uboot-dirver-model/serial.png"></p>
+<h2 id="Device-tree-configuration"><a href="#Device-tree-configuration" class="headerlink" title="Device tree configuration"></a>Device tree configuration</h2><p><img src="/2022/02/13/uboot-uboot-dirver-model/Device_tree_configuration.png"></p>
+<h2 id="Device-sequence"><a href="#Device-sequence" class="headerlink" title="Device sequence"></a>Device sequence</h2><p><img src="/2022/02/13/uboot-uboot-dirver-model/Device_sequence.png"></p>
+<h2 id="Automatic-memory-allocation"><a href="#Automatic-memory-allocation" class="headerlink" title="Automatic memory allocation"></a>Automatic memory allocation</h2><p><img src="/2022/02/13/uboot-uboot-dirver-model/Automatic_memory_allocation.png"></p>
+<h2 id="Architecture-2"><a href="#Architecture-2" class="headerlink" title="Architecture 2"></a>Architecture 2</h2><ul>
+<li>Binding and probing<ul>
+<li>Bing creates the device but does not touch hardware</li>
+<li>Probing activates the device ready for use</li>
+</ul>
+</li>
+<li>Avoid private data structures<ul>
+<li>Everything out in the open</li>
+</ul>
+</li>
+<li>SPL support<ul>
+<li>fdtgrep</li>
+<li>Simple malloc()</li>
+<li>Drop device removal code, warnings, etc.</li>
+</ul>
+</li>
+</ul>
+<h1 id="Driver-model-benefits-en"><a href="#Driver-model-benefits-en" class="headerlink" title="Driver model benefits (en)"></a>Driver model benefits (en)</h1><ul>
+<li>Consistent view of devices regardless of their type</li>
+<li>Multiple driver can be used with the same subsystem<ul>
+<li>Drivers can be created which use others driver for their transport layer</li>
+</ul>
+</li>
+<li>The lifecycle of a device is clear and consistent</li>
+<li>Devices can be bound automatically<ul>
+<li>Then probed automatically when used</li>
+</ul>
+</li>
+<li>Supports device tree for configuration<ul>
+<li>Thus sharing this with Linux and potentially other projects </li>
+<li>Avoids recreating the same information again in a different format</li>
+</ul>
+</li>
+</ul>
+<h1 id="Driver-model-benefits-zh"><a href="#Driver-model-benefits-zh" class="headerlink" title="Driver model benefits (zh)"></a>Driver model benefits (zh)</h1><ul>
+<li>一致的设备视图，无论其类型如何</li>
+<li>同一个子系统可以使用多个驱动程序<ul>
+<li>可以创建使用其他驱动程序作为传输层的驱动程序</li>
+</ul>
+</li>
+<li>设备生命周期清晰一致</li>
+<li>设备可自动绑定<ul>
+<li>然后使用时自动探测</li>
+</ul>
+</li>
+<li>支持设备树配置<ul>
+<li>因此与 Linux 和潜在的其他项目共享这个</li>
+<li>避免以不同的格式重新创建相同的信息</li>
+</ul>
+</li>
+</ul>
+<h1 id="DM-Limitations"><a href="#DM-Limitations" class="headerlink" title="DM Limitations"></a>DM Limitations</h1><ul>
+<li>A driver can be in only one uclass<ul>
+<li>Multi-function devices must use separate child devices</li>
+</ul>
+</li>
+<li>Uses flattened device tree (FDT,即 device tree, dts)<ul>
+<li>Driver model uses the device tree offset</li>
+<li>Overlays and other mutations are not supported</li>
+</ul>
+</li>
+</ul>
+<h1 id="Comparisons-with-Linux"><a href="#Comparisons-with-Linux" class="headerlink" title="Comparisons with Linux"></a>Comparisons with Linux</h1><ul>
+<li><p>Classes</p>
+</li>
+<li><p>Buses</p>
+</li>
+<li><p>Binding and probing </p>
+</li>
+<li><p>Memory allocation</p>
+</li>
+<li><p>Relocation and SPL //重定位 &amp; SPL</p>
+</li>
+<li><p>device visibility</p>
+</li>
+<li><p>Locking</p>
+</li>
+<li><p>Data structure size</p>
+<ul>
+<li>Core structure sizes are moderate<ul>
+<li>struct uclass</li>
+<li>struct udevice</li>
+<li>struct driver</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>automatic memory allocation</p>
+</li>
+</ul>
+<p><img src="/2022/02/13/uboot-uboot-dirver-model/Comparing_automatic_memory_allocation.png"></p>
+<h2 id="A-few-examples"><a href="#A-few-examples" class="headerlink" title="A few examples"></a>A few examples</h2><h3 id="Example-1-Requesting-GPIOs"><a href="#Example-1-Requesting-GPIOs" class="headerlink" title="Example 1: Requesting GPIOs"></a>Example 1: Requesting GPIOs</h3><p><img src="/2022/02/13/uboot-uboot-dirver-model/Requesting_GPIOs.png"></p>
+<h3 id="Example-2-Enabling-power"><a href="#Example-2-Enabling-power" class="headerlink" title="Example 2: Enabling power"></a>Example 2: Enabling power</h3><p><img src="/2022/02/13/uboot-uboot-dirver-model/Enabling_power.png"></p>
+<h1 id="重要数据结构"><a href="#重要数据结构" class="headerlink" title="重要数据结构"></a>重要数据结构</h1><h2 id="udevice"><a href="#udevice" class="headerlink" title="udevice"></a>udevice</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * struct udevice - An instance of a driver</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This holds information about a device, which is a driver bound to a</span></span><br><span class="line"><span class="comment"> * particular port or peripheral (essentially a driver instance).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A device will come into existence through a &#x27;bind&#x27; call, either due to</span></span><br><span class="line"><span class="comment"> * a U_BOOT_DEVICE() macro (in which case platdata is non-NULL) or a node</span></span><br><span class="line"><span class="comment"> * in the device tree (in which case of_offset is &gt;= 0). In the latter case</span></span><br><span class="line"><span class="comment"> * we translate the device tree information into platdata in a function</span></span><br><span class="line"><span class="comment"> * implemented by the driver ofdata_to_platdata method (called just before the</span></span><br><span class="line"><span class="comment"> * probe method if the device has a device tree node.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * All three of platdata, priv and uclass_priv can be allocated by the</span></span><br><span class="line"><span class="comment"> * driver, or you can use the auto_alloc_size members of struct driver and</span></span><br><span class="line"><span class="comment"> * struct uclass_driver to have driver model do this automatically.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @driver: The driver used by this device</span></span><br><span class="line"><span class="comment"> * @name: Name of device, typically the FDT node name</span></span><br><span class="line"><span class="comment"> * @platdata: Configuration data for this device</span></span><br><span class="line"><span class="comment"> * @parent_platdata: The parent bus&#x27;s configuration data for this device</span></span><br><span class="line"><span class="comment"> * @uclass_platdata: The uclass&#x27;s configuration data for this device</span></span><br><span class="line"><span class="comment"> * @node: Reference to device tree node for this device</span></span><br><span class="line"><span class="comment"> * @driver_data: Driver data word for the entry that matched this device with</span></span><br><span class="line"><span class="comment"> *		its driver</span></span><br><span class="line"><span class="comment"> * @parent: Parent of this device, or NULL for the top level device</span></span><br><span class="line"><span class="comment"> * @priv: Private data for this device</span></span><br><span class="line"><span class="comment"> * @uclass: Pointer to uclass for this device</span></span><br><span class="line"><span class="comment"> * @uclass_priv: The uclass&#x27;s private data for this device</span></span><br><span class="line"><span class="comment"> * @parent_priv: The parent&#x27;s private data for this device</span></span><br><span class="line"><span class="comment"> * @uclass_node: Used by uclass to link its devices</span></span><br><span class="line"><span class="comment"> * @child_head: List of children of this device</span></span><br><span class="line"><span class="comment"> * @sibling_node: Next device in list of all devices</span></span><br><span class="line"><span class="comment"> * @flags: Flags for this device DM_FLAG_...</span></span><br><span class="line"><span class="comment"> * @req_seq: Requested sequence number for this device (-1 = any)</span></span><br><span class="line"><span class="comment"> * @seq: Allocated sequence number for this device (-1 = none). This is set up</span></span><br><span class="line"><span class="comment"> * when the device is probed and will be unique within the device&#x27;s uclass.</span></span><br><span class="line"><span class="comment"> * @devres_head: List of memory allocations associated with this device.</span></span><br><span class="line"><span class="comment"> *		When CONFIG_DEVRES is enabled, devm_kmalloc() and friends will</span></span><br><span class="line"><span class="comment"> *		add to this list. Memory so-allocated will be freed</span></span><br><span class="line"><span class="comment"> *		automatically when the device is removed / unbound</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">udevice</span> &#123;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">driver</span> *<span class="title">driver</span>;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">	<span class="keyword">void</span> *platdata;</span><br><span class="line">	<span class="keyword">void</span> *parent_platdata;</span><br><span class="line">	<span class="keyword">void</span> *uclass_platdata;</span><br><span class="line">	ofnode node;</span><br><span class="line">	ulong driver_data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">udevice</span> *<span class="title">parent</span>;</span></span><br><span class="line">	<span class="keyword">void</span> *priv;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">uclass</span> *<span class="title">uclass</span>;</span></span><br><span class="line">	<span class="keyword">void</span> *uclass_priv;</span><br><span class="line">	<span class="keyword">void</span> *parent_priv;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">uclass_node</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">child_head</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">sibling_node</span>;</span></span><br><span class="line">	<span class="keyword">uint32_t</span> flags;</span><br><span class="line">	<span class="keyword">int</span> req_seq;</span><br><span class="line">	<span class="keyword">int</span> seq;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_DEVRES</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">devres_head</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>有三种途径生成一个 udevice：</p>
+<ol>
+<li><p>dts 设备节点</p>
+</li>
+<li><p>UBOOTDEVICE(__name) 宏申明</p>
+</li>
+<li><p>调用 ‘bind’ API, device_bind_xxx</p>
+</li>
+</ol>
+<h1 id="Device-Model-Start-up-sequence"><a href="#Device-Model-Start-up-sequence" class="headerlink" title="Device Model Start-up sequence"></a>Device Model Start-up sequence</h1><p>DM 启动顺序, core/root.c</p>
+<ul>
+<li>dm_init_and_scan():</li>
+<li>dm_init()<ul>
+<li>Creates an empty list of devices and uclasses</li>
+<li>Binds and probes a root device</li>
+</ul>
+</li>
+<li>dm_scan_platdata()<ul>
+<li>Scans available platform data looking devices to be created</li>
+<li>Platform data may only be used when memory constrains prohibit device tree</li>
+</ul>
+</li>
+<li>dm_scan_fdt()<ul>
+<li>Scan device tree and bind driver to nodes to create devices</li>
+</ul>
+</li>
+</ul>
+<p>根据当前 U-Boot 的编程哲学，基本大部分设备都是通过 dts 来描述，还有少部分设备因为特殊原因，可以通过 U_BOOT_DEVICE(_name) 宏申明。</p>
+<h2 id="匹配过程"><a href="#匹配过程" class="headerlink" title="匹配过程"></a>匹配过程</h2><p>在UBoot DM 初始化阶段(initfdm 和 initrdm)，通过调用 dm_init_and_scan(boolpre_reloc_only) 根据名称 (UBOOT_DEVICE 中和 driver 的 name，或者 dts 和 driver 的 compatible) 匹配到对应的 driver，</p>
+<p>然后调用 device_bind_common 函数生成 udevice，udevice 会和 driver 绑定，</p>
+<p>并根据 driver 中的uclass id 找到对应的 uclass driver，并生成相应的 uclass， 并把该设备挂到 uclass 的设备节点之下。</p>
+<p>最后调用 driver 的 bind 函数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">| -&gt; dm_init_and_scan</span><br><span class="line">    | -&gt; dm_init</span><br><span class="line">        | -&gt; INIT_LIST_HEAD <span class="comment">//创建 root 节点</span></span><br><span class="line">        | -&gt; device_bind_by_name()</span><br><span class="line">            | -&gt; lists_driver_lookup_name <span class="comment">//lists_driver_lookup_name(&quot;root_driver&quot;), This function returns a pointer a driver given its name.</span></span><br><span class="line">                | -&gt; ll_entry_start    <span class="comment">//Point to first entry of linker-generated array</span></span><br><span class="line">                | -&gt; ll_entry_count    <span class="comment">//Return the number of elements in linker-generated array</span></span><br><span class="line">                | -&gt; <span class="keyword">for</span> &#123; <span class="built_in">strcmp</span> &#125;    <span class="comment">//通过名字来遍历，得到匹配的 driver</span></span><br><span class="line">            | -&gt; device_bind_common</span><br><span class="line">                | -&gt; uclass_get</span><br><span class="line">                    | -&gt; uclass_find    <span class="comment">//Find uclass by uclass_id</span></span><br><span class="line">                | -&gt; list_add_tail    <span class="comment">//put dev into parent&#x27;s successor list</span></span><br><span class="line">                | -&gt; uclass_bind_device    </span><br><span class="line">        | -&gt; device_probe</span><br><span class="line">            | -&gt; </span><br><span class="line">    | -&gt; dm_scan_platdata</span><br><span class="line">    | -&gt; dm_extended_scan_fdt</span><br><span class="line">    | -&gt; dm_scan_other</span><br></pre></td></tr></table></figure>
+
+
+
+<p>还有部分特殊的驱动，他们并不存在实际意义上的设备，比如 MMC 子系统中的 mmcblk 驱动，</p>
+<p>该驱动主要是把所有的 mmc 设备注册到更上一层的 blk 子系统中，向 blk 层提供操作 mmc 设备的 blkops，向下通过mmc uclass 提供的统一接口控制 mmc 设备。显然，这个驱动位于抽象层，它不和具体的硬件设备直接交互，并不适合用一个 dts(dts 是用来描述具体的硬件信息的) 节点或者 UBOOTDEVICE(_name) 宏来为这个驱动显示的申明设备。这种情形下一般通过主动调用 device_bind_xxx 系列 API 来完成驱动和设备已经更上一层 uclass 之间的 bind。</p>
+<p><img src="/2022/02/13/uboot-uboot-dirver-model/NO1.jpeg"></p>
+<p>A：生成 udevice。<br>B：绑定 udevice 和 driver。<br>C：把设备挂到 uclass 的dev_head 链表下。<br>D：调用设备驱动的 bind 接口。</p>
+<h1 id="uclass"><a href="#uclass" class="headerlink" title="uclass"></a>uclass</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * struct uclass - a U-Boot drive class, collecting together similar drivers</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A uclass provides an interface to a particular function, which is</span></span><br><span class="line"><span class="comment"> * implemented by one or more drivers. Every driver belongs to a uclass even</span></span><br><span class="line"><span class="comment"> * if it is the only driver in that uclass. An example uclass is GPIO, which</span></span><br><span class="line"><span class="comment"> * provides the ability to change read inputs, set and clear outputs, etc.</span></span><br><span class="line"><span class="comment"> * There may be drivers for on-chip SoC GPIO banks, I2C GPIO expanders and</span></span><br><span class="line"><span class="comment"> * PMIC IO lines, all made available in a unified way through the uclass.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @priv: Private data for this uclass</span></span><br><span class="line"><span class="comment"> * @uc_drv: The driver for the uclass itself, not to be confused with a</span></span><br><span class="line"><span class="comment"> * &#x27;struct driver&#x27;</span></span><br><span class="line"><span class="comment"> * @dev_head: List of devices in this uclass (devices are attached to their</span></span><br><span class="line"><span class="comment"> * uclass when their bind method is called)</span></span><br><span class="line"><span class="comment"> * @sibling_node: Next uclass in the linked list of uclasses</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">uclass</span> &#123;</span></span><br><span class="line">	<span class="keyword">void</span> *priv;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">uclass_driver</span> *<span class="title">uc_drv</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">dev_head</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">sibling_node</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里主要的成员是 uclassdriver 和 devhead 链表。</p>
+<ul>
+<li>dev_head 是一个链表头， 用来链接该类下的所有设备。可以通过 uclass_foreach_dev(dev,uc) 遍历该class 下的所有设备。</li>
+<li>uclass_driver 是针对某一类设备提供的通用<strong>操作接口</strong>，然后通过 udevice-&gt;driver-&gt;ops 操作到具体的硬件设备。<br>uclassdriver 通过 UCLASSDRIVER(name) 宏申明， 在 device_bind_common 中根据 设备对应的驱动 driver 中的 uclass id 找到 uclassdriver，并生成相应的 uclass， 并把设备挂到该 uclass 的设备节点 dev_head 下。</li>
+</ul>
+<h2 id="以-pwm-backlight-为例："><a href="#以-pwm-backlight-为例：" class="headerlink" title="以 pwm backlight 为例："></a>以 pwm backlight 为例：</h2><p><img src="/2022/02/13/uboot-uboot-dirver-model/NO2.jpeg"></p>
+<p>通过 UBOOTDRIVER 的 id 可以看出，该设备(pwm backlight)驱动属于 UCLASSPANELBACKLIGHT 类。</p>
+<p><img src="/2022/02/13/uboot-uboot-dirver-model/NO3.jpeg"></p>
+<p>这里定义了 backlight 的 UCLASS_DRIVER。该 uclass driver 提供了<code> backlight_enable(struct udevice*dev) 和 backlight_set_brightness(struct udevice*dev,intpercent)</code> 两个通用的 API 供应用调用，可以看到他们都需要传递对应设备的 udevice ，然后通过 backlight_get_ops(dev) 拿到对该设备的操作接口。</p>
+<p>#define backlight_get_ops(dev)  ((struct backlight_ops *)(dev)-&gt;driver-&gt;ops)</p>
+<h1 id="driver"><a href="#driver" class="headerlink" title="driver"></a>driver</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * struct driver - A driver for a feature or peripheral</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This holds methods for setting up a new device, and also removing it.</span></span><br><span class="line"><span class="comment"> * The device needs information to set itself up - this is provided either</span></span><br><span class="line"><span class="comment"> * by platdata or a device tree node (which we find by looking up</span></span><br><span class="line"><span class="comment"> * matching compatible strings with of_match).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Drivers all belong to a uclass, representing a class of devices of the</span></span><br><span class="line"><span class="comment"> * same type. Common elements of the drivers can be implemented in the uclass,</span></span><br><span class="line"><span class="comment"> * or the uclass can provide a consistent interface to the drivers within</span></span><br><span class="line"><span class="comment"> * it.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @name: Device name</span></span><br><span class="line"><span class="comment"> * @id: Identifies the uclass we belong to</span></span><br><span class="line"><span class="comment"> * @of_match: List of compatible strings to match, and any identifying data</span></span><br><span class="line"><span class="comment"> * for each.</span></span><br><span class="line"><span class="comment"> * @bind: Called to bind a device to its driver</span></span><br><span class="line"><span class="comment"> * @probe: Called to probe a device, i.e. activate it</span></span><br><span class="line"><span class="comment"> * @remove: Called to remove a device, i.e. de-activate it</span></span><br><span class="line"><span class="comment"> * @unbind: Called to unbind a device from its driver</span></span><br><span class="line"><span class="comment"> * @ofdata_to_platdata: Called before probe to decode device tree data</span></span><br><span class="line"><span class="comment"> * @child_post_bind: Called after a new child has been bound</span></span><br><span class="line"><span class="comment"> * @child_pre_probe: Called before a child device is probed. The device has</span></span><br><span class="line"><span class="comment"> * memory allocated but it has not yet been probed.</span></span><br><span class="line"><span class="comment"> * @child_post_remove: Called after a child device is removed. The device</span></span><br><span class="line"><span class="comment"> * has memory allocated but its device_remove() method has been called.</span></span><br><span class="line"><span class="comment"> * @priv_auto_alloc_size: If non-zero this is the size of the private data</span></span><br><span class="line"><span class="comment"> * to be allocated in the device&#x27;s -&gt;priv pointer. If zero, then the driver</span></span><br><span class="line"><span class="comment"> * is responsible for allocating any data required.</span></span><br><span class="line"><span class="comment"> * @platdata_auto_alloc_size: If non-zero this is the size of the</span></span><br><span class="line"><span class="comment"> * platform data to be allocated in the device&#x27;s -&gt;platdata pointer.</span></span><br><span class="line"><span class="comment"> * This is typically only useful for device-tree-aware drivers (those with</span></span><br><span class="line"><span class="comment"> * an of_match), since drivers which use platdata will have the data</span></span><br><span class="line"><span class="comment"> * provided in the U_BOOT_DEVICE() instantiation.</span></span><br><span class="line"><span class="comment"> * @per_child_auto_alloc_size: Each device can hold private data owned by</span></span><br><span class="line"><span class="comment"> * its parent. If required this will be automatically allocated if this</span></span><br><span class="line"><span class="comment"> * value is non-zero.</span></span><br><span class="line"><span class="comment"> * @per_child_platdata_auto_alloc_size: A bus likes to store information about</span></span><br><span class="line"><span class="comment"> * its children. If non-zero this is the size of this data, to be allocated</span></span><br><span class="line"><span class="comment"> * in the child&#x27;s parent_platdata pointer.</span></span><br><span class="line"><span class="comment"> * @ops: Driver-specific operations. This is typically a list of function</span></span><br><span class="line"><span class="comment"> * pointers defined by the driver, to implement driver functions required by</span></span><br><span class="line"><span class="comment"> * the uclass.</span></span><br><span class="line"><span class="comment"> * @flags: driver flags - see DM_FLAGS_...</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">driver</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> *name;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> <span class="title">uclass_id</span> <span class="title">id</span>;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">udevice_id</span> *<span class="title">of_match</span>;</span></span><br><span class="line">	<span class="keyword">int</span> (*bind)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*probe)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*remove)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*unbind)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*ofdata_to_platdata)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*child_post_bind)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*child_pre_probe)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> (*child_post_remove)(struct udevice *dev);</span><br><span class="line">	<span class="keyword">int</span> priv_auto_alloc_size;</span><br><span class="line">	<span class="keyword">int</span> platdata_auto_alloc_size;</span><br><span class="line">	<span class="keyword">int</span> per_child_auto_alloc_size;</span><br><span class="line">	<span class="keyword">int</span> per_child_platdata_auto_alloc_size;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">void</span> *ops;	<span class="comment">/* driver-specific operations */</span></span><br><span class="line">	<span class="keyword">uint32_t</span> flags;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>通过 UBOOTDRIVER(__name) 宏声明。如果 driver 实现了 bind 接口，该bind 将在 device_bind_common 中 device 和 driver 匹配上后被调用, 而且在 device_bind_common 中会完成 udevice 和 driver 的绑定。</p>
+<p>driver 一般都有对应的 probe 接口，通过 device_probe(structudevice*dev) 调用，需要注意的是driver 的 bind 接口调用的比 probe 接口早， 大部分在 dm_init_and_scan 中就被调用了。</p>
+<p>driver 一般会提供 ops 操作接口，供上一层调用。</p>
+<p>需要说明的是，driver 一般都不需要把自己注册到 uclass 中，而是在 device_bind _common 阶段实现driver 、uclass、device 三者的对接，然后 uclass 层通过 udevice-&gt;driver-&gt;ops 获取对应 driver 的操作接口。</p>
+<h1 id="设备驱动的使用"><a href="#设备驱动的使用" class="headerlink" title="设备驱动的使用"></a>设备驱动的使用</h1><p>一般应用层的代码要使用某个设备的时候，首先需要通过 uclass_get_device_xxx 系列 API 拿到该设备的 udevice， 然后通过该设备的 uclass 提供的 API 操作该设备。</p>
+<p>uclass_get_device_xxx 拿到该设备的 udevice 后会调用该设备的 probe 接口。</p>
+<p>以前面提到的 pwm backlight 为例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * drivers/video/simple_panel.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">udevice</span> *<span class="title">bldev</span>;</span></span><br><span class="line">uclass_get_device_by_phandle(UCLASS_PANEL_BACKLIGHT, dev, <span class="string">&quot;backlight&quot;</span>, &amp;bldev);</span><br><span class="line">backlight_enable(bldev);</span><br><span class="line">backlight_set_brightness(bldev, percent);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>uboot</category>
+      </categories>
+      <tags>
+        <tag>uboot</tag>
+      </tags>
   </entry>
 </search>
