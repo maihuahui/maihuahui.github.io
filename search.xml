@@ -3200,4 +3200,89 @@
         <tag>C</tag>
       </tags>
   </entry>
+  <entry>
+    <title>GDB 内存操作</title>
+    <url>/2022/02/15/gdb-gdb-memory/</url>
+    <content><![CDATA[<h1 id="gdb查看内存数据"><a href="#gdb查看内存数据" class="headerlink" title="gdb查看内存数据"></a>gdb查看内存数据</h1><p>格式: </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x/nfu</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li><code>x</code> 是 examine 的缩写，意思是检查</li>
+<li><code>n</code>表示要显示的内存单元的个数</li>
+<li><code>f</code>表示显示方式</li>
+<li><code>u</code>表示一个地址单元的长度：</li>
+</ul>
+<h2 id="显示方式-f-取值"><a href="#显示方式-f-取值" class="headerlink" title="显示方式 f 取值"></a>显示方式 f 取值</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x 按十六进制格式显示变量。</span><br><span class="line">d 按十进制格式显示变量。</span><br><span class="line">u 按十进制格式显示无符号整型。</span><br><span class="line">o 按八进制格式显示变量。</span><br><span class="line">t 按二进制格式显示变量。</span><br><span class="line">a 按十六进制格式显示变量。</span><br><span class="line">i 指令地址格式</span><br><span class="line">c 按字符格式显示变量。</span><br><span class="line">f 按浮点数格式显示变量。</span><br></pre></td></tr></table></figure>
+<h2 id="地址单元长度-u-取值"><a href="#地址单元长度-u-取值" class="headerlink" title="地址单元长度 u 取值"></a>地址单元长度 u 取值</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">b表示单字节，</span><br><span class="line">h表示双字节，</span><br><span class="line">w表示四字节，</span><br><span class="line">g表示八字节</span><br></pre></td></tr></table></figure>
+
+<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x/50xw 0x40451400</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>50</code>是数量，<code>x</code>是16进制，<code>w</code>是四字节</p>
+<h1 id="Examining-Memory"><a href="#Examining-Memory" class="headerlink" title="Examining Memory"></a>Examining Memory</h1><p>You can use the command <code>x</code> (for “examine”) to examine memory in any of several formats, independently of your program’s data types.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x/nfu addr</span><br><span class="line">x addr</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+<p>Use the x command to examine memory.</p>
+<p><code>n</code>, <code>f</code>, and <code>u</code> are all optional parameters that specify how much memory to display and how to format it; addr is an expression giving the address where you want to start displaying memory. If you use defaults for nfu, you need not type the slash ‘/’. Several commands set convenient defaults for addr.</p>
+<h2 id="n-the-repeat-count"><a href="#n-the-repeat-count" class="headerlink" title="n, the repeat count"></a>n, the repeat count</h2><pre><code>The repeat count is a decimal integer; the default is 1. 
+It specifies how much memory (counting by units u) to display. 
+If a negative number is specified, memory is examined backward from addr.
+</code></pre>
+<h2 id="f-the-display-format"><a href="#f-the-display-format" class="headerlink" title="f, the display format"></a>f, the display format</h2><pre><code>The display format is one of the formats used by print 
+(‘x’, ‘d’, ‘u’, ‘o’, ‘t’, ‘a’, ‘c’, ‘f’, ‘s’), 
+‘i’ (for machine instructions) and ‘m’ (for displaying memory tags). 
+The default is ‘x’ (hexadecimal) initially. 
+The default changes each time you use either x or print.
+</code></pre>
+<h2 id="u-the-unit-size"><a href="#u-the-unit-size" class="headerlink" title="u, the unit size"></a>u, the unit size</h2><p>The unit size is any of</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">b</span><br><span class="line">Bytes.</span><br><span class="line"></span><br><span class="line">h</span><br><span class="line">Halfwords (two bytes).</span><br><span class="line"></span><br><span class="line">w</span><br><span class="line">Words (four bytes). This is the initial default.</span><br><span class="line"></span><br><span class="line">g</span><br><span class="line">Giant words (eight bytes).</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Each time you specify a unit size with x, that size becomes the default unit the next time you use x. </li>
+<li>For the ‘i’ format, the unit size is ignored and is normally not written. </li>
+<li>For the ‘s’ format, the unit size defaults to ‘b’, unless it is explicitly given. </li>
+<li>Use x /hs to display 16-bit char strings and x /ws to display 32-bit strings. The next use of x /s will again display 8-bit strings. </li>
+<li>Note that the results depend on the programming language of the current compilation unit. </li>
+<li>If the language is C, the ‘s’ modifier will use the UTF-16 encoding while ‘w’ will use UTF-32. The encoding is set by the programming language and cannot be altered.</li>
+</ul>
+<h1 id="modify-memory"><a href="#modify-memory" class="headerlink" title="modify memory"></a>modify memory</h1><p>In order to set the variable g, use </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) set var g=4</span><br></pre></td></tr></table></figure>
+<p>GDB allows more implicit conversions in assignments than C; you can freely store an integer value into a pointer variable or vice versa,<br>and you can convert any structure to any other structure that is the same length or shorter.</p>
+<p>To store values into arbitrary places in memory, use the ‘{…}’ construct to generate a value of specified type at a specified address (see Expressions).<br>For example, {int}0x83040 refers to memory location 0x83040 as an integer (which implies a certain size and representation in memory), and</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set &#123;int&#125;0x83040 = 4</span><br></pre></td></tr></table></figure>
+<p>stores the value 4 into that memory location.</p>
+<p>This should work for any valid pointer, and can be cast to any appropriate data type.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set *((int *) 0xbfbb0000) = 20</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">set *(unsigned char      *)&lt;memaddr&gt; = &lt;value&gt;  ; write 1 byte</span><br><span class="line">set *(unsigned short     *)&lt;memaddr&gt; = &lt;value&gt;  ; write 2 bytes</span><br><span class="line">set *(unsigned int       *)&lt;memaddr&gt; = &lt;value&gt;  ; write 4 bytes</span><br><span class="line">set *(unsigned long long *)&lt;memaddr&gt; = &lt;value&gt;  ; write 8 bytes</span><br><span class="line"> </span><br><span class="line">or</span><br><span class="line"> </span><br><span class="line">set *(char      *)&lt;memaddr&gt; = &lt;value&gt;           ; write 1 byte</span><br><span class="line">set *(short     *)&lt;memaddr&gt; = &lt;value&gt;           ; write 2 bytes</span><br><span class="line">set *(int       *)&lt;memaddr&gt; = &lt;value&gt;           ; write 4 bytes</span><br><span class="line">set *(long long *)&lt;memaddr&gt; = &lt;value&gt;           ; write 8 bytes</span><br></pre></td></tr></table></figure>
+
+<p>or use</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set *0xbfbb0000=20</span><br></pre></td></tr></table></figure>
+<p>change memory locations directly.</p>
+]]></content>
+      <categories>
+        <category>gdb</category>
+      </categories>
+      <tags>
+        <tag>gdb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Makefile 特殊符号</title>
+    <url>/2022/02/15/makefile-makefile/</url>
+    <content><![CDATA[<h1 id="Makefile-特殊符号"><a href="#Makefile-特殊符号" class="headerlink" title="Makefile 特殊符号"></a>Makefile 特殊符号</h1><p> <code>- @ + $ $$</code></p>
+<h2 id="符号-连字符"><a href="#符号-连字符" class="headerlink" title="- 符号 (连字符)"></a><code>-</code> 符号 (连字符)</h2><p>任何命令行的任何非零退出状态都被忽略，忽略当前命令行执行时所遇到的错误。<br>make 在执行命令的时候，如果遇到 error，会退出执行。加上减号的目的是即便此命令行执行出错，那么也不要管，继续执行 make。<br>通常删除或者创建文件时，遇到文件不存在或者已经创建。如果希望忽略掉错误，继续执行，就可以在命令行前面添加 <code>-</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.PHONY : clean</span><br><span class="line">clean :</span><br><span class="line">	-rm $(objects)</span><br></pre></td></tr></table></figure>
+<h2 id="符号-at-符号"><a href="#符号-at-符号" class="headerlink" title="@ 符号 (at 符号)"></a><code>@</code> 符号 (at 符号)</h2><p>通常 makefile 会将其执行的命令行在执行前输出到屏幕上。如果将 @ 添加到命令行前，这个命令将不被 make 回显出来，<strong>即不显示命令本身而只显示结果</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">all :</span><br><span class="line">	@echo &quot;Make&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="符号-加号"><a href="#符号-加号" class="headerlink" title="+ 符号 (加号)"></a><code>+</code> 符号 (加号)</h2><p>使用加号修饰符让命令始终执行。命令行执行时不受到 make 的 -n -t -q 三个参数的影响，忽略这三个参数。<br>如果 make 执行时，使用 -n 或 –just-print。该参数显示命令，不会执行命令。这个功能有利于调试 Makefile，方便查看执行的命令形式和顺序。</p>
+<h2 id="符号-美元符号"><a href="#符号-美元符号" class="headerlink" title="$ 符号 (美元符号)"></a><code>$</code> 符号 (美元符号)</h2><p>美元符号 <code>$</code>，扩展打开 makefile 中定义的变量。</p>
+<h2 id="符号"><a href="#符号" class="headerlink" title="$$ 符号"></a><code>$$</code> 符号</h2><p><code>$$</code> 符号，扩展打开 makefile 中定义的 shell 变量。</p>
+]]></content>
+      <categories>
+        <category>makefile</category>
+      </categories>
+      <tags>
+        <tag>makefile</tag>
+      </tags>
+  </entry>
 </search>

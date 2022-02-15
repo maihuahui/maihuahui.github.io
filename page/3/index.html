@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,339 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">Vim匹配</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:13:11 / Modified: 17:13:37" itemprop="dateCreated datePublished" datetime="2021-09-12T17:13:11+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="按模式匹配还是按原义匹配"><a href="#按模式匹配还是按原义匹配" class="headerlink" title="按模式匹配还是按原义匹配"></a>按模式匹配还是按原义匹配</h1><h2 id="Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><a href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns" class="headerlink" title="Tip 72 Tune the Case Sensitivity of Search Patterns"></a>Tip 72 Tune the Case Sensitivity of Search Patterns</h2><p>调整搜索大小写敏感度</p>
+<p><strong>全局区分大小写</strong></p>
+<p>通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。</p>
+<p><strong>每次搜索区分大小写</strong></p>
+<p>可以使用以下选项来覆盖默认的是否忽略大小写:</p>
+<ul>
+<li><p>\c - 忽略大小写</p>
+</li>
+<li><p>\C - 区分大小写</p>
+</li>
+</ul>
+<p>每次搜索的时候都可以强制指定是否区分大小写。注意：在替换时\c标志位为手工确认。</p>
+<p><strong>启用智能大小写</strong></p>
+<p>Vim 提供了预测我们大小写敏感意图的 smartcase 选项， :set smartcase</p>
+<p>启用此选项后进行搜索时,</p>
+<ul>
+<li><p>如果输入的全部是小写字母, 那么就不区分大小写;</p>
+</li>
+<li><p>但只要包含大写字母, 那么就是大小写敏感的</p>
+</li>
+</ul>
+<h2 id="Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><a href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches" class="headerlink" title="Tip 73 Use the \v Pattern Switch for Regex Searches"></a>Tip 73 Use the \v Pattern Switch for Regex Searches</h2><p>按正则表达式查找时，使用 \v 模式开关  （开启字符的特殊含义）</p>
+<p>我们可以使用 \v 模式(very magic search)开关规范所有的特殊符号, 启用之后, 除了下划线 _, 大小写字母, 和数字外, 所有的字符都具有特殊含义。</p>
+<h2 id="Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><a href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches" class="headerlink" title="Tip 74 Use the \V Literal Switch for Verbatim Searches"></a>Tip 74 Use the \V Literal Switch for Verbatim Searches</h2><p>按原义查找文本时，使用 \V 原义开关  (开启字符的特殊含义)</p>
+<p>在正则表达式中使用的特殊字符，在按模式查找时用起来很顺手，但如果我们想</p>
+<p>按原义查找文本时，它们就变成了阻碍。使用 very nomagic 原义开关，可以消除附</p>
+<p>加在 .、 * 以及 ? 等大多数字符上的特殊含义。</p>
+<p><strong>使用原义开关 \V，即可激活 very nomagic 搜索模式</strong></p>
+<p>例如：搜索匹配“a.k.a.”字符串</p>
+<p>/ \Va.k.a.</p>
+<p>我们也可以使用转义的方式来消除字符的特殊含义。例如：</p>
+<p>/ a.k.a.</p>
+<p><strong>使用 “\V” 会使得其后的模式中只有反斜杠有特殊的意义,显然更方便。</strong></p>
+<h2 id="Tip-76-Stake-the-Boundaries-of-a-Ward"><a href="#Tip-76-Stake-the-Boundaries-of-a-Ward" class="headerlink" title="Tip 76 Stake the Boundaries of a Ward"></a>Tip 76 Stake the Boundaries of a Ward</h2><p>界定单词的边界</p>
+<p>定义一个搜索模型时, 指定单词的开始和结束位置可能很有用, Vim 给我们提供了单词分隔的选项。</p>
+<p>例如执行搜索 /the<CR> 的时候, 是会把 these they their 等单词一起搜索出来的。</p>
+<p>如果我们想只搜索 the 完整的单词, 而不需要包含 the 片段的词, 那么我们需要指定 词的边界。</p>
+<p>在 \v 模式下（开启字符特殊含义）, <strong>&lt; 和 &gt;</strong> 即代表词边界的符号. 所以我们可以使用 /\v<the><CR> 来达到我们的预期。</p>
+<p>需要注意的是, 如果我们在 \v 模式下需要匹配 &lt;&gt; 字符, 那么就得加反斜杠来进行转义了。</p>
+<h2 id="Tip-78-Escape-Problem-Characters"><a href="#Tip-78-Escape-Problem-Characters" class="headerlink" title="Tip 78 Escape Problem Characters"></a>Tip 78 Escape Problem Characters</h2><p>转义问题字符</p>
+<p>在 /V 纯文本模式下可以很容易的来进行纯文本的搜索匹配, 因为绝大部分的字符(如:. + *等)的特殊含义都被禁用了, 但是仍然有极少字符仍然有特殊的含义。</p>
+<p>这时要用 \ 进行转义。</p>
+<p>正向搜索转义斜杠 ‘/ ’</p>
+<p>正向搜索时, 斜杠 / 字符被解释为终止符, 所有在此字符之后的内容都会被忽略，替换模式下在 \ 字符后添加标志位。</p>
+<p>在 \v 和 \V 模式下, 如果要匹配 / 字符, 那么需要进行转义。</p>
+<p>反向搜索转义问号 ‘ ? ’</p>
+<p>当使用反向搜索的时候, 问号 ? 就是搜索的终止符。如果要匹配 ？号，需要转义 ?</p>
+<p>每次都转义反斜杠 ‘ \ ’</p>
+<p>\ 是需要进行转义的. 通常情况下, 反斜杠 \ 之后的那个字符表示被转义的特殊含义. 所以要匹配反斜杠字符的话就需要加转义, 也就是: \</p>
+<p>而且，不管正向还是反向搜索，要匹配 \ 都是需要转义的。</p>
+<p>终止符( / 或 ? )</p>
+<p>Vim 允许在搜索字段终止符后面追加某些标志来调整搜索命令的行为</p>
+<p>例如 /vim/e<CR> 将把光标放到高亮匹配位置的最后而不是前面</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/" class="post-title-link" itemprop="url">Vim替换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 17:11:55 / Modified: 17:12:20" itemprop="dateCreated datePublished" datetime="2021-09-12T17:11:55+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h1><h2 id="Tip-87-Meet-the-Substitute-Command"><a href="#Tip-87-Meet-the-Substitute-Command" class="headerlink" title="Tip 87 Meet the Substitute Command"></a>Tip 87 Meet the Substitute Command</h2><p>结识替换命令，<code>:substitute </code>命令。其允许我们查找和替换一个文本块，语法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:[range]s[ubstitute]/&#123;pattern&#125;/&#123;string&#125;/[flags]</span><br></pre></td></tr></table></figure>
+
+<p>​    命令很复杂.，除了要提供搜索模式和替换文本之外, 还需要指定执行的范围。另外, 还可以提供额外的标识符来调整其行为。</p>
+<p><code>[range]</code> 的使用和其他 Ex 命令一样，以逗号分隔</p>
+<p><code>&#123;pattern&#125; </code>指代要查找的部分</p>
+<p><strong>Flags，标志位调整替换行为</strong></p>
+<p>几种常用的 flag 标志符:</p>
+<ul>
+<li><p>g - 让替换命令应用到全局,可修改一行内的匹配项， 而不是仅改变第一个匹配项. </p>
+</li>
+<li><p>c -替换前手工确认或拒绝每一处修改, </p>
+</li>
+<li><p>n - 禁止替换行为, 此功能可用于统计匹配文本的数量 </p>
+</li>
+<li><p>e - 忽略错误信息. 例如搜索没有匹配项时, 替换命令会提示一个错误信息 “E486: Pattern not found.”</p>
+</li>
+<li><p>&amp; - 告知 Vim 重用上一次替换命令中的相同标志. </p>
+</li>
+</ul>
+<p><strong>替换域中的特殊字符</strong></p>
+<p>查找模式时某些字符是有特殊意义的. 而替换字段也是有一些特殊字符的</p>
+<table>
+<thead>
+<tr>
+<th><strong>Symbol</strong></th>
+<th><strong>Represents</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\r</td>
+<td>插入回车(而不是\n)</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>插入 tab 键</td>
+</tr>
+<tr>
+<td>\</td>
+<td>插入反斜杠 \</td>
+</tr>
+<tr>
+<td>\1</td>
+<td>插入第一个子匹配</td>
+</tr>
+<tr>
+<td>\2</td>
+<td>插入第二个只匹配 (依次到 \9)</td>
+</tr>
+<tr>
+<td>\0</td>
+<td>插入整个匹配的文本</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>插入整个匹配的文本</td>
+</tr>
+<tr>
+<td>~</td>
+<td>使用上次的 {string} 替换文本</td>
+</tr>
+<tr>
+<td>={Vim  script}</td>
+<td>执行 {Vim脚本} 表达式, 把结果结果作为 {string} 替换文本</td>
+</tr>
+</tbody></table>
+<h2 id="Tip-88-Find-and-Replace-Every-Match-in-a-File"><a href="#Tip-88-Find-and-Replace-Every-Match-in-a-File" class="headerlink" title="Tip 88 Find and Replace Every Match in a File"></a>Tip 88 Find and Replace Every Match in a File</h2><p>在文件范围内查找并替换每一处匹配</p>
+<ul>
+<li><p>标志位 g 处理横轴字符，当前行所有匹配</p>
+</li>
+<li><p>地址符 % 处理纵轴的文本行，可理解为处理整个文件的匹配项</p>
+</li>
+</ul>
+<p>语法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/g</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Tip-89-Eyeball-Each-Substitution"><a href="#Tip-89-Eyeball-Each-Substitution" class="headerlink" title="Tip 89 Eyeball Each Substitution"></a>Tip 89 Eyeball Each Substitution</h2><p>手动控制每一次替换操作</p>
+<p>标志位 <code>c </code> 手工确认每一处修改</p>
+<p>语法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/gc</span><br></pre></td></tr></table></figure>
+
+<p>​    引入标志位 c 后，Vim 会在每处匹配体贴地为我们提示所有的选项<code>y/n/a/q/l/^E/^Y</code>。下表展示了每种答案的含义：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Keystrokes</strong></th>
+<th><strong>Buffer Contents</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>y</td>
+<td><em>yes</em> 替换本次修改</td>
+</tr>
+<tr>
+<td>n</td>
+<td><em>no</em> 放弃本次修改</td>
+</tr>
+<tr>
+<td>q</td>
+<td><em>quit</em> 退出替换</td>
+</tr>
+<tr>
+<td>l</td>
+<td><em>last</em> 本次为最后一次替换, 然后退出</td>
+</tr>
+<tr>
+<td>a</td>
+<td><em>all</em> 替换本次和剩下的所有项</td>
+</tr>
+<tr>
+<td><C-e></td>
+<td>向上滚动屏幕</td>
+</tr>
+<tr>
+<td><C-y></td>
+<td>向下滚动屏幕</td>
+</tr>
+</tbody></table>
+<p>不同于以往的是，在 Vim 的替换-确认模式下，键盘上的大多数按键都将失效。尽</p>
+<p>管 <Esc> 键可以让我们像往常一样回到普通模式，但除此之外，周围的一切都使我们</p>
+<p>感到陌生。</p>
+<h2 id="Tip-90-Reuse-the-Last-Search-Pattern"><a href="#Tip-90-Reuse-the-Last-Search-Pattern" class="headerlink" title="Tip 90 Reuse the Last Search Pattern"></a>Tip 90 Reuse the Last Search Pattern</h2><p>重用上次的查找模式</p>
+<p>如果你觉得将来会以完整形式来调用历史记录中的 substitute 命令， 就要养成在查</p>
+<p>找域中填充内容的习惯。你只需在命令行中输入 <code>&lt;C-r&gt;/</code>，即可把上次的查找内容粘贴进来。</p>
+<p>即留空查找域，使用<code>&lt;C-r&gt;/</code>替代</p>
+<h2 id="Tip-91-Replace-with-the-Contents-of-a-Register"><a href="#Tip-91-Replace-with-the-Contents-of-a-Register" class="headerlink" title="Tip 91 Replace with the Contents of a Register"></a>Tip 91 Replace with the Contents of a Register</h2><p>用寄存器的内容替换</p>
+<p>通过输入<code> &lt;C-r&gt;&#123;register&#125;</code>， 我们可以将寄存器的内容插入到命令行</p>
+<h2 id="Tip-92-Repeat-the-Previous-Substitute-Command"><a href="#Tip-92-Repeat-the-Previous-Substitute-Command" class="headerlink" title="Tip 92 Repeat the Previous Substitute Command"></a>Tip 92 Repeat the Previous Substitute Command</h2><p>重复上一次 substitute 命令</p>
+<p>假设我们刚刚执行完以下命令（其作用范围为当前行）:s/target/replacement/g</p>
+<p>但我们失误，应该加上前缀 % 才对，接下来，我们只需输入 g&amp;，即可在整个文件的范围内重复这条命令。</p>
+<p>某条 substitute 命令除了没加 % 前缀之外，其余都正确的时候，不妨试一试 g&amp;</p>
+<p>​    gv 命令会激活可视模式，并重新将上次被选中的文本高亮起来（详情参考Tip 21 ）进入命令行模式，此时命令行会提示为 :’&lt;,’&gt; 键入 &amp;&amp;, 第一个 :&amp; 组合为 Ex 命令, 功能为重复最后一次替(:substitute)换命令(参考 :h :&amp;), 而第二个 &amp; 则表示使用前一个替换命令的标志符。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2037,84 +2370,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/vim/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/08/vim/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-08 23:38:55" itemprop="dateCreated datePublished" datetime="2021-09-08T23:38:55+08:00">2021-09-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>

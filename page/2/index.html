@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,383 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Tmux使用指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-12-12 19:18:27 / Modified: 20:08:15" itemprop="dateCreated datePublished" datetime="2021-12-12T19:18:27+08:00">2021-12-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="tmux使用指南"><a href="#tmux使用指南" class="headerlink" title="tmux使用指南"></a>tmux使用指南</h1><h2 id="tmux快捷指令"><a href="#tmux快捷指令" class="headerlink" title="tmux快捷指令"></a>tmux快捷指令</h2><p>tmux的所有指令，都包含同一个前缀，默认为<code>Ctrl+b</code>，但两按键相隔甚远，推荐<code>Ctrl+a</code></p>
+<h3 id="系统指令"><a href="#系统指令" class="headerlink" title="系统指令"></a>系统指令</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl + a</td>
+<td>?</td>
+<td>显示快捷键帮助文档</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>d</td>
+<td>断开当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>D</td>
+<td>选择要断开的会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>Ctrl+z</td>
+<td>挂起当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>r</td>
+<td>强制重载当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>s</td>
+<td>显示会话列表用于选择并切换</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>:</td>
+<td>进入命令行模式，此时可直接输入ls等命令</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>[</td>
+<td>进入复制模式，按q退出</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>]</td>
+<td>粘贴复制模式中复制的文本</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>~</td>
+<td>列出提示信息缓存</td>
+</tr>
+</tbody></table>
+<h3 id="窗口指令（window）"><a href="#窗口指令（window）" class="headerlink" title="窗口指令（window）"></a>窗口指令（window）</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+a</td>
+<td>c</td>
+<td>新建窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>&amp;</td>
+<td>关闭当前窗口（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>0~9</td>
+<td>切换到指定窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>p</td>
+<td>切换到上一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>n</td>
+<td>切换到下一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>w</td>
+<td>打开窗口列表，用于且切换窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>,</td>
+<td>重命名当前窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>.</td>
+<td>修改当前窗口编号（适用于窗口重新排序）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>f</td>
+<td>快速定位到窗口（输入关键字匹配窗口名称）</td>
+</tr>
+</tbody></table>
+<h3 id="面板指令-panel"><a href="#面板指令-panel" class="headerlink" title="面板指令(panel)"></a>面板指令(panel)</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+b</td>
+<td>“</td>
+<td>当前面板上下一分为二，下侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>%</td>
+<td>当前面板左右一分为二，右侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>x</td>
+<td>关闭当前面板（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>z</td>
+<td>最大化当前面板，再重复一次按键后恢复正常（v1.8版本新增）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>!</td>
+<td>将当前面板移动到新的窗口打开（原窗口中存在两个及以上面板有效）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>;</td>
+<td>切换到最后一次使用的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>q</td>
+<td>显示面板编号，在编号消失前输入对应的数字可切换到相应的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>{</td>
+<td>向前置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>}</td>
+<td>向后置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+o</td>
+<td>顺时针旋转当前窗口中的所有面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>方向键</td>
+<td>移动光标切换面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>o</td>
+<td>选择下一面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>空格键</td>
+<td>在自带的面板布局中循环切换</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Alt+方向键</td>
+<td>以5个单元格为单位调整当前面板边缘</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+方向键</td>
+<td>以1个单元格为单位调整当前面板边缘（Mac下被系统快捷键覆盖）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>t</td>
+<td>显示时钟</td>
+</tr>
+</tbody></table>
+<h1 id="会话-session"><a href="#会话-session" class="headerlink" title="会话 session"></a>会话 session</h1><h2 id="新建会话"><a href="#新建会话" class="headerlink" title="新建会话"></a>新建会话</h2><p>新建一个<code>tmux session</code>非常简单，语法为<code>tmux new -s session-name</code>，也可以简写为<code>tmux</code>，为了方便管理，建议指定会话名称，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux # 新建一个无名称的会话</span><br><span class="line">tmux new -s demo # 新建一个名称为demo的会话</span><br></pre></td></tr></table></figure>
+<h2 id="断开当前会话"><a href="#断开当前会话" class="headerlink" title="断开当前会话"></a>断开当前会话</h2><p>会话中操作了一段时间，我希望断开会话同时下次还能接着用，可以使用<code>detach</code>命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux detach # 断开当前会话</span><br><span class="line">Ctrl+b + d # tmux的会话中，断开快捷键</span><br></pre></td></tr></table></figure>
+<p>TODO: <code>Ctrl+b + d</code>与<code>Ctrl+b + z</code>区别</p>
+<h2 id="进入之前的会话"><a href="#进入之前的会话" class="headerlink" title="进入之前的会话"></a>进入之前的会话</h2><p>断开会话后，想要接着上次留下的现场继续工作，就要使用到tmux的<code>attach</code>命令了，语法为<code>tmux attach-session -t session-name</code>，可简写为<code>tmux a -t session-name</code> 或 <code>tmux a</code>。通常我们使用如下两种方式之一即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux a # 默认进入第一个会话</span><br><span class="line">tmux a -t demo # 进入到名称为demo的会话</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭会话"><a href="#关闭会话" class="headerlink" title="关闭会话"></a>关闭会话</h2><p>会话的使命完成后，一定是要关闭的。我们可以使用tmux的<code>kill</code>命令，kill命令有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kill-pane、kill-server、kill-session 和 kill-window共四种，其中kill-session的语法为tmux kill-session -t session-name。如下：</span><br><span class="line"></span><br><span class="line">tmux kill-session -t demo # 关闭demo会话</span><br><span class="line">tmux kill-server # 关闭服务器，所有的会话都将关闭</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看所有的会话"><a href="#查看所有的会话" class="headerlink" title="查看所有的会话"></a>查看所有的会话</h2><p>管理会话的第一步就是要查看所有的会话，我们可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux list-session # 查看所有会话</span><br><span class="line">tmux ls # 查看所有会话，提倡使用简写形式</span><br></pre></td></tr></table></figure>
+
+<p>如果刚好处于会话中，可以使用对应的tmux快捷键<code>Ctrl+b + s</code>，此时tmux将打开一个会话列表，按上下键或者鼠标滚轮，可选中目标会话，按左右键可收起或展开会话的窗口，选中目标会话或窗口后，按回车键即可完成切换。</p>
+<h1 id="灵活配置"><a href="#灵活配置" class="headerlink" title="灵活配置"></a>灵活配置</h1><h2 id="开启鼠标支持"><a href="#开启鼠标支持" class="headerlink" title="开启鼠标支持"></a>开启鼠标支持</h2><p>默认情况下，tmux的多窗口之间的切换以及面板大小调整，需要输入指令才能完成，这一过程，涉及到的指令较多，而且操作麻烦，特别是面板大小调整，指令难以一步到位，这个时候开启鼠标支持就完美了。</p>
+<p>对于tmux v2.1(2015.10.28)之前的版本，需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setw -g mode-mouse on # 支持鼠标选取文本等</span><br><span class="line">setw -g mouse-resize-pane on # 支持鼠标拖动调整面板的大小(通过拖动面板间的分割线)</span><br><span class="line">setw -g mouse-select-pane on # 支持鼠标选中并切换面板</span><br><span class="line">setw -g mouse-select-window on # 支持鼠标选中并切换窗口(通过点击状态栏窗口名称)</span><br></pre></td></tr></table></figure>
+
+<p>有的地方可能会出现set-window-option的写法，setw就是它的别名。</p>
+<p>对于tmux v2.1及以上的版本，仅需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set-option -g mouse on # 等同于以上4个指令的效果</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，开启鼠标支持后，iTem2默认的鼠标选中即复制功能需要同时按下 Alt 键，才会生效。</p>
+<h2 id="快速面板切换"><a href="#快速面板切换" class="headerlink" title="快速面板切换"></a>快速面板切换</h2><p>鼠标支持确实能带来很大的便捷性，特别是对于习惯了鼠标操作的tmux新手，但对于键盘爱好者而言，这不是什么好消息，对他们而言，双手不离键盘是基本素质。</p>
+<p>虽然指令前缀加方向键可以切换面板，但方向键太远，不够快，不够Geek。没关系，我们可以将面板切换升级为熟悉的h、j、k、l键位。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 绑定hjkl键为面板切换的上下左右键</span><br><span class="line">bind -r k select-pane -U # 绑定k为↑</span><br><span class="line">bind -r j select-pane -D # 绑定j为↓</span><br><span class="line">bind -r h select-pane -L # 绑定h为←</span><br><span class="line">bind -r l select-pane -R # 绑定l为→</span><br></pre></td></tr></table></figure>
+
+<p>-r表示可重复按键，大概500ms之内，重复的h、j、k、l按键都将有效，完美支持了快速切换的Geek需求。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">Dtb反编译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-25 19:43:11 / Modified: 19:47:54" itemprop="dateCreated datePublished" datetime="2021-09-25T19:43:11+08:00">2021-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>dts←→dtb</p>
+<ol>
+<li><p>反编译dtb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dtb -O dts -o *.dts  *.dtb</span><br></pre></td></tr></table></figure></li>
+<li><p>正编译dts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dts -O dtb -o *.dtb  *.dts</span><br></pre></td></tr></table></figure></li>
+<li><p>dtc -help</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Usage: dtc [options] &lt;input file&gt;</span><br><span class="line"></span><br><span class="line">Options: -[qI:O:o:V:d:R:S:p:a:fb:i:H:sW:E:@AThv]</span><br><span class="line">  -q, --quiet                </span><br><span class="line">	Quiet: -q suppress warnings, -qq errors, -qqq all</span><br><span class="line">  -I, --in-format &lt;arg&gt;      </span><br><span class="line">	Input formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		fs  - /proc/device-tree style directory</span><br><span class="line">  -o, --out &lt;arg&gt;            </span><br><span class="line">	Output file</span><br><span class="line">  -O, --out-format &lt;arg&gt;     </span><br><span class="line">	Output formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		asm - assembler source</span><br><span class="line">  -V, --out-version &lt;arg&gt;    </span><br><span class="line">	Blob version to produce, defaults to 17 (for dtb and asm output)</span><br><span class="line">  -d, --out-dependency &lt;arg&gt; </span><br><span class="line">	Output dependency file</span><br><span class="line">  -R, --reserve &lt;arg&gt;        </span><br><span class="line">	Make space for &lt;number&gt; reserve map entries (for dtb and asm output)</span><br><span class="line">  -S, --space &lt;arg&gt;          </span><br><span class="line">	Make the blob at least &lt;bytes&gt; long (extra space)</span><br><span class="line">  -p, --pad &lt;arg&gt;            </span><br><span class="line">	Add padding to the blob of &lt;bytes&gt; long (extra space)</span><br><span class="line">  -a, --align &lt;arg&gt;          </span><br><span class="line">	Make the blob align to the &lt;bytes&gt; (extra space)</span><br><span class="line">  -b, --boot-cpu &lt;arg&gt;       </span><br><span class="line">	Set the physical boot cpu</span><br><span class="line">  -f, --force                </span><br><span class="line">	Try to produce output even if the input tree has errors</span><br><span class="line">  -i, --include &lt;arg&gt;        </span><br><span class="line">	Add a path to search for include files</span><br><span class="line">  -s, --sort                 </span><br><span class="line">	Sort nodes and properties before outputting (useful for comparing trees)</span><br><span class="line">  -H, --phandle &lt;arg&gt;        </span><br><span class="line">	Valid phandle formats are:</span><br><span class="line">		legacy - &quot;linux,phandle&quot; properties only</span><br><span class="line">		epapr  - &quot;phandle&quot; properties only</span><br><span class="line">		both   - Both &quot;linux,phandle&quot; and &quot;phandle&quot; properties</span><br><span class="line">  -W, --warning &lt;arg&gt;        </span><br><span class="line">	Enable/disable warnings (prefix with &quot;no-&quot;)</span><br><span class="line">  -E, --error &lt;arg&gt;          </span><br><span class="line">	Enable/disable errors (prefix with &quot;no-&quot;)</span><br><span class="line">  -@, --symbols              </span><br><span class="line">	Enable generation of symbols</span><br><span class="line">  -A, --auto-alias           </span><br><span class="line">	Enable auto-alias of labels</span><br><span class="line">  -T, --annotate             </span><br><span class="line">	Annotate output .dts with input source file and line (-T -T for more details)</span><br><span class="line">  -h, --help                 </span><br><span class="line">	Print this help and exit</span><br><span class="line">  -v, --version              </span><br><span class="line">	Print version and exit</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1152,341 +1529,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">Vim匹配</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 17:13:11 / Modified: 17:13:37" itemprop="dateCreated datePublished" datetime="2021-09-12T17:13:11+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="按模式匹配还是按原义匹配"><a href="#按模式匹配还是按原义匹配" class="headerlink" title="按模式匹配还是按原义匹配"></a>按模式匹配还是按原义匹配</h1><h2 id="Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><a href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns" class="headerlink" title="Tip 72 Tune the Case Sensitivity of Search Patterns"></a>Tip 72 Tune the Case Sensitivity of Search Patterns</h2><p>调整搜索大小写敏感度</p>
-<p><strong>全局区分大小写</strong></p>
-<p>通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。</p>
-<p><strong>每次搜索区分大小写</strong></p>
-<p>可以使用以下选项来覆盖默认的是否忽略大小写:</p>
-<ul>
-<li><p>\c - 忽略大小写</p>
-</li>
-<li><p>\C - 区分大小写</p>
-</li>
-</ul>
-<p>每次搜索的时候都可以强制指定是否区分大小写。注意：在替换时\c标志位为手工确认。</p>
-<p><strong>启用智能大小写</strong></p>
-<p>Vim 提供了预测我们大小写敏感意图的 smartcase 选项， :set smartcase</p>
-<p>启用此选项后进行搜索时,</p>
-<ul>
-<li><p>如果输入的全部是小写字母, 那么就不区分大小写;</p>
-</li>
-<li><p>但只要包含大写字母, 那么就是大小写敏感的</p>
-</li>
-</ul>
-<h2 id="Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><a href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches" class="headerlink" title="Tip 73 Use the \v Pattern Switch for Regex Searches"></a>Tip 73 Use the \v Pattern Switch for Regex Searches</h2><p>按正则表达式查找时，使用 \v 模式开关  （开启字符的特殊含义）</p>
-<p>我们可以使用 \v 模式(very magic search)开关规范所有的特殊符号, 启用之后, 除了下划线 _, 大小写字母, 和数字外, 所有的字符都具有特殊含义。</p>
-<h2 id="Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><a href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches" class="headerlink" title="Tip 74 Use the \V Literal Switch for Verbatim Searches"></a>Tip 74 Use the \V Literal Switch for Verbatim Searches</h2><p>按原义查找文本时，使用 \V 原义开关  (开启字符的特殊含义)</p>
-<p>在正则表达式中使用的特殊字符，在按模式查找时用起来很顺手，但如果我们想</p>
-<p>按原义查找文本时，它们就变成了阻碍。使用 very nomagic 原义开关，可以消除附</p>
-<p>加在 .、 * 以及 ? 等大多数字符上的特殊含义。</p>
-<p><strong>使用原义开关 \V，即可激活 very nomagic 搜索模式</strong></p>
-<p>例如：搜索匹配“a.k.a.”字符串</p>
-<p>/ \Va.k.a.</p>
-<p>我们也可以使用转义的方式来消除字符的特殊含义。例如：</p>
-<p>/ a.k.a.</p>
-<p><strong>使用 “\V” 会使得其后的模式中只有反斜杠有特殊的意义,显然更方便。</strong></p>
-<h2 id="Tip-76-Stake-the-Boundaries-of-a-Ward"><a href="#Tip-76-Stake-the-Boundaries-of-a-Ward" class="headerlink" title="Tip 76 Stake the Boundaries of a Ward"></a>Tip 76 Stake the Boundaries of a Ward</h2><p>界定单词的边界</p>
-<p>定义一个搜索模型时, 指定单词的开始和结束位置可能很有用, Vim 给我们提供了单词分隔的选项。</p>
-<p>例如执行搜索 /the<CR> 的时候, 是会把 these they their 等单词一起搜索出来的。</p>
-<p>如果我们想只搜索 the 完整的单词, 而不需要包含 the 片段的词, 那么我们需要指定 词的边界。</p>
-<p>在 \v 模式下（开启字符特殊含义）, <strong>&lt; 和 &gt;</strong> 即代表词边界的符号. 所以我们可以使用 /\v<the><CR> 来达到我们的预期。</p>
-<p>需要注意的是, 如果我们在 \v 模式下需要匹配 &lt;&gt; 字符, 那么就得加反斜杠来进行转义了。</p>
-<h2 id="Tip-78-Escape-Problem-Characters"><a href="#Tip-78-Escape-Problem-Characters" class="headerlink" title="Tip 78 Escape Problem Characters"></a>Tip 78 Escape Problem Characters</h2><p>转义问题字符</p>
-<p>在 /V 纯文本模式下可以很容易的来进行纯文本的搜索匹配, 因为绝大部分的字符(如:. + *等)的特殊含义都被禁用了, 但是仍然有极少字符仍然有特殊的含义。</p>
-<p>这时要用 \ 进行转义。</p>
-<p>正向搜索转义斜杠 ‘/ ’</p>
-<p>正向搜索时, 斜杠 / 字符被解释为终止符, 所有在此字符之后的内容都会被忽略，替换模式下在 \ 字符后添加标志位。</p>
-<p>在 \v 和 \V 模式下, 如果要匹配 / 字符, 那么需要进行转义。</p>
-<p>反向搜索转义问号 ‘ ? ’</p>
-<p>当使用反向搜索的时候, 问号 ? 就是搜索的终止符。如果要匹配 ？号，需要转义 ?</p>
-<p>每次都转义反斜杠 ‘ \ ’</p>
-<p>\ 是需要进行转义的. 通常情况下, 反斜杠 \ 之后的那个字符表示被转义的特殊含义. 所以要匹配反斜杠字符的话就需要加转义, 也就是: \</p>
-<p>而且，不管正向还是反向搜索，要匹配 \ 都是需要转义的。</p>
-<p>终止符( / 或 ? )</p>
-<p>Vim 允许在搜索字段终止符后面追加某些标志来调整搜索命令的行为</p>
-<p>例如 /vim/e<CR> 将把光标放到高亮匹配位置的最后而不是前面</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/" class="post-title-link" itemprop="url">Vim替换</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 17:11:55 / Modified: 17:12:20" itemprop="dateCreated datePublished" datetime="2021-09-12T17:11:55+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h1><h2 id="Tip-87-Meet-the-Substitute-Command"><a href="#Tip-87-Meet-the-Substitute-Command" class="headerlink" title="Tip 87 Meet the Substitute Command"></a>Tip 87 Meet the Substitute Command</h2><p>结识替换命令，<code>:substitute </code>命令。其允许我们查找和替换一个文本块，语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:[range]s[ubstitute]/&#123;pattern&#125;/&#123;string&#125;/[flags]</span><br></pre></td></tr></table></figure>
-
-<p>​    命令很复杂.，除了要提供搜索模式和替换文本之外, 还需要指定执行的范围。另外, 还可以提供额外的标识符来调整其行为。</p>
-<p><code>[range]</code> 的使用和其他 Ex 命令一样，以逗号分隔</p>
-<p><code>&#123;pattern&#125; </code>指代要查找的部分</p>
-<p><strong>Flags，标志位调整替换行为</strong></p>
-<p>几种常用的 flag 标志符:</p>
-<ul>
-<li><p>g - 让替换命令应用到全局,可修改一行内的匹配项， 而不是仅改变第一个匹配项. </p>
-</li>
-<li><p>c -替换前手工确认或拒绝每一处修改, </p>
-</li>
-<li><p>n - 禁止替换行为, 此功能可用于统计匹配文本的数量 </p>
-</li>
-<li><p>e - 忽略错误信息. 例如搜索没有匹配项时, 替换命令会提示一个错误信息 “E486: Pattern not found.”</p>
-</li>
-<li><p>&amp; - 告知 Vim 重用上一次替换命令中的相同标志. </p>
-</li>
-</ul>
-<p><strong>替换域中的特殊字符</strong></p>
-<p>查找模式时某些字符是有特殊意义的. 而替换字段也是有一些特殊字符的</p>
-<table>
-<thead>
-<tr>
-<th><strong>Symbol</strong></th>
-<th><strong>Represents</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\r</td>
-<td>插入回车(而不是\n)</td>
-</tr>
-<tr>
-<td>\t</td>
-<td>插入 tab 键</td>
-</tr>
-<tr>
-<td>\</td>
-<td>插入反斜杠 \</td>
-</tr>
-<tr>
-<td>\1</td>
-<td>插入第一个子匹配</td>
-</tr>
-<tr>
-<td>\2</td>
-<td>插入第二个只匹配 (依次到 \9)</td>
-</tr>
-<tr>
-<td>\0</td>
-<td>插入整个匹配的文本</td>
-</tr>
-<tr>
-<td>&amp;</td>
-<td>插入整个匹配的文本</td>
-</tr>
-<tr>
-<td>~</td>
-<td>使用上次的 {string} 替换文本</td>
-</tr>
-<tr>
-<td>={Vim  script}</td>
-<td>执行 {Vim脚本} 表达式, 把结果结果作为 {string} 替换文本</td>
-</tr>
-</tbody></table>
-<h2 id="Tip-88-Find-and-Replace-Every-Match-in-a-File"><a href="#Tip-88-Find-and-Replace-Every-Match-in-a-File" class="headerlink" title="Tip 88 Find and Replace Every Match in a File"></a>Tip 88 Find and Replace Every Match in a File</h2><p>在文件范围内查找并替换每一处匹配</p>
-<ul>
-<li><p>标志位 g 处理横轴字符，当前行所有匹配</p>
-</li>
-<li><p>地址符 % 处理纵轴的文本行，可理解为处理整个文件的匹配项</p>
-</li>
-</ul>
-<p>语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/g</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Tip-89-Eyeball-Each-Substitution"><a href="#Tip-89-Eyeball-Each-Substitution" class="headerlink" title="Tip 89 Eyeball Each Substitution"></a>Tip 89 Eyeball Each Substitution</h2><p>手动控制每一次替换操作</p>
-<p>标志位 <code>c </code> 手工确认每一处修改</p>
-<p>语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/gc</span><br></pre></td></tr></table></figure>
-
-<p>​    引入标志位 c 后，Vim 会在每处匹配体贴地为我们提示所有的选项<code>y/n/a/q/l/^E/^Y</code>。下表展示了每种答案的含义：</p>
-<table>
-<thead>
-<tr>
-<th><strong>Keystrokes</strong></th>
-<th><strong>Buffer Contents</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>y</td>
-<td><em>yes</em> 替换本次修改</td>
-</tr>
-<tr>
-<td>n</td>
-<td><em>no</em> 放弃本次修改</td>
-</tr>
-<tr>
-<td>q</td>
-<td><em>quit</em> 退出替换</td>
-</tr>
-<tr>
-<td>l</td>
-<td><em>last</em> 本次为最后一次替换, 然后退出</td>
-</tr>
-<tr>
-<td>a</td>
-<td><em>all</em> 替换本次和剩下的所有项</td>
-</tr>
-<tr>
-<td><C-e></td>
-<td>向上滚动屏幕</td>
-</tr>
-<tr>
-<td><C-y></td>
-<td>向下滚动屏幕</td>
-</tr>
-</tbody></table>
-<p>不同于以往的是，在 Vim 的替换-确认模式下，键盘上的大多数按键都将失效。尽</p>
-<p>管 <Esc> 键可以让我们像往常一样回到普通模式，但除此之外，周围的一切都使我们</p>
-<p>感到陌生。</p>
-<h2 id="Tip-90-Reuse-the-Last-Search-Pattern"><a href="#Tip-90-Reuse-the-Last-Search-Pattern" class="headerlink" title="Tip 90 Reuse the Last Search Pattern"></a>Tip 90 Reuse the Last Search Pattern</h2><p>重用上次的查找模式</p>
-<p>如果你觉得将来会以完整形式来调用历史记录中的 substitute 命令， 就要养成在查</p>
-<p>找域中填充内容的习惯。你只需在命令行中输入 <code>&lt;C-r&gt;/</code>，即可把上次的查找内容粘贴进来。</p>
-<p>即留空查找域，使用<code>&lt;C-r&gt;/</code>替代</p>
-<h2 id="Tip-91-Replace-with-the-Contents-of-a-Register"><a href="#Tip-91-Replace-with-the-Contents-of-a-Register" class="headerlink" title="Tip 91 Replace with the Contents of a Register"></a>Tip 91 Replace with the Contents of a Register</h2><p>用寄存器的内容替换</p>
-<p>通过输入<code> &lt;C-r&gt;&#123;register&#125;</code>， 我们可以将寄存器的内容插入到命令行</p>
-<h2 id="Tip-92-Repeat-the-Previous-Substitute-Command"><a href="#Tip-92-Repeat-the-Previous-Substitute-Command" class="headerlink" title="Tip 92 Repeat the Previous Substitute Command"></a>Tip 92 Repeat the Previous Substitute Command</h2><p>重复上一次 substitute 命令</p>
-<p>假设我们刚刚执行完以下命令（其作用范围为当前行）:s/target/replacement/g</p>
-<p>但我们失误，应该加上前缀 % 才对，接下来，我们只需输入 g&amp;，即可在整个文件的范围内重复这条命令。</p>
-<p>某条 substitute 命令除了没加 % 前缀之外，其余都正确的时候，不妨试一试 g&amp;</p>
-<p>​    gv 命令会激活可视模式，并重新将上次被选中的文本高亮起来（详情参考Tip 21 ）进入命令行模式，此时命令行会提示为 :’&lt;,’&gt; 键入 &amp;&amp;, 第一个 :&amp; 组合为 Ex 命令, 功能为重复最后一次替(:substitute)换命令(参考 :h :&amp;), 而第二个 &amp; 则表示使用前一个替换命令的标志符。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>
