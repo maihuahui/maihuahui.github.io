@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="How to use Tig to browse Git logsTig is more than just a text-mode interface for Git. Here’s how it can enhance your daily workflow. If you work with Git as your version control system, you’ve likely">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tig">
+<meta property="og:url" content="http://example.com/2022/02/15/git-Tig/index.html">
+<meta property="og:site_name" content="Huahui">
+<meta property="og:description" content="How to use Tig to browse Git logsTig is more than just a text-mode interface for Git. Here’s how it can enhance your daily workflow. If you work with Git as your version control system, you’ve likely">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/15/git-Tig/1-default.png">
+<meta property="og:image" content="http://example.com/2022/02/15/git-Tig/2-commit.png">
+<meta property="og:image" content="http://example.com/2022/02/15/git-Tig/3-help.png">
+<meta property="og:image" content="http://example.com/2022/02/15/git-Tig/4-status.png">
+<meta property="article:published_time" content="2022-02-15T12:04:53.000Z">
+<meta property="article:modified_time" content="2022-02-15T12:06:19.795Z">
+<meta property="article:author" content="huahui">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="Tig">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/15/git-Tig/1-default.png">
+
+
+<link rel="canonical" href="http://example.com/2022/02/15/git-Tig/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/02/15/git-Tig/","path":"2022/02/15/git-Tig/","title":"Tig"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Tig | Huahui</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Huahui</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-use-Tig-to-browse-Git-logs"><span class="nav-number">1.</span> <span class="nav-text">How to use Tig to browse Git logs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-Tig"><span class="nav-number">2.</span> <span class="nav-text">Install Tig</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-commits-in-your-current-branch"><span class="nav-number">3.</span> <span class="nav-text">Browse commits in your current branch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-revisions-for-a-single-file"><span class="nav-number">4.</span> <span class="nav-text">Browse revisions for a single file</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-who-changed-a-file"><span class="nav-number">5.</span> <span class="nav-text">Browse who changed a file</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-your-stash"><span class="nav-number">6.</span> <span class="nav-text">Browse your stash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-your-refs"><span class="nav-number">7.</span> <span class="nav-text">Browse your refs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-git-status"><span class="nav-number">8.</span> <span class="nav-text">Browse git status</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browse-git-grep"><span class="nav-number">9.</span> <span class="nav-text">Browse git grep</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pipe-output-to-Tig-via-STDIN"><span class="nav-number">10.</span> <span class="nav-text">Pipe output to Tig via STDIN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-custom-bindings"><span class="nav-number">11.</span> <span class="nav-text">Add custom bindings</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huahui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/15/git-Tig/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tig
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-02-15 20:04:53 / Modified: 20:06:19" itemprop="dateCreated datePublished" datetime="2022-02-15T20:04:53+08:00">2022-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="How-to-use-Tig-to-browse-Git-logs"><a href="#How-to-use-Tig-to-browse-Git-logs" class="headerlink" title="How to use Tig to browse Git logs"></a>How to use Tig to browse Git logs</h1><p>Tig is more than just a text-mode interface for Git. Here’s how it can enhance your daily workflow.</p>
+<p>If you work with Git as your version control system, you’ve likely already resigned yourself to the fact that Git is a complicated beast. It is a fantastic tool, but it can be cumbersome to navigate Git repositories. That’s where a tool like Tig comes in.</p>
+<p>From the <a target="_blank" rel="noopener" href="http://manpages.ubuntu.com/manpages/jammy/man1/tig.1.html">Tig man page</a>:</p>
+<blockquote>
+<p>Tig is an ncurses-based text-mode interface for git. It functions mainly as a Git repository browser, but can also assist in staging changes for commit at chunk level and act as a pager for output from various Git commands.</p>
+</blockquote>
+<p>This basically means that Tig provides a text-based user interface you can run in your terminal. Tig makes it easy to browse your Git logs, but it can do much more than just bounce you around from your last commit to a previous one.</p>
+<p><img src="/2022/02/15/git-Tig/1-default.png"></p>
+<p>Many of the examples in this quick introduction to Tig have been poached directly from its excellent man page. I highly recommend reading it to learn more.</p>
+<h1 id="Install-Tig"><a href="#Install-Tig" class="headerlink" title="Install Tig"></a>Install Tig</h1><ul>
+<li>Fedora and RHEL: <code>sudo dnf install tig</code></li>
+<li>Ubuntu and Debian: <code>sudo apt install tig</code></li>
+<li>MacOS: <code>brew install tig</code></li>
+</ul>
+<p>See the official <a target="_blank" rel="noopener" href="https://jonas.github.io/tig/INSTALL.html">installation instructions</a> for even more options.</p>
+<h1 id="Browse-commits-in-your-current-branch"><a href="#Browse-commits-in-your-current-branch" class="headerlink" title="Browse commits in your current branch"></a>Browse commits in your current branch</h1><p>If you want to browse the latest commits in your branch, enter:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig</span><br></pre></td></tr></table></figure>
+<p>That’s it. This three-character command will launch a browser where you can navigate the commits in your current branch. You can think of it as a wrapper around <strong>git log</strong>.</p>
+<p>To navigate the output, you can use the <code>Up</code> and <code>Down</code> arrow keys to move from one commit to another. Pressing the <code>Return/Enter</code> key will open a vertical split with the contents of the chosen commit on the right-hand side. You can continue to browse up and down in your commit history on the left-hand side, and your changes will appear on the right. Use <code>k</code> and <code>j</code> to navigate up and down by line and <code>-</code> and the <code>Space Bar</code> to page up and down on the right-hand side. Use <code>q</code> to exit the right-hand pane.</p>
+<p>Searching on tig output is simple as well. Use <code>/</code> to search forward and <code>?</code> to search backward on both the left and right panes.</p>
+<p><img src="/2022/02/15/git-Tig/2-commit.png"></p>
+<p>That’s enough to get you started navigating your commits. There are too many key bindings to cover here, but clicking <code>h</code> will display a Help menu where you can discover its navigation and command options. You can also use <code>/</code> and <code>?</code> to search the Help menu. Use <code>q</code> to exit Help.</p>
+<p><img src="/2022/02/15/git-Tig/3-help.png"></p>
+<h1 id="Browse-revisions-for-a-single-file"><a href="#Browse-revisions-for-a-single-file" class="headerlink" title="Browse revisions for a single file"></a>Browse revisions for a single file</h1><p>Since Tig is a wrapper around <code>git log</code>, it conveniently accepts the same arguments that can be passed to <code>git log</code>. For instance, to browse the commit history for a single file, enter:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig README.md</span><br></pre></td></tr></table></figure>
+<p>Compare this with the output of the Git command being wrapped to get a clearer view of how Tig enhances the output.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log README.md</span><br></pre></td></tr></table></figure>
+<p>To include the patches in the raw Git output, you can add a <code>-p</code> option:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log -p README.md</span><br></pre></td></tr></table></figure>
+<p>If you want to narrow the commits down to a specific date range, try something like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig --after=&quot;2017-01-01&quot; --before=&quot;2018-05-16&quot; -- README.md</span><br></pre></td></tr></table></figure>
+<p>Again, you can compare this with the raw Git version:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --after=&quot;2017-01-01&quot; --before=&quot;2018-05-16&quot; -- README.md</span><br></pre></td></tr></table></figure>
+<h1 id="Browse-who-changed-a-file"><a href="#Browse-who-changed-a-file" class="headerlink" title="Browse who changed a file"></a>Browse who changed a file</h1><p>Sometimes you want to find out who made a change to a file and why. The command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig blame README.md</span><br></pre></td></tr></table></figure>
+<p>is essentially a wrapper around <code>git blame</code>. As you would expect, it allows you to see who the last person was to edit a given line, and it also allows you to navigate to the commit that introduced the line. This is somewhat like the <code>:Gblame</code> command Vim’s <code>vim-fugitive</code> plugin provides.</p>
+<h1 id="Browse-your-stash"><a href="#Browse-your-stash" class="headerlink" title="Browse your stash"></a>Browse your stash</h1><p>If you’re like me, you may have a pile of edits in your stash. It’s easy to lose track of them. You can view the latest item in your stash via: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash show -p stash@&#123;0&#125;</span><br></pre></td></tr></table></figure>
+<p>You can find the second most recent item via:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash show -p stash@&#123;1&#125;</span><br></pre></td></tr></table></figure>
+<p>and so on. If you can recall these commands whenever you need them, you have a much sharper memory than I do.</p>
+<p>As with the Git commands above, Tig makes it easy to enhance your Git output with a simple invocation:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig stash</span><br></pre></td></tr></table></figure>
+<p>Try issuing this command in a repository with a populated stash. You’ll be able to browse and search your stash items, giving you a quick overview of everything you saved for a rainy day.</p>
+<h1 id="Browse-your-refs"><a href="#Browse-your-refs" class="headerlink" title="Browse your refs"></a>Browse your refs</h1><p>A Git ref is the hash of something you have committed. This includes files as well as branches. Using the <code>tig refs</code> command allows you to browse all of your refs and drill down to specific commits.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig refs</span><br></pre></td></tr></table></figure>
+<p>When you’re finished, use <code>q</code> to return to a previous menu.</p>
+<h1 id="Browse-git-status"><a href="#Browse-git-status" class="headerlink" title="Browse git status"></a>Browse git status</h1><p>If you want to view which files have been staged and which are untracked, use tig status, a wrapper around <code>git status</code>.</p>
+<p><img src="/2022/02/15/git-Tig/4-status.png"></p>
+<h1 id="Browse-git-grep"><a href="#Browse-git-grep" class="headerlink" title="Browse git grep"></a>Browse git grep</h1><p>You can use the <code>grep</code> command to search for expressions in text files. The command <code>tig grep</code> allows you to navigate the output of <code>git grep</code>. For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tig grep -i foo lib/Bar</span><br></pre></td></tr></table></figure>
+<p>will navigate the output of a case-insensitive search for <code>foo</code> in the <code>lib/Bar</code> directory.</p>
+<h1 id="Pipe-output-to-Tig-via-STDIN"><a href="#Pipe-output-to-Tig-via-STDIN" class="headerlink" title="Pipe output to Tig via STDIN"></a>Pipe output to Tig via STDIN</h1><p>If you are piping a list of commit IDs to Tig, you must use the <code>--stdin</code> flag so that <code>tig show</code> reads from stdin. Otherwise, <code>tig show</code> launches without input (rendering an empty screen).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-list --author=olaf HEAD | tig show --stdin</span><br></pre></td></tr></table></figure>
+<h1 id="Add-custom-bindings"><a href="#Add-custom-bindings" class="headerlink" title="Add custom bindings"></a>Add custom bindings</h1><p>You can customize Tig with an <code>rc</code> file. Here’s how you can configure Tig to your liking, using the example of adding some helpful custom key bindings.</p>
+<p>Create a file in your home directory called <code>.tigrc</code>. Open <code>~/.tigrc</code> in your favorite editor and add:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Apply the selected stash</span><br><span class="line">bind stash a !?git stash apply %(stash)</span><br><span class="line"></span><br><span class="line"># Drop the selected stash item</span><br><span class="line">bind stash x !?git stash drop %(stash)</span><br></pre></td></tr></table></figure>
+<p>Run <code>tig stash</code> to browse your stash, as above. However, with these bindings in place, you can press <code>a</code> to apply an item from the stash to your repository and <code>x</code> to drop an item from the stash. Keep in mind that you’ll need to perform these commands when browsing the stash list. If you’re browsing a stash item, enter <code>q</code> to exit that view and press <code>a</code> or <code>x</code> to get the effect you want.</p>
+<p>For more information, you can read more about <a target="_blank" rel="noopener" href="https://github.com/jonas/tig/wiki/Bindings">Tig key bindings.</a></p>
+<p>Wrapping up<br>I hope this has been a helpful demonstration of how Tig can enhance your daily workflow. Tig can do even more powerful things (such as staging lines of code), but that’s outside the scope of this introductory article. There’s enough information here to make you dangerous, but there’s still more to explore.</p>
+<p>via: <a target="_blank" rel="noopener" href="https://opensource.com/article/19/6/what-tig">https://opensource.com/article/19/6/what-tig</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/Tig/" rel="tag"># Tig</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/15/makefile-makefile/" rel="prev" title="Makefile 特殊符号">
+                  <i class="fa fa-chevron-left"></i> Makefile 特殊符号
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/15/git-Tig-manual/" rel="next" title="Tig Manual">
+                  Tig Manual <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huahui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
