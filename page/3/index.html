@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/git-git-sshkey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/git-git-sshkey/" class="post-title-link" itemprop="url">git添加SSH Key</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-12 19:13:15 / Modified: 19:23:06" itemprop="dateCreated datePublished" datetime="2021-09-12T19:13:15+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h1><p>先配置git邮箱和用户名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;user@email.com&quot;</span><br><span class="line">git config --global user.name &quot;name&quot;</span><br></pre></td></tr></table></figure>
+<p>可通过以下命令查看配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<h1 id="生成SSH-keys"><a href="#生成SSH-keys" class="headerlink" title="生成SSH keys"></a>生成SSH keys</h1><p>生成SSH keys 密钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>默认会在相应路径下（/your_home_path）生成<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件</p>
+<ul>
+<li>输入passphrase（本步骤可以跳过）</li>
+<li><code>id_rsa.pub</code>文件，里面的信息即为SSH key</li>
+</ul>
+<h1 id="添加ssh-key"><a href="#添加ssh-key" class="headerlink" title="添加ssh key"></a>添加ssh key</h1><ol>
+<li><p>在git bash 界面 cat <code>id_rsa.pub</code> 文件</p>
+</li>
+<li><p>将打印信息上传至github <code>setting -&gt; ADD SSH key</code></p>
+</li>
+</ol>
+<h1 id="选择ssh链接"><a href="#选择ssh链接" class="headerlink" title="选择ssh链接"></a>选择ssh链接</h1><p>git clone 代码有HTTP链接和 SSH链接，两者密钥，或者认证方式不同，选择SSH方式链接</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2204,133 +2296,6 @@
 <li><p><code>:[range]write! filename</code> - 表示把 <em>filename</em> 内容强制覆盖掉; 相当于内容另存为一个文件   </p>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Vim可视化模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 16:19:07 / Modified: 16:20:36" itemprop="dateCreated datePublished" datetime="2021-09-12T16:19:07+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Visual-Mode"><a href="#Visual-Mode" class="headerlink" title="Visual Mode"></a>Visual Mode</h1><p>可视化模式</p>
-<p>Vim 的可视模式允许我们选中一块文本区域并在其上进行操作，并具有 3 种不同的可视模式，分别用于操作字符文本、行文本或块文本。</p>
-<p>可视化模式批量编辑或者纵向编辑模式时，可以极大的提高工作效率</p>
-<h2 id="Tip-20-Grok-Visual-Mode"><a href="#Tip-20-Grok-Visual-Mode" class="headerlink" title="Tip 20 Grok Visual Mode"></a>Tip 20 Grok Visual Mode</h2><p>深入了解可视化模式</p>
-<p><code>Select Mode 选择模式</code> </p>
-<p>在一个典型的文本编辑器环境中，当选中一段文本后，再输入任意可见字符时，这些选中的文本将会被删除。Vim中的Select Mode类似于这样的模式。</p>
-<p> 使用<code> &lt; C - g &gt;</code>，可以在可视化模式与选择模式中进行切换。不同点在于最后一行显示的是 <code>Visual</code> 以及 <code>Select</code>。</p>
-<h2 id="Tip-21-Define-a-Visual-Selection"><a href="#Tip-21-Define-a-Visual-Selection" class="headerlink" title="Tip 21 Define a Visual Selection"></a>Tip 21 Define a Visual Selection</h2><p>定义高亮选区</p>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>v</td>
-<td>激活面向字符的可视模式</td>
-</tr>
-<tr>
-<td>V</td>
-<td>激活面向行的可视模式</td>
-</tr>
-<tr>
-<td>&lt; C - v &gt;</td>
-<td>激活面向块的可视模式</td>
-</tr>
-<tr>
-<td>gv</td>
-<td>重选上次的高亮选区</td>
-</tr>
-<tr>
-<td>o</td>
-<td>切换高亮选区的活动端</td>
-</tr>
-</tbody></table>
-<h2 id="Tip-22-Repeat-Line-wise-Visual-Command"><a href="#Tip-22-Repeat-Line-wise-Visual-Command" class="headerlink" title="Tip 22 Repeat Line-wise Visual Command"></a>Tip 22 Repeat Line-wise Visual Command</h2><p>重复执行面向行的可视化命令</p>
-<p>还是<code> .</code>命令，甚至不需要进行<code>gv</code>命令重选上次的高亮选区</p>
-<h2 id="Tip-23-Prefer-Operation-to-Visual-Command-Where-Possible"><a href="#Tip-23-Prefer-Operation-to-Visual-Command-Where-Possible" class="headerlink" title="Tip 23 Prefer Operation to Visual Command Where Possible"></a>Tip 23 Prefer Operation to Visual Command Where Possible</h2><p>只要可能，最好用操作符命令，而不是可视命令</p>
-<p>可视模式可能比 Vim 的普通模式操作起来更自然一些，但是它有一个缺点：</p>
-<ul>
-<li>在这个模式下 . 命令有时会有一些异常的表现。 </li>
-</ul>
-<p>我们可以用普通模式下的操作符命令来规避此缺点。</p>
-<h2 id="Tip-24-Edit-Tabular-Data-with-Visual-Block-Mode"><a href="#Tip-24-Edit-Tabular-Data-with-Visual-Block-Mode" class="headerlink" title="Tip 24 Edit Tabular Data with Visual-Block Mode"></a>Tip 24 Edit Tabular Data with Visual-Block Mode</h2><p>用面向列块的可视化模式编辑表格数据</p>
-<p>以在列间增加分隔竖线 为例：</p>
-<p><img src="vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_01.JPG" alt="img"></p>
-<h2 id="Tip-25-Change-Columns-of-Text"><a href="#Tip-25-Change-Columns-of-Text" class="headerlink" title="Tip 25 Change Columns of Text"></a>Tip 25 Change Columns of Text</h2><p>修改列文本</p>
-<p>用列块可视模式可以同时往若干行中插入文本。列块可视模式不仅仅对表格数据有用，在编程时我们也时常受惠于此功能。  </p>
-<p><strong>使用<code> &lt; C – v &gt;</code> 模式选中块，可同时修改多行中同一列的数据。</strong></p>
-<h2 id="Tip-26-Append-After-a-Ragged-Visual-Block"><a href="#Tip-26-Append-After-a-Ragged-Visual-Block" class="headerlink" title="Tip 26 Append After a Ragged Visual Block"></a>Tip 26 Append After a Ragged Visual Block</h2><p>在<strong>长短不一</strong>的高亮块后添加文本。</p>
-<p>以在块可视化模式中为多行添加分号为例：</p>
-<p><img src="vim%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F_02.JPG" alt="img"></p>
-<p>处于插入模式期间，任何输入的内容只出现在顶行，然而一旦返回到普通模式，这些修改就会被扩散到其余选中的行上。</p>
 
       
     </div>

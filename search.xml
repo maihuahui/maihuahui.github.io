@@ -3389,4 +3389,56 @@ The default changes each time you use either x or print.
         <tag>Tig</tag>
       </tags>
   </entry>
+  <entry>
+    <title>GTAGS</title>
+    <url>/2022/03/16/tags/</url>
+    <content><![CDATA[<h1 id="使用Gtags辅助查看kernel源码"><a href="#使用Gtags辅助查看kernel源码" class="headerlink" title="使用Gtags辅助查看kernel源码"></a>使用Gtags辅助查看kernel源码</h1><p>使用<code>make gtags</code>在kernel根目录下生成索引文件。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gtags       - Generate GNU GLOBAL index</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>kernel已对该命令进行封装，不必手动生成索引文件。在生成索引文件时还可以指定架构，这可以有效减少干扰项。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make gtags ARCH=arm</span><br><span class="line">make gtags ARCH=riscv</span><br></pre></td></tr></table></figure>
+
+<p>kernel根目录下会生成三个新文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls G*</span></span><br><span class="line">GPATH	GRTAGS	GTAGS</span><br></pre></td></tr></table></figure>
+
+<h1 id="gtags-vim"><a href="#gtags-vim" class="headerlink" title="gtags.vim"></a>gtags.vim</h1><p>General form of Gtags command is as follows:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">:Gtags [option] pattern</span><br></pre></td></tr></table></figure>
+<p>To go to ‘func’, you can say</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags func</span><br></pre></td></tr></table></figure>
+<p>Input completion is available. If you forgot the name of a function but recall only some characters of the head, please input them and press <TAB> key.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags fu&lt;TAB&gt;</span><br><span class="line">:Gtags func			&lt;- Vim will append &#x27;nc&#x27;.</span><br></pre></td></tr></table></figure>
+
+<p>To go to the referenced point of ‘func’, add <code>-r</code> option.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -r func</span><br></pre></td></tr></table></figure>
+<p>To go to any symbols which are not defined in GTAGS, try this.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -s func</span><br></pre></td></tr></table></figure>
+<p>To go to any string other than symbol, try this.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -g ^[sg]et_</span><br></pre></td></tr></table></figure>
+<p>This command accomplishes the same function as grep(1) but is more convenient because it retrieves an entire directory structure.</p>
+<p>To get list of objects in a file ‘main.c’, use -f command.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -f main.c</span><br></pre></td></tr></table></figure>
+<p>If you are editing main.c itself, you can use ‘%’ instead.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -f %</span><br></pre></td></tr></table></figure>
+<p>You can get a list of files whose path include specified pattern.<br>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   :Gtags -P /vm/			&lt;- all files under &#x27;vm&#x27; directory.</span><br><span class="line">   :Gtags -P \.h$			&lt;- all include files.</span><br><span class="line">:Gtags -P init			&lt;- all paths includes &#x27;init&#x27;</span><br></pre></td></tr></table></figure>
+<p>If you omitted an argument and input only <ENTER> key to the prompt, vim shows list of all files in the project.</p>
+<p>Since all short options are sent to global(1) as is, you can  use the -i, -o, -O, and so on.</p>
+<p>For example, if you want to ignore case distinctions in pattern.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -gi paTtern</span><br></pre></td></tr></table></figure>
+<p>It will match to both of ‘PATTERN’ and ‘pattern’.</p>
+<p>If you want to search a pattern which starts with a hyphen like ‘-C’<br> then you can use the -e option like grep(1).</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -ge -C</span><br></pre></td></tr></table></figure>
+<p>By default, Gtags command search only in source files. If you want to<br>search in both source files and text files, or only in text files then</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -go pattern		# both source and text</span><br><span class="line">:Gtags -gO pattern		# only text file</span><br></pre></td></tr></table></figure>
+
+<h1 id="gtags-cscope"><a href="#gtags-cscope" class="headerlink" title="gtags-cscope"></a>gtags-cscope</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Find symbol		:cs find 0 or s</span><br><span class="line">Find definition		:cs find 1 or g</span><br><span class="line">Find functions called by this function	:cs find 2 or d</span><br><span class="line">Find reference		:cs find 3 or c</span><br><span class="line">Find text string	:cs find 4 or t</span><br><span class="line">Find egrep pattern	:cs find 6 or e</span><br><span class="line">Find path		:cs find 7 or f</span><br><span class="line">Find include file	:cs find 8 or i</span><br><span class="line">Find assignments	:cs find 9 or a</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一般情况下，<code>Gtags</code>已能满足需求。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Gtags</tag>
+      </tags>
+  </entry>
 </search>

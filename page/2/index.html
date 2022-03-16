@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,90 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-linux-list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-linux-list/" class="post-title-link" itemprop="url">List</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-12 20:59:11" itemprop="dateCreated datePublished" datetime="2022-02-12T20:59:11+08:00">2022-02-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-13 15:39:28" itemprop="dateModified" datetime="2022-02-13T15:39:28+08:00">2022-02-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>内核链表的操作常用的二个宏<code>list_for_each_entry</code>和<code>list_for_each_entry_safe</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * list_for_each_entry	-	iterate over list of given type</span></span><br><span class="line"><span class="comment"> * @pos:	the type * to use as a loop cursor.</span></span><br><span class="line"><span class="comment"> * @head:	the head for your list.</span></span><br><span class="line"><span class="comment"> * @member:	the name of the list_head within the struct.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> list_for_each_entry(pos, head, member)				\</span></span><br><span class="line"><span class="meta">	for (pos = list_first_entry(head, typeof(*pos), member);	\</span></span><br><span class="line"><span class="meta">	     !list_entry_is_head(pos, head, member);			\</span></span><br><span class="line"><span class="meta">	     pos = list_next_entry(pos, member))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * list_for_each_entry_safe - iterate over list of given type safe against removal of list entry</span></span><br><span class="line"><span class="comment"> * @pos:	the type * to use as a loop cursor.</span></span><br><span class="line"><span class="comment"> * @n:		another type * to use as temporary storage</span></span><br><span class="line"><span class="comment"> * @head:	the head for your list.</span></span><br><span class="line"><span class="comment"> * @member:	the name of the list_head within the struct.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> list_for_each_entry_safe(pos, n, head, member)			\</span></span><br><span class="line"><span class="meta">	for (pos = list_first_entry(head, typeof(*pos), member),	\</span></span><br><span class="line"><span class="meta">		n = list_next_entry(pos, member);			\</span></span><br><span class="line"><span class="meta">	     !list_entry_is_head(pos, head, member); 			\</span></span><br><span class="line"><span class="meta">	     pos = n, n = list_next_entry(n, member))</span></span><br></pre></td></tr></table></figure>
+
+<p><code>list_for_each_entry</code>宏是一个for循环语句，for循环的第一个参数就是让(head)-&gt;next指向member成员所在数据结构的指针，也就是将pos初始化为链表头指向的第一个实体链表成员，for的第三句话通过pos-&gt;member.next指针遍历整个实体链表，当pos-&gt;member.next再次指向我们的链表头的时候跳出for循环。整个过程没有对链表头进行遍历（不需要被遍历），所以使用list_for_each_entry遍历链表必须从链表头开始。 因此可以看出，list_for_each_entry的功能就是遍历以head为链表头的实体链表，对实体链表中的数据结构进行处理；</p>
+<p><code>list_for_each_entry_safe</code>用指针n对链表的下一个数据结构进行了临时存储，所以如果在遍历链表的时候需要做删除链表中的当前项操作时，用list_for_each_entry_safe可以安全的删除，而不会影响接下来的遍历过程（用n指针可以继续完成接下来的遍历， 而list_for_each_entry则无法继续遍历，删除后会导致无法继续遍历）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1187,98 +1271,6 @@
 
 <p>XXX: &lt;说明&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果代码中有该标识，说明标识处代码虽然实现了功能，但是实现的方法有待商榷，将来可以进行一些改进优化，</span><br><span class="line">&lt;说明&gt; 中应该简单描述下改进优化的策略。</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/git-git-sshkey/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/git-git-sshkey/" class="post-title-link" itemprop="url">git添加SSH Key</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 19:13:15 / Modified: 19:23:06" itemprop="dateCreated datePublished" datetime="2021-09-12T19:13:15+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h1><p>先配置git邮箱和用户名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;user@email.com&quot;</span><br><span class="line">git config --global user.name &quot;name&quot;</span><br></pre></td></tr></table></figure>
-<p>可通过以下命令查看配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
-
-<h1 id="生成SSH-keys"><a href="#生成SSH-keys" class="headerlink" title="生成SSH keys"></a>生成SSH keys</h1><p>生成SSH keys 密钥</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
-<p>默认会在相应路径下（/your_home_path）生成<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件</p>
-<ul>
-<li>输入passphrase（本步骤可以跳过）</li>
-<li><code>id_rsa.pub</code>文件，里面的信息即为SSH key</li>
-</ul>
-<h1 id="添加ssh-key"><a href="#添加ssh-key" class="headerlink" title="添加ssh key"></a>添加ssh key</h1><ol>
-<li><p>在git bash 界面 cat <code>id_rsa.pub</code> 文件</p>
-</li>
-<li><p>将打印信息上传至github <code>setting -&gt; ADD SSH key</code></p>
-</li>
-</ol>
-<h1 id="选择ssh链接"><a href="#选择ssh链接" class="headerlink" title="选择ssh链接"></a>选择ssh链接</h1><p>git clone 代码有HTTP链接和 SSH链接，两者密钥，或者认证方式不同，选择SSH方式链接</p>
-
       
     </div>
 

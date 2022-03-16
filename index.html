@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,120 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/16/tags/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/16/tags/" class="post-title-link" itemprop="url">GTAGS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-03-16 21:30:03 / Modified: 22:00:10" itemprop="dateCreated datePublished" datetime="2022-03-16T21:30:03+08:00">2022-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用Gtags辅助查看kernel源码"><a href="#使用Gtags辅助查看kernel源码" class="headerlink" title="使用Gtags辅助查看kernel源码"></a>使用Gtags辅助查看kernel源码</h1><p>使用<code>make gtags</code>在kernel根目录下生成索引文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gtags       - Generate GNU GLOBAL index</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>kernel已对该命令进行封装，不必手动生成索引文件。在生成索引文件时还可以指定架构，这可以有效减少干扰项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make gtags ARCH=arm</span><br><span class="line">make gtags ARCH=riscv</span><br></pre></td></tr></table></figure>
+
+<p>kernel根目录下会生成三个新文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls G*</span></span><br><span class="line">GPATH	GRTAGS	GTAGS</span><br></pre></td></tr></table></figure>
+
+<h1 id="gtags-vim"><a href="#gtags-vim" class="headerlink" title="gtags.vim"></a>gtags.vim</h1><p>General form of Gtags command is as follows:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags [option] pattern</span><br></pre></td></tr></table></figure>
+<p>To go to ‘func’, you can say</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags func</span><br></pre></td></tr></table></figure>
+<p>Input completion is available. If you forgot the name of a function but recall only some characters of the head, please input them and press <TAB> key.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:Gtags fu&lt;TAB&gt;</span><br><span class="line">:Gtags func			&lt;- Vim will append &#x27;nc&#x27;.</span><br></pre></td></tr></table></figure>
+
+<p>To go to the referenced point of ‘func’, add <code>-r</code> option.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -r func</span><br></pre></td></tr></table></figure>
+<p>To go to any symbols which are not defined in GTAGS, try this.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -s func</span><br></pre></td></tr></table></figure>
+<p>To go to any string other than symbol, try this.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -g ^[sg]et_</span><br></pre></td></tr></table></figure>
+<p>This command accomplishes the same function as grep(1) but is more convenient because it retrieves an entire directory structure.</p>
+<p>To get list of objects in a file ‘main.c’, use -f command.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -f main.c</span><br></pre></td></tr></table></figure>
+<p>If you are editing main.c itself, you can use ‘%’ instead.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -f %</span><br></pre></td></tr></table></figure>
+<p>You can get a list of files whose path include specified pattern.<br>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   :Gtags -P /vm/			&lt;- all files under &#x27;vm&#x27; directory.</span><br><span class="line">   :Gtags -P \.h$			&lt;- all include files.</span><br><span class="line">:Gtags -P init			&lt;- all paths includes &#x27;init&#x27;</span><br></pre></td></tr></table></figure>
+<p>If you omitted an argument and input only <ENTER> key to the prompt, vim shows list of all files in the project.</p>
+<p>Since all short options are sent to global(1) as is, you can  use the -i, -o, -O, and so on.</p>
+<p>For example, if you want to ignore case distinctions in pattern.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -gi paTtern</span><br></pre></td></tr></table></figure>
+<p>It will match to both of ‘PATTERN’ and ‘pattern’.</p>
+<p>If you want to search a pattern which starts with a hyphen like ‘-C’<br> then you can use the -e option like grep(1).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -ge -C</span><br></pre></td></tr></table></figure>
+<p>By default, Gtags command search only in source files. If you want to<br>search in both source files and text files, or only in text files then</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:Gtags -go pattern		# both source and text</span><br><span class="line">:Gtags -gO pattern		# only text file</span><br></pre></td></tr></table></figure>
+
+<h1 id="gtags-cscope"><a href="#gtags-cscope" class="headerlink" title="gtags-cscope"></a>gtags-cscope</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Find symbol		:cs find 0 or s</span><br><span class="line">Find definition		:cs find 1 or g</span><br><span class="line">Find functions called by this function	:cs find 2 or d</span><br><span class="line">Find reference		:cs find 3 or c</span><br><span class="line">Find text string	:cs find 4 or t</span><br><span class="line">Find egrep pattern	:cs find 6 or e</span><br><span class="line">Find path		:cs find 7 or f</span><br><span class="line">Find include file	:cs find 8 or i</span><br><span class="line">Find assignments	:cs find 9 or a</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一般情况下，<code>Gtags</code>已能满足需求。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1684,90 +1798,6 @@ The default changes each time you use either x or print.
 <blockquote>
 <p>typeof 是 GNU C 新增的一个关键字，用来获取数据类型。</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-linux-list/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/12/Linux%E9%A9%B1%E5%8A%A8-linux-list/" class="post-title-link" itemprop="url">List</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-12 20:59:11" itemprop="dateCreated datePublished" datetime="2022-02-12T20:59:11+08:00">2022-02-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-13 15:39:28" itemprop="dateModified" datetime="2022-02-13T15:39:28+08:00">2022-02-13</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>内核链表的操作常用的二个宏<code>list_for_each_entry</code>和<code>list_for_each_entry_safe</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * list_for_each_entry	-	iterate over list of given type</span></span><br><span class="line"><span class="comment"> * @pos:	the type * to use as a loop cursor.</span></span><br><span class="line"><span class="comment"> * @head:	the head for your list.</span></span><br><span class="line"><span class="comment"> * @member:	the name of the list_head within the struct.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> list_for_each_entry(pos, head, member)				\</span></span><br><span class="line"><span class="meta">	for (pos = list_first_entry(head, typeof(*pos), member);	\</span></span><br><span class="line"><span class="meta">	     !list_entry_is_head(pos, head, member);			\</span></span><br><span class="line"><span class="meta">	     pos = list_next_entry(pos, member))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * list_for_each_entry_safe - iterate over list of given type safe against removal of list entry</span></span><br><span class="line"><span class="comment"> * @pos:	the type * to use as a loop cursor.</span></span><br><span class="line"><span class="comment"> * @n:		another type * to use as temporary storage</span></span><br><span class="line"><span class="comment"> * @head:	the head for your list.</span></span><br><span class="line"><span class="comment"> * @member:	the name of the list_head within the struct.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> list_for_each_entry_safe(pos, n, head, member)			\</span></span><br><span class="line"><span class="meta">	for (pos = list_first_entry(head, typeof(*pos), member),	\</span></span><br><span class="line"><span class="meta">		n = list_next_entry(pos, member);			\</span></span><br><span class="line"><span class="meta">	     !list_entry_is_head(pos, head, member); 			\</span></span><br><span class="line"><span class="meta">	     pos = n, n = list_next_entry(n, member))</span></span><br></pre></td></tr></table></figure>
-
-<p><code>list_for_each_entry</code>宏是一个for循环语句，for循环的第一个参数就是让(head)-&gt;next指向member成员所在数据结构的指针，也就是将pos初始化为链表头指向的第一个实体链表成员，for的第三句话通过pos-&gt;member.next指针遍历整个实体链表，当pos-&gt;member.next再次指向我们的链表头的时候跳出for循环。整个过程没有对链表头进行遍历（不需要被遍历），所以使用list_for_each_entry遍历链表必须从链表头开始。 因此可以看出，list_for_each_entry的功能就是遍历以head为链表头的实体链表，对实体链表中的数据结构进行处理；</p>
-<p><code>list_for_each_entry_safe</code>用指针n对链表的下一个数据结构进行了临时存储，所以如果在遍历链表的时候需要做删除链表中的当前项操作时，用list_for_each_entry_safe可以安全的删除，而不会影响接下来的遍历过程（用n指针可以继续完成接下来的遍历， 而list_for_each_entry则无法继续遍历，删除后会导致无法继续遍历）。</p>
 
       
     </div>
