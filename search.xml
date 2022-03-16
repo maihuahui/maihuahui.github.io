@@ -3453,7 +3453,19 @@ The default changes each time you use either x or print.
 <li>V：红色通道与亮度的差值。</li>
 </ul>
 <p>其中，U、V 分量分别表示蓝 (blue)、红 (red) 分量信号，只含有色度信息，所以 YUV 也称为 YCbCr，其中，Cb、Cr的含义等同于U、V，C 可以理解为 component 或者 color。</p>
-<p><img src="/2022/03/16/video-yuv-format/NO1_1.JPG"><br><img src="/2022/03/16/video-yuv-format/NO1.JPG"><br><img src="/2022/03/16/video-yuv-format/NO1_3.JPG"><br><img src="/2022/03/16/video-yuv-format/NO1_4.PNG"><br>第一幅是Y分量描述黑白图像，第二幅是U(V)分量描述，第三幅是V(U)分量描述，第四幅是YUV三幅合成后得到的正常图像</p>
+<table>
+<thead>
+<tr>
+<th><img src="/2022/03/16/video-yuv-format/NO1_1.JPG"></th>
+<th><img src="/2022/03/16/video-yuv-format/NO1.JPG"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2022/03/16/video-yuv-format/NO1_3.JPG"></td>
+<td><img src="/2022/03/16/video-yuv-format/NO1_4.PNG"></td>
+</tr>
+</tbody></table>
+<p>第一幅是Y分量描述黑白图像，第二幅是U(V)分量描述，第三幅是V(U)分量描述，第四幅是YUV三幅合成后得到的正常图像</p>
 <p>人眼对亮度的敏感超过色度，即使把色度信息减少一点，人眼也无法查觉这一点。如果一张图片使用YUV格式保存将更少地占用存储空间。</p>
 <blockquote>
 <p>以采集视频为例，RGB24格式一帧的大小size＝width×heigth×3 Bit，RGB32的size＝width×heigth×4，如果是I420（即YUV标准格式4：2：0）的数据量是 size＝width×heigth×1.5 Bit</p>
