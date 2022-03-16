@@ -3393,7 +3393,7 @@ The default changes each time you use either x or print.
     <title>GTAGS</title>
     <url>/2022/03/16/tags/</url>
     <content><![CDATA[<h1 id="使用Gtags辅助查看kernel源码"><a href="#使用Gtags辅助查看kernel源码" class="headerlink" title="使用Gtags辅助查看kernel源码"></a>使用Gtags辅助查看kernel源码</h1><p>使用<code>make gtags</code>在kernel根目录下生成索引文件。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gtags       - Generate GNU GLOBAL index</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gtags       - Generate GNU GLOBAL index</span><br></pre></td></tr></table></figure>
 <p>kernel已对该命令进行封装，不必手动生成索引文件。在生成索引文件时还可以指定架构，这可以有效减少干扰项。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make gtags ARCH=arm</span><br><span class="line">make gtags ARCH=riscv</span><br></pre></td></tr></table></figure>
 
@@ -3404,7 +3404,7 @@ The default changes each time you use either x or print.
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">:Gtags [option] pattern</span><br></pre></td></tr></table></figure>
 <p>To go to ‘func’, you can say</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags func</span><br></pre></td></tr></table></figure>
-<p>Input completion is available. If you forgot the name of a function but recall only some characters of the head, please input them and press <TAB> key.</p>
+<p>Input completion is available. If you forgot the name of a function but recall only some characters of the head, please input them and press <TAB> key.</TAB></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags fu&lt;TAB&gt;</span><br><span class="line">:Gtags func			&lt;- Vim will append &#x27;nc&#x27;.</span><br></pre></td></tr></table></figure>
 
 <p>To go to the referenced point of ‘func’, add <code>-r</code> option.</p>
@@ -3420,7 +3420,7 @@ The default changes each time you use either x or print.
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -f %</span><br></pre></td></tr></table></figure>
 <p>You can get a list of files whose path include specified pattern.<br>For example:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   :Gtags -P /vm/			&lt;- all files under &#x27;vm&#x27; directory.</span><br><span class="line">   :Gtags -P \.h$			&lt;- all include files.</span><br><span class="line">:Gtags -P init			&lt;- all paths includes &#x27;init&#x27;</span><br></pre></td></tr></table></figure>
-<p>If you omitted an argument and input only <ENTER> key to the prompt, vim shows list of all files in the project.</p>
+<p>If you omitted an argument and input only <ENTER> key to the prompt, vim shows list of all files in the project.</ENTER></p>
 <p>Since all short options are sent to global(1) as is, you can  use the -i, -o, -O, and so on.</p>
 <p>For example, if you want to ignore case distinctions in pattern.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:Gtags -gi paTtern</span><br></pre></td></tr></table></figure>
@@ -3439,6 +3439,285 @@ The default changes each time you use either x or print.
       </categories>
       <tags>
         <tag>Gtags</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YUV FORMAT</title>
+    <url>/2022/03/16/video-yuv-format/</url>
+    <content><![CDATA[<h1 id="YUV简介"><a href="#YUV简介" class="headerlink" title="YUV简介"></a>YUV简介</h1><p>YUV是一种颜色编码方法，它和我们熟知的RGB红绿蓝颜色体系相对应，它们之间能通过公式相互转换。YUV将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的。</p>
+<p>YUV将亮度Y和色差UV三个信号分别进行编码，用同一信道发送出去。YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。</p>
+<p>YUV 三个字母的意义分别为：</p>
+<ul>
+<li>Y：亮度，就是灰度值。除了表示亮度信号外，还含有较多的绿色通道量。单纯的 Y 分量可以显示出完整的黑白图像。</li>
+<li>U：蓝色通道与亮度的差值。</li>
+<li>V：红色通道与亮度的差值。</li>
+</ul>
+<p>其中，U、V 分量分别表示蓝 (blue)、红 (red) 分量信号，只含有色度信息，所以 YUV 也称为 YCbCr，其中，Cb、Cr的含义等同于U、V，C 可以理解为 component 或者 color。</p>
+<p><img src="/2022/03/16/video-yuv-format/NO1.JPG"><br>第一幅是Y分量描述黑白图像，第二幅是U(V)分量描述，第三幅是V(U)分量描述，第四幅是YUV三幅合成后得到的正常图像</p>
+<p>人眼对亮度的敏感超过色度，即使把色度信息减少一点，人眼也无法查觉这一点。如果一张图片使用YUV格式保存将更少地占用存储空间。</p>
+<blockquote>
+<p>以采集视频为例，RGB24格式一帧的大小size＝width×heigth×3 Bit，RGB32的size＝width×heigth×4，如果是I420（即YUV标准格式4：2：0）的数据量是 size＝width×heigth×1.5 Bit</p>
+</blockquote>
+<h1 id="YUV详解"><a href="#YUV详解" class="headerlink" title="YUV详解"></a>YUV详解</h1><h2 id="YUV的存储格式"><a href="#YUV的存储格式" class="headerlink" title="YUV的存储格式"></a>YUV的存储格式</h2><p>YUV的存储格式有两大类：planar和packed。</p>
+<ul>
+<li><p>对于planar的YUV格式，先连续存储所有像素点的Y，紧接着存储所有像素点的U，随后是所有像素点的V。</p>
+</li>
+<li><p>对于packed的YUV格式，每个像素点的Y,U,V是连续交替存储的。</p>
+</li>
+</ul>
+<h2 id="YUV的采样方式"><a href="#YUV的采样方式" class="headerlink" title="YUV的采样方式"></a>YUV的采样方式</h2><p>YUV采样方式，主要描述像素Y、U、V分量采样比例，即表达每个像素时，Y、U、V分量的数目，通常有三种方式：YUV4:4:4，YUV4:2:2，YUV4:2:0。</p>
+<ul>
+<li><p>YUV4:4:4采样，每一个Y对应一组UV分量。</p>
+</li>
+<li><p>YUV4:2:2采样，每两个Y共用一组UV分量。</p>
+</li>
+<li><p>YUV4:2:0采样，每四个Y共用一组UV分量。</p>
+</li>
+</ul>
+<p>用图直观地表示采集的方式，以黑点表示采样该像点的Y分量，以空心圆圈表示采用该像素点的UV分量<br><img src="/2022/03/16/video-yuv-format/NO2.png"></p>
+<ul>
+<li><p>使用YUV4:4:4采样，一共要进行12次采样分别4个Y，4个U，4个V，对每一个Y,U,V每个需要8个比特位,就需要12*8=96位，平均下每个像素点需要96/4=24位比特位表示。</p>
+</li>
+<li><p>使用YUV4:2:2采样,就需要8*8 =64位，平均每个像素64/4=16位。</p>
+</li>
+<li><p>使用YUV4:2:0采样,就需要6*8 =48位，平均每个像素48/4=12位。</p>
+</li>
+</ul>
+<h2 id="常见的YUV码流的存储方式"><a href="#常见的YUV码流的存储方式" class="headerlink" title="常见的YUV码流的存储方式"></a>常见的YUV码流的存储方式</h2><p>Cb、Cr的含义等同于U、V</p>
+<p>YUVY 采用422采样格式，packed存储格式<br><img src="/2022/03/16/video-yuv-format/NO3.png"></p>
+<p>YUVY 采用422采样格式，Planar存储格式<br><img src="/2022/03/16/video-yuv-format/NO4.png"></p>
+<h2 id="YUV420"><a href="#YUV420" class="headerlink" title="YUV420"></a>YUV420</h2><h3 id="YUV420P-和-YUV420SP"><a href="#YUV420P-和-YUV420SP" class="headerlink" title="YUV420P 和 YUV420SP"></a>YUV420P 和 YUV420SP</h3><ul>
+<li>YUV420p：又叫planer平面模式，Y ，U，V分别再不同平面，也就是有三个平面。</li>
+<li>YUV420sp：又叫bi-planer或two-planer双平面，Y一个平面，UV在同一个平面交叉存储。<br><img src="/2022/03/16/video-yuv-format/NO5.png"></li>
+</ul>
+<p>YUV420P –&gt; YUV420SP<br><img src="/2022/03/16/video-yuv-format/NO6.png"></p>
+<h3 id="NV12-和-NV21"><a href="#NV12-和-NV21" class="headerlink" title="NV12 和 NV21"></a>NV12 和 NV21</h3><ul>
+<li>NV12:IOS只有这一种模式。存储顺序是先存Y，再UV交替存储。YYYYUVUVUV</li>
+<li>NV21:安卓的模式。存储顺序是先存Y，再存U，再VU交替存储。YYYYVUVUVU</li>
+</ul>
+<p>NV12: UV交替<br><img src="/2022/03/16/video-yuv-format/NO7.jpg"></p>
+<p>NV21:  VU交替</p>
+<h3 id="YUV420的内存计算"><a href="#YUV420的内存计算" class="headerlink" title="YUV420的内存计算"></a>YUV420的内存计算</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Y = width * hight </span><br><span class="line"></span><br><span class="line">U = Y / 4   V = Y / 4</span><br></pre></td></tr></table></figure>
+
+<p>YUV420中</p>
+<ul>
+<li>V的步长（也就是宽）是Y的步长的一半，V的行高也是Y的一半。</li>
+<li>U的步长和行高与V相同，也就是都是Y的一半。</li>
+<li>U 和 V 的内存占用为都Y的 1/4, <code>U + V</code> 的内存占用为 Y 的 1/2</li>
+</ul>
+<p>所以YUV420 数据在内存中的长度是 width * hight * 3 / 2 = width * hight * 1.5 </p>
+<p>以720×488大小图象YUV420 planar为例，</p>
+<p>其存储格式是： 共大小为720 × 480× 3 × 1.5字节，</p>
+<p>分为三个部分:Y,U和V</p>
+<ul>
+<li><p>Y分量：    (720×480)个字节</p>
+</li>
+<li><p>U(Cb)分量：(720×480 × 1/4)个字节</p>
+</li>
+<li><p>V(Cr)分量：(720×480 × 1/4)个字节</p>
+</li>
+</ul>
+<p>三个部分内部均是行优先存储，三个部分之间是Y,U,V 顺序存储。</p>
+<p>即YUV数据</p>
+<ul>
+<li><p>0－－720×480字节是Y分量值，</p>
+</li>
+<li><p>720×480－－720×480×5/4字节是U分量</p>
+</li>
+<li><p>720×480×5/4 －－720×480×3/2字节是V分量。</p>
+</li>
+</ul>
+<h2 id="YUV422"><a href="#YUV422" class="headerlink" title="YUV422"></a>YUV422</h2><p>每两个Y共用一组UV分量。<strong>U/V的步长（也就是宽）是Y的步长的一半，但高与 Y 相同</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Y = width * hight </span><br><span class="line"></span><br><span class="line">U = Y / 2   V = Y / 2</span><br><span class="line"></span><br><span class="line">Y = U + V</span><br></pre></td></tr></table></figure>
+
+<h3 id="NV16-和-NV61"><a href="#NV16-和-NV61" class="headerlink" title="NV16 和 NV61"></a>NV16 和 NV61</h3><ul>
+<li><p>NV16: UV 交替</p>
+</li>
+<li><p>NV61: VU 交替</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">NV16：</span><br><span class="line">                    w</span><br><span class="line">            +--------------------+</span><br><span class="line">            |Y0Y1Y2Y3...         |</span><br><span class="line">            |...                 |   h</span><br><span class="line">            |...                 |</span><br><span class="line">            |                    |</span><br><span class="line">            +--------------------+        UV 交替为NV16，VU 交替为NV61</span><br><span class="line">            |U0V0U1V1            |</span><br><span class="line">            |...                 |   h</span><br><span class="line">            |...                 |</span><br><span class="line">            |                    |</span><br><span class="line">            +--------------------+</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="YUV420与YUV422"><a href="#YUV420与YUV422" class="headerlink" title="YUV420与YUV422"></a>YUV420与YUV422</h2><p>UV分量的长都是 Y的一般，仅有宽不同， 420 UV的宽是Y的 1/2， 422 UV的宽与 Y 相同</p>
+<h2 id="YUV400"><a href="#YUV400" class="headerlink" title="YUV400"></a>YUV400</h2><p>灰度数据，没有色度数据, <strong>即仅有 Y 分量</strong></p>
+<h2 id="YUV常用格式附录"><a href="#YUV常用格式附录" class="headerlink" title="YUV常用格式附录"></a>YUV常用格式附录</h2><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>Mode</th>
+<th>通道</th>
+<th>比特</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GRAY</td>
+<td>Planar</td>
+<td>1</td>
+<td>8</td>
+<td>400. Y0Y1…Y15</td>
+</tr>
+<tr>
+<td>I420</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  U0U1U2U3 V0V1V2V3   * 常用 理解为YU12</td>
+</tr>
+<tr>
+<td>IYUV</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420</td>
+</tr>
+<tr>
+<td>YUV420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420 * 感觉 YUV420P 名字更常用</td>
+</tr>
+<tr>
+<td>YUVJ420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420,不同的是色彩转换公式，YUVJ使用  JPEG 公式， 输出数据范围[0..255]， I420的范围是 [16-240]</td>
+</tr>
+<tr>
+<td>YV12</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  V0V1V2V3 U0U1U2U3   * 常用 很多编解码器都用这个格式输入输出</td>
+</tr>
+<tr>
+<td>YVU420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同YV12</td>
+</tr>
+<tr>
+<td>NV12</td>
+<td>Planar</td>
+<td>2</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  U0V0U1V1…..U3V3 *常用</td>
+</tr>
+<tr>
+<td>NV21</td>
+<td>Planar</td>
+<td>2</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  V0U0V1U1…..V3U3</td>
+</tr>
+<tr>
+<td>YV16</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>422. Y0Y1..Y15  V0V1..V7 U0U1..U7</td>
+</tr>
+<tr>
+<td>YUV422P</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>同YV16 * 感觉 YUV422P 名字更常用</td>
+</tr>
+<tr>
+<td>I422</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>同YV16</td>
+</tr>
+<tr>
+<td>UYVY</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. U0Y0V0Y1</td>
+</tr>
+<tr>
+<td>Y422</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同UYVY</td>
+</tr>
+<tr>
+<td>YUY2</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. Y0U0Y1V0</td>
+</tr>
+<tr>
+<td>YUV422</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同YUY2</td>
+</tr>
+<tr>
+<td>YUYV</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同YUY2</td>
+</tr>
+<tr>
+<td>YVYU</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. Y0V0Y1U0</td>
+</tr>
+<tr>
+<td>YU16</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>422. Y0Y1..Y15 U0U1..U7 V0V1..V7</td>
+</tr>
+<tr>
+<td>NV16</td>
+<td>Planar</td>
+<td>2</td>
+<td>16</td>
+<td>422. Y0Y1..Y15  U0V0U1V1..U7V7</td>
+</tr>
+<tr>
+<td>YV24</td>
+<td>Planar</td>
+<td>3</td>
+<td>24</td>
+<td>444. Y0Y1..Y15  V0V1..V15 U0U1..U15</td>
+</tr>
+<tr>
+<td>I444</td>
+<td>Planar</td>
+<td>3</td>
+<td>24</td>
+<td>同YV24</td>
+</tr>
+<tr>
+<td>IYU2</td>
+<td>Packed</td>
+<td>1</td>
+<td>24</td>
+<td>444. U0Y0V0</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>yuv</category>
+      </categories>
+      <tags>
+        <tag>yuv</tag>
       </tags>
   </entry>
 </search>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="YUV简介YUV是一种颜色编码方法，它和我们熟知的RGB红绿蓝颜色体系相对应，它们之间能通过公式相互转换。YUV将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的。 YUV将亮度Y和色差UV三个信号分别进行编码，用同一信道发送出去。YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。 YUV 三个字母的意义分别为：  Y：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YUV FORMAT">
+<meta property="og:url" content="http://example.com/2022/03/16/video-yuv-format/index.html">
+<meta property="og:site_name" content="Huahui">
+<meta property="og:description" content="YUV简介YUV是一种颜色编码方法，它和我们熟知的RGB红绿蓝颜色体系相对应，它们之间能通过公式相互转换。YUV将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的。 YUV将亮度Y和色差UV三个信号分别进行编码，用同一信道发送出去。YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。 YUV 三个字母的意义分别为：  Y：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO1.JPG">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO2.png">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO3.png">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO4.png">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO5.png">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO6.png">
+<meta property="og:image" content="http://example.com/2022/03/16/video-yuv-format/NO7.jpg">
+<meta property="article:published_time" content="2022-03-16T14:26:06.000Z">
+<meta property="article:modified_time" content="2022-03-16T15:53:59.533Z">
+<meta property="article:author" content="huahui">
+<meta property="article:tag" content="yuv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/16/video-yuv-format/NO1.JPG">
+
+
+<link rel="canonical" href="http://example.com/2022/03/16/video-yuv-format/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/03/16/video-yuv-format/","path":"2022/03/16/video-yuv-format/","title":"YUV FORMAT"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>YUV FORMAT | Huahui</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Huahui</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YUV%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">YUV简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YUV%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">YUV详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV%E7%9A%84%E5%AD%98%E5%82%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">YUV的存储格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV%E7%9A%84%E9%87%87%E6%A0%B7%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">YUV的采样方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84YUV%E7%A0%81%E6%B5%81%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">常见的YUV码流的存储方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV420"><span class="nav-number">2.4.</span> <span class="nav-text">YUV420</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YUV420P-%E5%92%8C-YUV420SP"><span class="nav-number">2.4.1.</span> <span class="nav-text">YUV420P 和 YUV420SP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NV12-%E5%92%8C-NV21"><span class="nav-number">2.4.2.</span> <span class="nav-text">NV12 和 NV21</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YUV420%E7%9A%84%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97"><span class="nav-number">2.4.3.</span> <span class="nav-text">YUV420的内存计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV422"><span class="nav-number">2.5.</span> <span class="nav-text">YUV422</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NV16-%E5%92%8C-NV61"><span class="nav-number">2.5.1.</span> <span class="nav-text">NV16 和 NV61</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV420%E4%B8%8EYUV422"><span class="nav-number">2.6.</span> <span class="nav-text">YUV420与YUV422</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV400"><span class="nav-number">2.7.</span> <span class="nav-text">YUV400</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUV%E5%B8%B8%E7%94%A8%E6%A0%BC%E5%BC%8F%E9%99%84%E5%BD%95"><span class="nav-number">2.8.</span> <span class="nav-text">YUV常用格式附录</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huahui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/16/video-yuv-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          YUV FORMAT
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-03-16 22:26:06 / Modified: 23:53:59" itemprop="dateCreated datePublished" datetime="2022-03-16T22:26:06+08:00">2022-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/yuv/" itemprop="url" rel="index"><span itemprop="name">yuv</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="YUV简介"><a href="#YUV简介" class="headerlink" title="YUV简介"></a>YUV简介</h1><p>YUV是一种颜色编码方法，它和我们熟知的RGB红绿蓝颜色体系相对应，它们之间能通过公式相互转换。YUV将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的。</p>
+<p>YUV将亮度Y和色差UV三个信号分别进行编码，用同一信道发送出去。YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。</p>
+<p>YUV 三个字母的意义分别为：</p>
+<ul>
+<li>Y：亮度，就是灰度值。除了表示亮度信号外，还含有较多的绿色通道量。单纯的 Y 分量可以显示出完整的黑白图像。</li>
+<li>U：蓝色通道与亮度的差值。</li>
+<li>V：红色通道与亮度的差值。</li>
+</ul>
+<p>其中，U、V 分量分别表示蓝 (blue)、红 (red) 分量信号，只含有色度信息，所以 YUV 也称为 YCbCr，其中，Cb、Cr的含义等同于U、V，C 可以理解为 component 或者 color。</p>
+<p><img src="/2022/03/16/video-yuv-format/NO1.JPG"><br>第一幅是Y分量描述黑白图像，第二幅是U(V)分量描述，第三幅是V(U)分量描述，第四幅是YUV三幅合成后得到的正常图像</p>
+<p>人眼对亮度的敏感超过色度，即使把色度信息减少一点，人眼也无法查觉这一点。如果一张图片使用YUV格式保存将更少地占用存储空间。</p>
+<blockquote>
+<p>以采集视频为例，RGB24格式一帧的大小size＝width×heigth×3 Bit，RGB32的size＝width×heigth×4，如果是I420（即YUV标准格式4：2：0）的数据量是 size＝width×heigth×1.5 Bit</p>
+</blockquote>
+<h1 id="YUV详解"><a href="#YUV详解" class="headerlink" title="YUV详解"></a>YUV详解</h1><h2 id="YUV的存储格式"><a href="#YUV的存储格式" class="headerlink" title="YUV的存储格式"></a>YUV的存储格式</h2><p>YUV的存储格式有两大类：planar和packed。</p>
+<ul>
+<li><p>对于planar的YUV格式，先连续存储所有像素点的Y，紧接着存储所有像素点的U，随后是所有像素点的V。</p>
+</li>
+<li><p>对于packed的YUV格式，每个像素点的Y,U,V是连续交替存储的。</p>
+</li>
+</ul>
+<h2 id="YUV的采样方式"><a href="#YUV的采样方式" class="headerlink" title="YUV的采样方式"></a>YUV的采样方式</h2><p>YUV采样方式，主要描述像素Y、U、V分量采样比例，即表达每个像素时，Y、U、V分量的数目，通常有三种方式：YUV4:4:4，YUV4:2:2，YUV4:2:0。</p>
+<ul>
+<li><p>YUV4:4:4采样，每一个Y对应一组UV分量。</p>
+</li>
+<li><p>YUV4:2:2采样，每两个Y共用一组UV分量。</p>
+</li>
+<li><p>YUV4:2:0采样，每四个Y共用一组UV分量。</p>
+</li>
+</ul>
+<p>用图直观地表示采集的方式，以黑点表示采样该像点的Y分量，以空心圆圈表示采用该像素点的UV分量<br><img src="/2022/03/16/video-yuv-format/NO2.png"></p>
+<ul>
+<li><p>使用YUV4:4:4采样，一共要进行12次采样分别4个Y，4个U，4个V，对每一个Y,U,V每个需要8个比特位,就需要12*8=96位，平均下每个像素点需要96/4=24位比特位表示。</p>
+</li>
+<li><p>使用YUV4:2:2采样,就需要8*8 =64位，平均每个像素64/4=16位。</p>
+</li>
+<li><p>使用YUV4:2:0采样,就需要6*8 =48位，平均每个像素48/4=12位。</p>
+</li>
+</ul>
+<h2 id="常见的YUV码流的存储方式"><a href="#常见的YUV码流的存储方式" class="headerlink" title="常见的YUV码流的存储方式"></a>常见的YUV码流的存储方式</h2><p>Cb、Cr的含义等同于U、V</p>
+<p>YUVY 采用422采样格式，packed存储格式<br><img src="/2022/03/16/video-yuv-format/NO3.png"></p>
+<p>YUVY 采用422采样格式，Planar存储格式<br><img src="/2022/03/16/video-yuv-format/NO4.png"></p>
+<h2 id="YUV420"><a href="#YUV420" class="headerlink" title="YUV420"></a>YUV420</h2><h3 id="YUV420P-和-YUV420SP"><a href="#YUV420P-和-YUV420SP" class="headerlink" title="YUV420P 和 YUV420SP"></a>YUV420P 和 YUV420SP</h3><ul>
+<li>YUV420p：又叫planer平面模式，Y ，U，V分别再不同平面，也就是有三个平面。</li>
+<li>YUV420sp：又叫bi-planer或two-planer双平面，Y一个平面，UV在同一个平面交叉存储。<br><img src="/2022/03/16/video-yuv-format/NO5.png"></li>
+</ul>
+<p>YUV420P –&gt; YUV420SP<br><img src="/2022/03/16/video-yuv-format/NO6.png"></p>
+<h3 id="NV12-和-NV21"><a href="#NV12-和-NV21" class="headerlink" title="NV12 和 NV21"></a>NV12 和 NV21</h3><ul>
+<li>NV12:IOS只有这一种模式。存储顺序是先存Y，再UV交替存储。YYYYUVUVUV</li>
+<li>NV21:安卓的模式。存储顺序是先存Y，再存U，再VU交替存储。YYYYVUVUVU</li>
+</ul>
+<p>NV12: UV交替<br><img src="/2022/03/16/video-yuv-format/NO7.jpg"></p>
+<p>NV21:  VU交替</p>
+<h3 id="YUV420的内存计算"><a href="#YUV420的内存计算" class="headerlink" title="YUV420的内存计算"></a>YUV420的内存计算</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Y = width * hight </span><br><span class="line"></span><br><span class="line">U = Y / 4   V = Y / 4</span><br></pre></td></tr></table></figure>
+
+<p>YUV420中</p>
+<ul>
+<li>V的步长（也就是宽）是Y的步长的一半，V的行高也是Y的一半。</li>
+<li>U的步长和行高与V相同，也就是都是Y的一半。</li>
+<li>U 和 V 的内存占用为都Y的 1/4, <code>U + V</code> 的内存占用为 Y 的 1/2</li>
+</ul>
+<p>所以YUV420 数据在内存中的长度是 width * hight * 3 / 2 = width * hight * 1.5 </p>
+<p>以720×488大小图象YUV420 planar为例，</p>
+<p>其存储格式是： 共大小为720 × 480× 3 × 1.5字节，</p>
+<p>分为三个部分:Y,U和V</p>
+<ul>
+<li><p>Y分量：    (720×480)个字节</p>
+</li>
+<li><p>U(Cb)分量：(720×480 × 1/4)个字节</p>
+</li>
+<li><p>V(Cr)分量：(720×480 × 1/4)个字节</p>
+</li>
+</ul>
+<p>三个部分内部均是行优先存储，三个部分之间是Y,U,V 顺序存储。</p>
+<p>即YUV数据</p>
+<ul>
+<li><p>0－－720×480字节是Y分量值，</p>
+</li>
+<li><p>720×480－－720×480×5/4字节是U分量</p>
+</li>
+<li><p>720×480×5/4 －－720×480×3/2字节是V分量。</p>
+</li>
+</ul>
+<h2 id="YUV422"><a href="#YUV422" class="headerlink" title="YUV422"></a>YUV422</h2><p>每两个Y共用一组UV分量。<strong>U/V的步长（也就是宽）是Y的步长的一半，但高与 Y 相同</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Y = width * hight </span><br><span class="line"></span><br><span class="line">U = Y / 2   V = Y / 2</span><br><span class="line"></span><br><span class="line">Y = U + V</span><br></pre></td></tr></table></figure>
+
+<h3 id="NV16-和-NV61"><a href="#NV16-和-NV61" class="headerlink" title="NV16 和 NV61"></a>NV16 和 NV61</h3><ul>
+<li><p>NV16: UV 交替</p>
+</li>
+<li><p>NV61: VU 交替</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">NV16：</span><br><span class="line">                    w</span><br><span class="line">            +--------------------+</span><br><span class="line">            |Y0Y1Y2Y3...         |</span><br><span class="line">            |...                 |   h</span><br><span class="line">            |...                 |</span><br><span class="line">            |                    |</span><br><span class="line">            +--------------------+        UV 交替为NV16，VU 交替为NV61</span><br><span class="line">            |U0V0U1V1            |</span><br><span class="line">            |...                 |   h</span><br><span class="line">            |...                 |</span><br><span class="line">            |                    |</span><br><span class="line">            +--------------------+</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="YUV420与YUV422"><a href="#YUV420与YUV422" class="headerlink" title="YUV420与YUV422"></a>YUV420与YUV422</h2><p>UV分量的长都是 Y的一般，仅有宽不同， 420 UV的宽是Y的 1/2， 422 UV的宽与 Y 相同</p>
+<h2 id="YUV400"><a href="#YUV400" class="headerlink" title="YUV400"></a>YUV400</h2><p>灰度数据，没有色度数据, <strong>即仅有 Y 分量</strong></p>
+<h2 id="YUV常用格式附录"><a href="#YUV常用格式附录" class="headerlink" title="YUV常用格式附录"></a>YUV常用格式附录</h2><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>Mode</th>
+<th>通道</th>
+<th>比特</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GRAY</td>
+<td>Planar</td>
+<td>1</td>
+<td>8</td>
+<td>400. Y0Y1…Y15</td>
+</tr>
+<tr>
+<td>I420</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  U0U1U2U3 V0V1V2V3   * 常用 理解为YU12</td>
+</tr>
+<tr>
+<td>IYUV</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420</td>
+</tr>
+<tr>
+<td>YUV420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420 * 感觉 YUV420P 名字更常用</td>
+</tr>
+<tr>
+<td>YUVJ420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同I420,不同的是色彩转换公式，YUVJ使用  JPEG 公式， 输出数据范围[0..255]， I420的范围是 [16-240]</td>
+</tr>
+<tr>
+<td>YV12</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  V0V1V2V3 U0U1U2U3   * 常用 很多编解码器都用这个格式输入输出</td>
+</tr>
+<tr>
+<td>YVU420P</td>
+<td>Planar</td>
+<td>3</td>
+<td>12</td>
+<td>同YV12</td>
+</tr>
+<tr>
+<td>NV12</td>
+<td>Planar</td>
+<td>2</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  U0V0U1V1…..U3V3 *常用</td>
+</tr>
+<tr>
+<td>NV21</td>
+<td>Planar</td>
+<td>2</td>
+<td>12</td>
+<td>420. Y0Y1..Y15  V0U0V1U1…..V3U3</td>
+</tr>
+<tr>
+<td>YV16</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>422. Y0Y1..Y15  V0V1..V7 U0U1..U7</td>
+</tr>
+<tr>
+<td>YUV422P</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>同YV16 * 感觉 YUV422P 名字更常用</td>
+</tr>
+<tr>
+<td>I422</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>同YV16</td>
+</tr>
+<tr>
+<td>UYVY</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. U0Y0V0Y1</td>
+</tr>
+<tr>
+<td>Y422</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同UYVY</td>
+</tr>
+<tr>
+<td>YUY2</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. Y0U0Y1V0</td>
+</tr>
+<tr>
+<td>YUV422</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同YUY2</td>
+</tr>
+<tr>
+<td>YUYV</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>同YUY2</td>
+</tr>
+<tr>
+<td>YVYU</td>
+<td>Packed</td>
+<td>1</td>
+<td>16</td>
+<td>422. Y0V0Y1U0</td>
+</tr>
+<tr>
+<td>YU16</td>
+<td>Planar</td>
+<td>3</td>
+<td>16</td>
+<td>422. Y0Y1..Y15 U0U1..U7 V0V1..V7</td>
+</tr>
+<tr>
+<td>NV16</td>
+<td>Planar</td>
+<td>2</td>
+<td>16</td>
+<td>422. Y0Y1..Y15  U0V0U1V1..U7V7</td>
+</tr>
+<tr>
+<td>YV24</td>
+<td>Planar</td>
+<td>3</td>
+<td>24</td>
+<td>444. Y0Y1..Y15  V0V1..V15 U0U1..U15</td>
+</tr>
+<tr>
+<td>I444</td>
+<td>Planar</td>
+<td>3</td>
+<td>24</td>
+<td>同YV24</td>
+</tr>
+<tr>
+<td>IYU2</td>
+<td>Packed</td>
+<td>1</td>
+<td>24</td>
+<td>444. U0Y0V0</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/yuv/" rel="tag"># yuv</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/16/tags/" rel="prev" title="GTAGS">
+                  <i class="fa fa-chevron-left"></i> GTAGS
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huahui</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
