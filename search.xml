@@ -3732,4 +3732,27 @@ The default changes each time you use either x or print.
         <tag>yuv</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Hexo</title>
+    <url>/2022/07/08/hexo-hexo/</url>
+    <content><![CDATA[<h1 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h1><h2 id="创建新博客"><a href="#创建新博客" class="headerlink" title="创建新博客"></a>创建新博客</h2><p>new指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new -p 后端/test.md </span><br></pre></td></tr></table></figure>
+
+<p>执行后，会在 <code>_posts</code>文件夹下创建子文件夹 “后端”，并创建一篇test.md博文。</p>
+<h2 id="创建关联文件夹"><a href="#创建关联文件夹" class="headerlink" title="创建关联文件夹"></a>创建关联文件夹</h2><p><code>_config.yml</code> 配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="网页生成"><a href="#网页生成" class="headerlink" title="网页生成"></a>网页生成</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo generate --&gt; hexo g</span><br><span class="line"></span><br><span class="line">hexo g -d #生成并部署</span><br></pre></td></tr></table></figure>
+
+<h2 id="网页预览"><a href="#网页预览" class="headerlink" title="网页预览"></a>网页预览</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --&gt; hexo s  #启动服务预览</span><br></pre></td></tr></table></figure>
+
+<h2 id="网页部署"><a href="#网页部署" class="headerlink" title="网页部署"></a>网页部署</h2><p>hexo deploy –&gt; hexo d #部署</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
 </search>
