@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,312 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/13/Linux%E9%A9%B1%E5%8A%A8-LCD%E9%A9%B1%E5%8A%A8/" class="post-title-link" itemprop="url">Framebuffer</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-02-13 15:58:36 / Modified: 16:05:09" itemprop="dateCreated datePublished" datetime="2022-02-13T15:58:36+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux%E9%A9%B1%E5%8A%A8/" itemprop="url" rel="index"><span itemprop="name">Linux驱动</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>像素颜色</p>
+<p>用红绿蓝三颜色来表示，可以用24位数据来表示红绿蓝，也可以用16位等等格式，比如：</p>
+<ul>
+<li>bpp：bits per pixel，每个像素用多少位来表示</li>
+<li>24bpp：实际上会用到32位，其中8位未使用，其余24位中分别用8位表示红(R)、绿(G)、蓝(B) 。24位使用32位来存储方便寻址。</li>
+<li>16bpp：有rbg565，rgb555<ul>
+<li>rgb565：用5位表示红、6位表示绿、5位表示蓝。人眼对绿色较敏感，能分辨出其中的细微差别</li>
+<li>rgb555：16位数据中用5位表示红、5位表示绿、5位表示蓝，浪费一位</li>
+</ul>
+</li>
+</ul>
+<p><img src="002_rgb.png"></p>
+<p>注：有些LCD控制器可以设置红绿蓝三原色的位置，比如24位的数据里，可能是RGB888，也可能是BGR888</p>
+<h1 id="Framebuffer"><a href="#Framebuffer" class="headerlink" title="Framebuffer"></a>Framebuffer</h1><p>存储像素数据的一块特殊内存，<strong>显存</strong></p>
+<ul>
+<li>也有芯片手册称为 <strong>GRAM</strong>, G指图形</li>
+</ul>
+<h2 id="对于应用工程师"><a href="#对于应用工程师" class="headerlink" title="对于应用工程师"></a>对于<strong>应用工程师</strong></h2><p>使用LCD只需要掌握三点：</p>
+<ol>
+<li>颜色格式：16bpp/24bpp</li>
+<li>Framebuffer基地址</li>
+<li>LCD屏幕分辨率，根据分辨率才能找到像素点在显存的任意位置</li>
+</ol>
+<p>应用工程师将数据写入Framebuffer即可，LCD controler （LCD控制器）会帮助更新屏幕上像素的颜色。</p>
+<h2 id="对于驱动工程师"><a href="#对于驱动工程师" class="headerlink" title="对于驱动工程师"></a>对于驱动工程师</h2><p>对LCD的理解要深入硬件，比如要回答这几个问题：</p>
+<ul>
+<li>Framebuffer在哪里？</li>
+</ul>
+<p>LCD里面还是LCD外面</p>
+<ul>
+<li>谁把Framebuffer中的数据发给LCD？</li>
+</ul>
+<p>LCD controler，驱动工程师很大一部分工作既是设置初始化LCD controler</p>
+<h1 id="统一的硬件模型"><a href="#统一的硬件模型" class="headerlink" title="统一的硬件模型"></a>统一的硬件模型</h1><p>LCD接口众多，但硬件模型一致，原理一致</p>
+<p><img src="004_lcd_hardware_block.png"></p>
+<h2 id="MCU常用的8080接口LCD模组"><a href="#MCU常用的8080接口LCD模组" class="headerlink" title="MCU常用的8080接口LCD模组"></a>MCU常用的8080接口LCD模组</h2><p>内存，LCD控制器，LCD屏幕组合成一个<strong>LCM模组</strong>，单片机F103直接跟模组通信</p>
+<p>F103一般通过以下信号线跟LCM模组通信</p>
+<ul>
+<li>CS 片选线</li>
+<li>RD / WD 读写控制线</li>
+<li>DataBus 数据总线</li>
+<li>Data / cmd 控制引脚，决定DataBus上传输的是数据还是地址等其他信息</li>
+</ul>
+<h2 id="MPU常用的TFT-RGB接口"><a href="#MPU常用的TFT-RGB接口" class="headerlink" title="MPU常用的TFT RGB接口"></a>MPU常用的TFT RGB接口</h2><p>只有LCD屏幕在外面，LCD控制器位于ARM芯片内部，可外接显存。LCD控制器通过RGB三组线以及其他控制信号线对LCD屏幕进行控制</p>
+<ul>
+<li>DCLK 移动一个像素点</li>
+<li>HSYNC 从最右跳到下一行</li>
+<li>VSYNC 从最后一个跳到第一个</li>
+<li>DE 决定是否接受RGB数据，在像素点跳转时禁用RGB数据</li>
+</ul>
+<h2 id="RGB三组线"><a href="#RGB三组线" class="headerlink" title="RGB三组线"></a>RGB三组线</h2><ul>
+<li><p>对于使用真彩色的LCD控制器，RGB引脚上的数据直接来自自Framebuffer；</p>
+</li>
+<li><p>对于使用调色板的LCD控制器，Framebuffer中的数据只是用来取出调色板中的颜色，调色板中的数据会被放到RGB引脚上去。</p>
+</li>
+</ul>
+<h1 id="编写Framebuffer框架"><a href="#编写Framebuffer框架" class="headerlink" title="编写Framebuffer框架"></a>编写Framebuffer框架</h1><p>分配显存时，不可以使用kmalloc函数。</p>
+<p>显存要保证物理地址连续，kamlloc函数分配的内存可以保证虚拟地址的联系，但在物理地址上不一定是连续的。</p>
+<p>Framebuffer框架分为上下两层：</p>
+<ul>
+<li>fbmem.c：承上启下<ul>
+<li>实现、注册file_operations结构体</li>
+<li>把APP的调用向下转发到具体的硬件驱动程序</li>
+</ul>
+</li>
+<li>xxx_fb.c：硬件相关的驱动程序<ul>
+<li>实现、注册fb_info结构体</li>
+<li>实现硬件操作</li>
+</ul>
+</li>
+</ul>
+<h2 id="Framebuffer核心："><a href="#Framebuffer核心：" class="headerlink" title="Framebuffer核心："></a>Framebuffer核心：</h2><ul>
+<li><p>分配fb_info</p>
+<ul>
+<li>framebuffer_alloc</li>
+</ul>
+</li>
+<li><p>设置fb_info</p>
+<ul>
+<li>var</li>
+<li>fbops</li>
+<li>硬件相关操作</li>
+</ul>
+</li>
+<li><p>注册fb_info</p>
+<ul>
+<li>register_framebuffer</li>
+</ul>
+</li>
+</ul>
+<h1 id="imx6ull-LCD-控制器"><a href="#imx6ull-LCD-控制器" class="headerlink" title="imx6ull LCD 控制器"></a>imx6ull LCD 控制器</h1><h2 id="控制器模块"><a href="#控制器模块" class="headerlink" title="控制器模块"></a>控制器模块</h2><ul>
+<li>硬件框架</li>
+<li>数据传输与处理</li>
+<li>时序控制</li>
+</ul>
+<p>数据处理过程</p>
+<ol>
+<li>从显存读数据 32bit * n</li>
+<li>判断是否交换</li>
+<li>使用哪种RGB格式 RGB555， RGB565, RGB888</li>
+<li>设置时序，用于发送数据</li>
+<li>RGB 数据格式 跟LCD屏幕匹配</li>
+</ol>
+<p>例如：RGB 888 - &gt; 16bpp的LCD ，在8位中只传五位</p>
+<h2 id="LCD控制器寄存器简介"><a href="#LCD控制器寄存器简介" class="headerlink" title="LCD控制器寄存器简介"></a>LCD控制器寄存器简介</h2><p>查看任何芯片的LCD控制器寄存器时，记住几个要点：</p>
+<p>① 怎么把LCD的信息告诉LCD控制器：即分辨率、行列时序、像素时钟等；<br>② 怎么把显存地址、像素格式告诉LCD控制器。</p>
+<h1 id="内核中的LCD驱动程序"><a href="#内核中的LCD驱动程序" class="headerlink" title="内核中的LCD驱动程序"></a>内核中的LCD驱动程序</h1><p>如何确定内存LCD驱动程序</p>
+<p>在已经编译好的内核中 <code>drivers/video/fbdev</code>目录下，有哪些<code>.o</code>文件，对应的<code>.c</code>文件。</p>
+<h1 id="编程-LCD驱动程序框架-使用设备树"><a href="#编程-LCD驱动程序框架-使用设备树" class="headerlink" title="编程_LCD驱动程序框架_使用设备树"></a>编程_LCD驱动程序框架_使用设备树</h1><p>Linux驱动程序 = 驱动程序框架 + 硬件编程。</p>
+<p>驱动程序框架核心就是：</p>
+<ul>
+<li>分配fb_info</li>
+<li>设置fb_info</li>
+<li>注册fb_info</li>
+<li>硬件相关的设置</li>
+</ul>
+<h2 id="硬件相关的设置"><a href="#硬件相关的设置" class="headerlink" title="硬件相关的设置"></a>硬件相关的设置</h2><ul>
+<li>引脚设置</li>
+<li>时钟设置</li>
+<li>LCD控制器设置</li>
+</ul>
+<p>入口函数注册<code>platform_driver</code></p>
+<p>设备树结点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">framebuffer-mylcd &#123;</span><br><span class="line">        compatible = &quot;huahui,lcd_drv&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="编写probe函数"><a href="#编写probe函数" class="headerlink" title="编写probe函数"></a>编写probe函数</h2><ul>
+<li>驱动程序框架核心 fb_info</li>
+<li>硬件相关的设置</li>
+</ul>
+<h1 id="引脚配置"><a href="#引脚配置" class="headerlink" title="引脚配置"></a>引脚配置</h1><p>主要使用<strong>pinctrl子系统</strong>把引脚配置为LCD功能，对于背光引脚等使用<strong>GPIO子系统</strong>的函数控制它的输出电平。</p>
+<p>设备树结点</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pinctrl-names = <span class="string">&quot;default&quot;</span>;</span><br><span class="line">pinctrl<span class="number">-0</span> = &lt;&amp;pmylcd_pinctrl&gt;;</span><br><span class="line">backlight-gpios = &lt;&amp;gpio1 <span class="number">8</span> GPIO_ACTIVE_HIGH&gt;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="时钟配置"><a href="#时钟配置" class="headerlink" title="时钟配置"></a>时钟配置</h1><p>通过芯片手册，查看需要使能那些时钟</p>
+<p>设备树结点</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clocks = &lt;&amp;clks IMX6UL_CLK_LCDIF_PIX&gt;,</span><br><span class="line">         &lt;&amp;clks IMX6UL_CLK_LCDIF_APB&gt;;</span><br><span class="line">clock-names = <span class="string">&quot;pix&quot;</span>, <span class="string">&quot;axi&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置LCD控制器"><a href="#配置LCD控制器" class="headerlink" title="配置LCD控制器"></a>配置LCD控制器</h1><h2 id="在设备树里指定LCD参数"><a href="#在设备树里指定LCD参数" class="headerlink" title="在设备树里指定LCD参数"></a>在设备树里指定LCD参数</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">framebuffer-mylcd &#123;</span><br><span class="line">		compatible = &quot;100ask,lcd_drv&quot;;</span><br><span class="line">        pinctrl-names = &quot;default&quot;;</span><br><span class="line">		pinctrl-0 = &lt;&amp;mylcd_pinctrl&gt;;</span><br><span class="line">		backlight-gpios = &lt;&amp;gpio1 8 GPIO_ACTIVE_HIGH&gt;;</span><br><span class="line"></span><br><span class="line">           clocks = &lt;&amp;clks IMX6UL_CLK_LCDIF_PIX&gt;,</span><br><span class="line">                    &lt;&amp;clks IMX6UL_CLK_LCDIF_APB&gt;;</span><br><span class="line">           clock-names = &quot;pix&quot;, &quot;axi&quot;;</span><br><span class="line">           </span><br><span class="line">           display = &lt;&amp;display0&gt;;</span><br><span class="line"></span><br><span class="line">		display0: display &#123;</span><br><span class="line">			bits-per-pixel = &lt;24&gt;;</span><br><span class="line">			bus-width = &lt;24&gt;;</span><br><span class="line"></span><br><span class="line">			display-timings &#123;</span><br><span class="line">				native-mode = &lt;&amp;timing0&gt;;</span><br><span class="line"></span><br><span class="line">				 timing0: timing0_1024x768 &#123;</span><br><span class="line">				 clock-frequency = &lt;50000000&gt;;</span><br><span class="line">				 hactive = &lt;1024&gt;;</span><br><span class="line">				 vactive = &lt;600&gt;;</span><br><span class="line">				 hfront-porch = &lt;160&gt;;</span><br><span class="line">				 hback-porch = &lt;140&gt;;</span><br><span class="line">				 hsync-len = &lt;20&gt;;</span><br><span class="line">				 vback-porch = &lt;20&gt;;</span><br><span class="line">				 vfront-porch = &lt;12&gt;;</span><br><span class="line">				 vsync-len = &lt;3&gt;;</span><br><span class="line"></span><br><span class="line">				 hsync-active = &lt;0&gt;;</span><br><span class="line">				 vsync-active = &lt;0&gt;;</span><br><span class="line">				 de-active = &lt;1&gt;;</span><br><span class="line">				 pixelclk-active = &lt;0&gt;;</span><br><span class="line">				 &#125;;</span><br><span class="line"></span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;;            </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="从设备树获得参数"><a href="#从设备树获得参数" class="headerlink" title="从设备树获得参数"></a>从设备树获得参数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line">u32 width;</span><br><span class="line">u32 bits_per_pixel;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">display_timings</span> *<span class="title">timings</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* get display node from device tree , pdev-&gt;dev.of_node : from father node*/</span></span><br><span class="line">display_np = of_parse_phandle(pdev-&gt;dev.of_node, <span class="string">&quot;display&quot;</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* get common info 通用属性 */</span></span><br><span class="line">ret = of_property_read_u32(display_np, <span class="string">&quot;bus-width&quot;</span>, &amp;width);</span><br><span class="line">ret = of_property_read_u32(display_np, <span class="string">&quot;bits-per-pixel&quot;</span>,</span><br><span class="line">			   &amp;bits_per_pixel);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* get timings from device tree */</span></span><br><span class="line">  timings = of_get_display_timings(display_np);</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用参数配置LCD控制器"><a href="#使用参数配置LCD控制器" class="headerlink" title="使用参数配置LCD控制器"></a>使用参数配置LCD控制器</h2><p>根据芯片手册，一个一个设置寄存器：</p>
+<ul>
+<li>Framebuffer地址设置</li>
+<li>Framebuffer中数据格式设置</li>
+<li>LCD时序参数设置</li>
+<li>LCD引脚极性设置</li>
+</ul>
+<p>注意：硬件参数，例如lcd控制器物理地址等，最好在设备树中指定，而不是写在代码中</p>
+<h1 id="调试LCD驱动程序"><a href="#调试LCD驱动程序" class="headerlink" title="调试LCD驱动程序"></a>调试LCD驱动程序</h1><p>要做的事情</p>
+<ul>
+<li><p>去除内核自带的驱动程序</p>
+</li>
+<li><p>加入我们编写的驱动程序、设备树文件</p>
+</li>
+<li><p>重新编译内核、设备树</p>
+</li>
+<li><p>上机测试：使用编译出来的内核、设备树启动板子</p>
+</li>
+</ul>
+<h1 id="单Buffer的缺点与改进方法"><a href="#单Buffer的缺点与改进方法" class="headerlink" title="单Buffer的缺点与改进方法"></a>单Buffer的缺点与改进方法</h1><h2 id="单buffer的缺点"><a href="#单buffer的缺点" class="headerlink" title="单buffer的缺点"></a>单buffer的缺点</h2><ul>
+<li><p>如果APP速度很慢，可以看到它在LCD上缓慢绘制图案</p>
+</li>
+<li><p>即使APP速度很高，LCD控制器不断从Framebuffer中读取数据来显示，而APP不断把数据写入Framebuffer</p>
+<ul>
+<li><p>假设APP想把LCD显示为整屏幕的蓝色、红色</p>
+</li>
+<li><p>很大几率出现这种情况：</p>
+<ul>
+<li><p>LCD控制器读取Framebuffer数据，读到一半时，在LCD上显示了半屏幕的蓝色</p>
+</li>
+<li><p>这是APP非常高效地把整个Framebuffer的数据都改为了红色</p>
+</li>
+<li><p>LCD控制器继续读取数据，于是LCD上就会显示半屏幕蓝色、半屏幕红色</p>
+</li>
+<li><p>人眼就会感觉到屏幕闪烁、撕裂</p>
+<img src="048_singble_buffer.png" style="zoom:53%;" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用多Buffer来改进"><a href="#使用多Buffer来改进" class="headerlink" title="使用多Buffer来改进"></a>使用多Buffer来改进</h2><p>上述两个缺点的根源是一致的：Framebuffer中的数据还没准备好整帧数据，就被LCD控制器使用了。</p>
+<ul>
+<li>使用双buffer甚至多buffer可以解决这个问题。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 假设有2个Framebuffer：FB0、FB1</span><br><span class="line">* LCD控制器正在读取FB0</span><br><span class="line">* APP写FB1</span><br><span class="line">* 写好FB1后，让LCD控制器切换到FB1</span><br><span class="line">* APP写FB0</span><br><span class="line">* 写好FB0后，让LCD控制器切换到FB0	</span><br></pre></td></tr></table></figure>
+
+<p>具体流程：</p>
+<p><img src="049_drv_app_use_double_buff.png"></p>
+<ul>
+<li>驱动：分配多个buffer</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fb_info-&gt;fix.smem_len = SZ_32M;</span><br><span class="line">fbi-&gt;screen_base = dma_alloc_writecombine(fbi-&gt;device, <span class="comment">//fbi-&gt;screen_base虚拟地址</span></span><br><span class="line">				fbi-&gt;fix.smem_len,</span><br><span class="line">				(<span class="keyword">dma_addr_t</span> *)&amp;fbi-&gt;fix.smem_start, <span class="comment">//fix.smem_start物理地址</span></span><br><span class="line">				GFP_DMA | GFP_KERNEL);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>驱动：保存buffer信息</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fb_info-&gt;fix.smem_len  <span class="comment">// 含有总buffer大小 </span></span><br><span class="line">fb_info-&gt;var           <span class="comment">// 含有单个buffer信息</span></span><br></pre></td></tr></table></figure>
+
+<p>fb_info固定信息 fix：显存起始地址，大小</p>
+<p>可变信息 var：x / y 分辨率</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*一般情况下*/</span> <span class="comment">/*分配了多个buffer，在y轴上叠加*/</span></span><br><span class="line">yres_virtual = yres *n; xres_virtual = xres; </span><br><span class="line"><span class="comment">/* 但驱动程序一开始并不使能多buffer </span></span><br><span class="line"><span class="comment">*  即yres_virtual = yres；</span></span><br><span class="line"><span class="comment">*  需要 set : yres_virtual = yres *n;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>APP : 读取buffer信息</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ioctl(fd_fb, FBIOGET_FSCREENINFO, &amp;fix);</span><br><span class="line">ioctl(fd_fb, FBIOGET_VSCREENINFO, &amp;var);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算是否支持多buffer，有多少个buffer</span></span><br><span class="line">screen_size = var.xres * var.yres * var.bits_per_pixel / <span class="number">8</span>;</span><br><span class="line">nBuffers = fix.smem_len / screen_size;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>APP：使能多buffer</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var.yres_virtual = nBuffers * var.yres;</span><br><span class="line">ioctl(fd_fb, FBIOPUT_VSCREENINFO, &amp;var);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>APP : 写buffer</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fb_base = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)mmap(<span class="literal">NULL</span> , fix.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fd_fb, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* get buffer */</span></span><br><span class="line">pNextBuffer =  fb_base + nNextBuffer * screen_size;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* set buffer */</span></span><br><span class="line">lcd_draw_screen(pNextBuffer, colors[i]);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>APP : 切换buffer</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* switch buffer */</span></span><br><span class="line">var.yoffset = nNextBuffer * var.yres;</span><br><span class="line">ioctl(fd_fb, FBIOPAN_DISPLAY, &amp;var);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>驱动：切换buffer</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fbmem.c</span></span><br><span class="line"><span class="function">fb_ioctl</span></span><br><span class="line"><span class="function">    do_fb_ioctl</span></span><br><span class="line"><span class="function">    	<span class="title">fb_pan_display</span><span class="params">(info, &amp;var)</span></span>;</span><br><span class="line">			err = info-&gt;fbops-&gt;fb_pan_display(var, info) <span class="comment">// 调用硬件相关的函数   </span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1550,120 +1856,6 @@
 <p>如果p的值不是0，!p的判定为假</p>
 <p>如果是一个指针，指针有内容，即：p的值不是0，!p的判定为假</p>
 <p>如果指针没有内容，NULL，即：p的值为0，!p判定为真；</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Vim配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-15 20:29:27 / Modified: 20:53:49" itemprop="dateCreated datePublished" datetime="2021-09-15T20:29:27+08:00">2021-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="win10-右键菜单添加使用-Neovim-打开方式"><a href="#win10-右键菜单添加使用-Neovim-打开方式" class="headerlink" title="win10 右键菜单添加使用 Neovim 打开方式"></a>win10 右键菜单添加使用 Neovim 打开方式</h1><ol>
-<li><p>打开注册表编辑器，开始–&gt;运行–&gt;regedit</p>
-</li>
-<li><p>定位到：HKEY_CLASSSES_ROOT—&gt; * —&gt;Shell，在Shell 上右击，新建—&gt; 项，输入：  Open With Neovim（使用Neovim打开）</p>
-</li>
-<li><p>在 Open With Neovim 右键—&gt;新建—&gt;字符串值，数值名称设置为：Icon，数值数据设置为：xxx\nvim-qt.exe,0 (替换成自己的路径地址)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 以 Gvim 举例，两者类似，注意应用时候替换路劲</span><br><span class="line">*  数值名称：Icon</span><br><span class="line">*  数值数据：C:\MyProgram\gvim73\gVimPortable\vim\vim73\gvim.exe,0</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p><img src="vim_01.png"></p>
-</li>
-</ol>
-<p>上面的设置会带来一个小问题：当文件名的最后一个字符为空格时，使用VIM打开某个文件时会新建一个空白的文件，而不是直接打开该文件。</p>
-<ul>
-<li>解决方法：加引号，如下图所示，注意应用时候替换路径<blockquote>
-<p>xxxx.exe “%1”</p>
-</blockquote>
-</li>
-</ul>
-<p><img src="vim_02.png"></p>
-<h1 id="80字符提示条"><a href="#80字符提示条" class="headerlink" title="80字符提示条"></a>80字符提示条</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot; 设置编码最长80字符提示条，额外高亮显示第80列</span><br><span class="line">set cc=80</span><br><span class="line">&quot; 超过长度自动折行 default ,根据屏幕长度</span><br><span class="line">&quot; Tjis option changes how text is displayed. It do not change the text</span><br><span class="line">set wrap</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="vim-开启错误信息一闪而过-可使用命令查看"><a href="#vim-开启错误信息一闪而过-可使用命令查看" class="headerlink" title="vim 开启错误信息一闪而过,可使用命令查看"></a>vim 开启错误信息一闪而过,可使用命令查看</h1><blockquote>
-<p><code>:messages</code></p>
-</blockquote>
-<h1 id="使用silent静默执行命令"><a href="#使用silent静默执行命令" class="headerlink" title="使用silent静默执行命令"></a>使用silent静默执行命令</h1><p>如果不希望显示提示信息，那么可以使用<code>:silent</code>命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于*`git` executable not found. Most commands will not be available. To suppress this message, prepend `silent!` to `call plug#begin(...)`.*错误</span><br></pre></td></tr></table></figure>
-<p>在vim配置文件中修改为:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">silent! call plug#begin</span><br></pre></td></tr></table></figure>
-
-<h1 id="neovim-qt-标签栏显示有问题"><a href="#neovim-qt-标签栏显示有问题" class="headerlink" title="neovim-qt 标签栏显示有问题"></a>neovim-qt 标签栏显示有问题</h1><p>neovim 还有一个配置文件，ginit.vim ，与init.vim 同一个目录下。</p>
-<ul>
-<li>gitee : <a target="_blank" rel="noopener" href="https://gitee.com/mirrors/neovim-qt">https://gitee.com/mirrors/neovim-qt</a></li>
-<li>github: <a target="_blank" rel="noopener" href="https://github.com/equalsraf/neovim-qt">https://github.com/equalsraf/neovim-qt</a></li>
-<li>wiki: <a target="_blank" rel="noopener" href="https://github.com/equalsraf/neovim-qt/wiki/Configuration-Options#GuiFont">https://github.com/equalsraf/neovim-qt/wiki/Configuration-Options#GuiFont</a></li>
-</ul>
-<p>These options are specific to Neovim Qt. The options cannot be set from <code>init.vim</code>, they must be set from <code>ginit.vim</code>.</p>
-<p>Recommended <code>ginit.vim</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&quot; Enable Mouse</span><br><span class="line">set mouse=a</span><br><span class="line"></span><br><span class="line">&quot; Set Editor Font</span><br><span class="line">if exists(&#x27;:GuiFont&#x27;)</span><br><span class="line">    &quot; Use GuiFont! to ignore font errors</span><br><span class="line">    GuiFont &#123;font_name&#125;:h&#123;size&#125;</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Disable GUI Tabline</span><br><span class="line">if exists(&#x27;:GuiTabline&#x27;)</span><br><span class="line">    GuiTabline 0</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Disable GUI Popupmenu</span><br><span class="line">if exists(&#x27;:GuiPopupmenu&#x27;)</span><br><span class="line">    GuiPopupmenu 0</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Enable GUI ScrollBar</span><br><span class="line">if exists(&#x27;:GuiScrollBar&#x27;)</span><br><span class="line">    GuiScrollBar 1</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Right Click Context Menu (Copy-Cut-Paste)</span><br><span class="line">nnoremap &lt;silent&gt;&lt;RightMouse&gt; :call GuiShowContextMenu()&lt;CR&gt;</span><br><span class="line">inoremap &lt;silent&gt;&lt;RightMouse&gt; &lt;Esc&gt;:call GuiShowContextMenu()&lt;CR&gt;</span><br><span class="line">vnoremap &lt;silent&gt;&lt;RightMouse&gt; :call GuiShowContextMenu()&lt;CR&gt;gv</span><br></pre></td></tr></table></figure>
-
-<p>For more options, try <code>:help nvim_gui_shim</code> and scroll down to <code>Commands</code></p>
-<h1 id="使用powerline-字体斜体导致状态栏消失"><a href="#使用powerline-字体斜体导致状态栏消失" class="headerlink" title="使用powerline 字体斜体导致状态栏消失"></a>使用powerline 字体斜体导致状态栏消失</h1><p>增大行距</p>
-<p>set linespace=5</p>
 
       
     </div>
