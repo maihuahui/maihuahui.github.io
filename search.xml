@@ -3736,7 +3736,7 @@ The default changes each time you use either x or print.
     <title>Hexo</title>
     <url>/2022/07/08/hexo-hexo/</url>
     <content><![CDATA[<h1 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h1><h2 id="创建新博客"><a href="#创建新博客" class="headerlink" title="创建新博客"></a>创建新博客</h2><p>new指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new -p 后端/test.md </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new post -p 后端/test.md </span><br></pre></td></tr></table></figure>
 
 <p>执行后，会在 <code>_posts</code>文件夹下创建子文件夹 “后端”，并创建一篇test.md博文。</p>
 <h2 id="创建关联文件夹"><a href="#创建关联文件夹" class="headerlink" title="创建关联文件夹"></a>创建关联文件夹</h2><p><code>_config.yml</code> 配置文件</p>
@@ -3753,6 +3753,83 @@ The default changes each time you use either x or print.
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim 寄存器</title>
+    <url>/2022/07/08/vim-vim%E5%AF%84%E5%AD%98%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="VIM寄存器"><a href="#VIM寄存器" class="headerlink" title="VIM寄存器"></a>VIM寄存器</h1><p>VIM有两个地方可以保存临时数据</p>
+<pre><code>OS级别-剪切板
+VIM级别-寄存器
+</code></pre>
+<p>VIM寄存器概述</p>
+<p>寄存器是VIM用于保存临时数据的地方，不同于传统的编辑器（于系统共享一个寄存器，也成为剪切板），VIM具有多个寄存器，分别保存不同的临时数据，活用多个寄存器可以显著提高数据的安全和可操作性。<br>同时，为了与系统剪切板互通，VIM有一个专用的寄存器，与系统剪切板内容一致，既保证了VIM本身的统一性，也实现了与操作系统的对接。<br>查看寄存器值</p>
+<pre><code>查看所有寄存器值：:reg
+查看指定寄存器值：:reg &quot;&#123;register_name&#125;
+</code></pre>
+<p>调取寄存器值</p>
+<pre><code>NORMAL Mode：&quot;&#123;register_name&#125;
+COMMAND MODE：&lt;C-r&gt;+&quot;寄存器名称 （输入&lt;C-r&gt;后VIM会自动打出&quot;寄存器引用符号。
+INSERT MODE：&lt;C-r&gt;+寄存器名称（无需输入寄存器引用符号&quot;）
+</code></pre>
+<p>VIM寄存器分类</p>
+<ol>
+<li>无名寄存器（默认寄存器）</li>
+</ol>
+<p>引用方式： <code>&quot;&quot;</code><br>该寄存器是默认的寄存器，所有的复制和修改操作（x、s、d、c、y）都会将该数据复制到无名寄存器。</p>
+<ol start="2">
+<li>字母寄存器</li>
+</ol>
+<p>引用方式：<code>&quot;a - &quot;z 或&quot;A - &quot;Z</code><br>{register_name}只能是一位的26个英文字母，从a-z。<br>大写字母A-Z寄存器内容将会合并到对应小写字母内容后边。</p>
+<ol start="3">
+<li>数字寄存器</li>
+</ol>
+<p>引用方式：<code>&quot;0 （数字0）- &quot;9</code></p>
+<p>3.1 复制专用寄存器 0</p>
+<p>引用方式：<code>&quot;0</code> （数字0）<br>仅当使用复制操作(y)时，该数据将会同时被复制到无名寄存器和复制专用寄存器。</p>
+<p>3.2 逐级临时缓存寄存器1-9**</p>
+<p>引用方式：”1 - “9 （数字1-9）<br>所有不带范围（‘(’，‘)’，‘{’，‘}’）、操作涉及1行以上的删除修改操作（x、s、d、c）的数据都会复制到逐级临时缓存寄存器，并在新的数据加入时，逐级先后推移。1的数据复制到2，2的复制到3，最后的9寄存器内容将会被删除。</p>
+<pre><code>1行以内的数据删除修改操作的数据不会复制到逐级临时缓存寄存器1-9，而是复制到另一个Small Delete Register: &quot;-
+</code></pre>
+<ol start="4">
+<li>黑洞寄存器</li>
+</ol>
+<p>引用方式：<code>&quot;_</code><br>几乎所有的操作涉及的数据都会被复制到寄存器，如果想让操作的数据不经过寄存器，可以指定黑洞寄存器，数据到该寄存器就会消失掉，不能显示，也不存在。</p>
+<ol start="5">
+<li>系统剪切板</li>
+</ol>
+<p>引用方式：<code>&quot;+ 或&quot;*</code><br>于VIM外部的GUI交互数据时，需要使用专用的系统剪切板。<br>在Unix环境下，”+寄存器需要+xterm-clipboard feature的VIM软件才能使用，具有这个feature的VIM可以安装vim-gtk（包含gvim和vim），使用gvim可以正常调用”+寄存器。</p>
+<p>“+和”*的區別：</p>
+<pre><code>    Under Windows, the * and + registers are equivalent.
+    For X11 systems, though, they differ. For X11 systems, * is the selection, and + is the cut buffer (like clipboard).
+        Text selected, or otherwise highlighted in one X11 app is available in the selection buffer.
+        Text explicitly copied or cut is available in the cut buffer.
+</code></pre>
+<p>Ref:</p>
+<ol>
+<li><a href="https://vim.fandom.com/wiki/Accessing_the_system_clipboard">Accessing the system clipboard</a></li>
+<li><a href="http://vimcasts.org/blog/2013/11/getting-vim-with-clipboard-support/">Getting Vim with +clipboard support</a></li>
+</ol>
+<p>5.1 剪切板与自动缩进indent</p>
+<p>如果开启了set autoindent，在粘贴具有格式缩进的文本时（如python程序），粘贴的结果将会是缩进混乱的，因为set autoindent的影响。<br>解决这个问题有两个方法：</p>
+<ol>
+<li><p>使用 <code>set paste</code> 模式<br> 开启paste模式后，autoindent等缩进功能将会被屏蔽，粘贴格式就会不受影响。<br> 每次手工开启关闭paste模式将会比较麻烦，可以在_vimrc中为其设置一个快捷键，每次需要时按一下即可切换：set pastetoggle=<f12></p>
+</li>
+<li><p>使用普通模式的 <code>&quot;+p </code>命令</p>
+</li>
+<li><p>插入模式输入 <code>&lt;C-r&gt;&lt;C-p&gt;&quot;+</code></p>
+</li>
+<li><p>表达式寄存器</p>
+</li>
+</ol>
+<p>引用方式：”=<br>所有寄存器里最特殊的一个，用于计算表达式。<br>输入完该寄存器应用后，会在命令行里提示“=”，按需输入表达式，结果将会显示到光标处。<br>7. 其他寄存器</p>
+<p>“% 当前文件名，包含文件路径。<br>“/ 上次查找的内容。<br>“. 上次插入的内容。</p>
+]]></content>
+      <categories>
+        <category>vim实用技巧</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
       </tags>
   </entry>
 </search>
