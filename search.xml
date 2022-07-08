@@ -3746,7 +3746,8 @@ The default changes each time you use either x or print.
 
 <h2 id="网页预览"><a href="#网页预览" class="headerlink" title="网页预览"></a>网页预览</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --&gt; hexo s  #启动服务预览</span><br></pre></td></tr></table></figure>
 
-<h2 id="网页部署"><a href="#网页部署" class="headerlink" title="网页部署"></a>网页部署</h2><p>hexo deploy –&gt; hexo d #部署</p>
+<h2 id="网页部署"><a href="#网页部署" class="headerlink" title="网页部署"></a>网页部署</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo deploy --&gt; hexo d #部署</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>hexo</category>
