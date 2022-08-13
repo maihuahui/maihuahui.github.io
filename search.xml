@@ -2006,7 +2006,23 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make unistall</span><br></pre></td></tr></table></figure>
 
 <p>就可以，如果作者懒没有写，那就只有根据<code>make install</code>中的步骤，看它把什么文件拷到哪去了，然后分别手动删除。</p>
-<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。 </p>
+<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。</p>
+<h2 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./configure --target=riscv64-unknown-elf</span><br></pre></td></tr></table></figure>
+
+<p>交叉编译配置参数主要有三个</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System types:</span><br><span class="line">--build</span><br><span class="line">--host</span><br><span class="line">--target</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>build 一般与 host 相同</li>
+<li>host 指运行在的 PC 端</li>
+<li>target 指交叉编译的架构，不配置即可 host 保持一致</li>
+</ul>
+<h2 id="gdb-添加-python-支持"><a href="#gdb-添加-python-支持" class="headerlink" title="gdb 添加 python 支持"></a>gdb 添加 python 支持</h2><p><code>./configure --help</code> 中并没有 <code>--with-python</code> 选项，但并不影响。</p>
+<p>在配置阶段加上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">which python</span><br><span class="line"></span><br><span class="line">./configure --with-python=/path</span><br></pre></td></tr></table></figure>
+
+<p>添加 python 支持。</p>
+<p>NOTE：GDB 源码编译可行，其他类型的源码编译是否可以举一反三。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -3858,6 +3874,50 @@ INSERT MODE：&lt;C-r&gt;+寄存器名称（无需输入寄存器引用符号&qu
       </categories>
       <tags>
         <tag>debug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Copy Between Memory and a File</title>
+    <url>/2022/08/13/gdb-gdb-file/</url>
+    <content><![CDATA[<p>官方文档路径 [Copy Between Memory and a File] (<a href="https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename">https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename</a>)</p>
+<h1 id="导出内存为一个文件"><a href="#导出内存为一个文件" class="headerlink" title="导出内存为一个文件"></a>导出内存为一个文件</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dump [format] memory filename start_addr end_addr</span><br><span class="line">dump [format] value filename expr</span><br></pre></td></tr></table></figure>
+<p>Dump the contents of memory from start_addr to end_addr, or the value of expr, to filename in the given format.</p>
+<p>The format parameter may be any one of:</p>
+<ul>
+<li><p>binary</p>
+<p>  Raw binary form.</p>
+</li>
+<li><p>ihex</p>
+<p>  Intel hex format.</p>
+</li>
+<li><p>srec</p>
+<p>  Motorola S-record format.</p>
+</li>
+<li><p>tekhex</p>
+<p>  Tektronix Hex format.</p>
+</li>
+<li><p>verilog</p>
+<p>  Verilog Hex format.</p>
+</li>
+</ul>
+<h1 id="将一个文件加载进内存"><a href="#将一个文件加载进内存" class="headerlink" title="将一个文件加载进内存"></a>将一个文件加载进内存</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">restore filename [binary] bias start end</span><br></pre></td></tr></table></figure>
+
+<p>Restore the contents of file filename into memory. The restore command can automatically recognize any known BFD file format, except for raw binary. To restore a raw binary file you must specify the optional keyword binary after the filename.</p>
+<p>If bias is non-zero, its value will be added to the addresses contained in the file. Binary files always start at address zero, so they will be restored at address bias. Other bfd files have a built-in location; they will be restored at offset bias from that location.</p>
+<p>If start and/or end are non-zero, then only data between file offset start and file offset end will be restored. These offsets are relative to the addresses in the file, before the bias argument is applied.</p>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>将 /dev/fb0 的文件 dump 出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dump binary memory fb0.argb start_addr end_addr</span><br><span class="line"></span><br><span class="line">需要知道虚拟地址（基于物理地址的测试未进行）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将裸数据加载进 fb0</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">restore fb0.argb binary start_addr</span><br></pre></td></tr></table></figure>
+
+<p>可以忽略 end_addr, 加载完后会显示加载到的地址范围</p>
+]]></content>
+      <categories>
+        <category>gdb</category>
+      </categories>
+      <tags>
+        <tag>gdb</tag>
       </tags>
   </entry>
 </search>

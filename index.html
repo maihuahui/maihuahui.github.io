@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,6 +166,112 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/13/gdb-gdb-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/13/gdb-gdb-file/" class="post-title-link" itemprop="url">Copy Between Memory and a File</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-08-13 20:25:36 / Modified: 20:34:35" itemprop="dateCreated datePublished" datetime="2022-08-13T20:25:36+08:00">2022-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/gdb/" itemprop="url" rel="index"><span itemprop="name">gdb</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>官方文档路径 [Copy Between Memory and a File] (<a target="_blank" rel="noopener" href="https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename">https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename</a>)</p>
+<h1 id="导出内存为一个文件"><a href="#导出内存为一个文件" class="headerlink" title="导出内存为一个文件"></a>导出内存为一个文件</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dump [format] memory filename start_addr end_addr</span><br><span class="line">dump [format] value filename expr</span><br></pre></td></tr></table></figure>
+<p>Dump the contents of memory from start_addr to end_addr, or the value of expr, to filename in the given format.</p>
+<p>The format parameter may be any one of:</p>
+<ul>
+<li><p>binary</p>
+<p>  Raw binary form.</p>
+</li>
+<li><p>ihex</p>
+<p>  Intel hex format.</p>
+</li>
+<li><p>srec</p>
+<p>  Motorola S-record format.</p>
+</li>
+<li><p>tekhex</p>
+<p>  Tektronix Hex format.</p>
+</li>
+<li><p>verilog</p>
+<p>  Verilog Hex format.</p>
+</li>
+</ul>
+<h1 id="将一个文件加载进内存"><a href="#将一个文件加载进内存" class="headerlink" title="将一个文件加载进内存"></a>将一个文件加载进内存</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restore filename [binary] bias start end</span><br></pre></td></tr></table></figure>
+
+<p>Restore the contents of file filename into memory. The restore command can automatically recognize any known BFD file format, except for raw binary. To restore a raw binary file you must specify the optional keyword binary after the filename.</p>
+<p>If bias is non-zero, its value will be added to the addresses contained in the file. Binary files always start at address zero, so they will be restored at address bias. Other bfd files have a built-in location; they will be restored at offset bias from that location.</p>
+<p>If start and/or end are non-zero, then only data between file offset start and file offset end will be restored. These offsets are relative to the addresses in the file, before the bias argument is applied.</p>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>将 /dev/fb0 的文件 dump 出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dump binary memory fb0.argb start_addr end_addr</span><br><span class="line"></span><br><span class="line">需要知道虚拟地址（基于物理地址的测试未进行）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将裸数据加载进 fb0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restore fb0.argb binary start_addr</span><br></pre></td></tr></table></figure>
+
+<p>可以忽略 end_addr, 加载完后会显示加载到的地址范围</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1371,121 +1477,6 @@ The default changes each time you use either x or print.
 <p>or use</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set *0xbfbb0000=20</span><br></pre></td></tr></table></figure>
 <p>change memory locations directly.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/13/C%E7%BC%96%E7%A8%8B-inline/" class="post-title-link" itemprop="url">Inline</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-02-13 16:08:56 / Modified: 16:48:59" itemprop="dateCreated datePublished" datetime="2022-02-13T16:08:56+08:00">2022-02-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">C编程</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><p>有些函数短小精悍而且调用频繁，调用开销大，经常保护现场，恢复现场，算下来性价比不高。这时就可以将这个函数声明为内联函数。编译器在编译过程中遇到内联函数，<strong>像宏一样，将内联函数直接在调用处展开</strong>，这样就可以减少函数调用的开支：<strong>直接执行内联函数展开的代码，不用再保存现场和恢复现场</strong>。</p>
-<h2 id="内联函数和宏"><a href="#内联函数和宏" class="headerlink" title="内联函数和宏"></a>内联函数和宏</h2><p>内联函数和宏的功能差不多，为什么不直接定义一个宏定义？而是定义一个内联函数？</p>
-<p>存在即合理，内联函数在 C 语言中有广泛运用，自然有其原因。与宏相比，内联函数有以下优势：</p>
-<ul>
-<li><p>参数类型检查</p>
-<pre><code>    内联函数随有宏的展开特性，但其本质仍是函数，在编译过程中，编译器仍可以对其进行参数检查，而宏不具备这个功能。
-</code></pre>
-</li>
-<li><p>便于调试</p>
-<p>​        函数支持的调试功能有断点、单步等，内联函数同样支持。        </p>
-</li>
-<li><p>返回值</p>
-<p>​        内联函数有返回值，返回一个结果给调用者。这个优势是相对 ANSI C 说的，因为现在宏也可以有返回值和类型了，如前面使用语句表达式的宏。</p>
-</li>
-<li><p>接口封装</p>
-<p>​        有些内联函数可以用来封装一个接口，而宏不具备这个功能。</p>
-</li>
-</ul>
-<h2 id="内联函数不足"><a href="#内联函数不足" class="headerlink" title="内联函数不足"></a>内联函数不足</h2><p>内联函数并不是完美无瑕的，也存在不足。</p>
-<ul>
-<li>内联函数会增大函数体积。<br>  如果一个文件中多次调用内联函数，多次展开，那整个程序的体积就会变大，在一定程度上会减低程序的执行效率。</li>
-<li>减低代码复用性。<br>  函数的作用之一就是提高代码的复用性。我们将一些代码封装成函数，进行模块化编程，可以减轻软件开发的工作量，而内联函数往往又减低函数的复用性。</li>
-</ul>
-<h2 id="编译器对内联函数的处理"><a href="#编译器对内联函数的处理" class="headerlink" title="编译器对内联函数的处理"></a>编译器对内联函数的处理</h2><p>我们通过 <code>inline</code>关键字将一个函数声明为内联函数，但编译器不一定会对这个内联函数在进行展开。编译器也要根据实际情况进行评估。除了检测用户定义的内联函数是否含有指针、循环、递归，还会在函数执行效率和函数调用开销之间进行权衡。</p>
-<p>从程序员角度出发，是否展开主要考虑如下因素：</p>
-<ul>
-<li>函数体积大小</li>
-<li>函数体内无指针赋值、递归、循环等语句</li>
-<li>调用频繁</li>
-</ul>
-<p>当我们认为一个函数体积小，而且被大量调用，应该做内联展开。</p>
-<h3 id="属性声明：noinline"><a href="#属性声明：noinline" class="headerlink" title="属性声明：noinline"></a>属性声明：noinline</h3><p>明确告诉编译器不展开内联函数</p>
-<h3 id="属性声明：always-inline"><a href="#属性声明：always-inline" class="headerlink" title="属性声明：always_inline"></a>属性声明：always_inline</h3><p>明确告诉编译器展开内联函数</p>
-<h2 id="内联函数定义在头文件中"><a href="#内联函数定义在头文件中" class="headerlink" title="内联函数定义在头文件中"></a>内联函数定义在头文件中</h2><p>在Linux 内核中，有大量的内联函数被定义在头文件中，而且经常使用 <code>static</code>修饰。</p>
-<p>Q: 为什么内联函数要定义在头文件中？</p>
-<blockquote>
-<p> A: 因为它是一个内联函数，可以像宏一样展开，任何像使用这个内联函数的源文件，都不必亲自去定义一遍，直接包含这个头文件即可，即像宏定义一样使用。</p>
-</blockquote>
-<p>Q：为什么要加<code>static</code>修饰</p>
-<blockquote>
-<p>inline 定义的内联函数不一定会展开，当一个工程中多个文件都包含这个内联函数的定义时，编译时就有可能报重定义错误。使用 static 关键字修饰，则可以将这个函数的作用域限制在各自的文件内，避免重定义错误的发生。</p>
-</blockquote>
 
       
     </div>

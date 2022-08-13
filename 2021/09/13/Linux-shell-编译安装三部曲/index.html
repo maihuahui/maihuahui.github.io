@@ -28,7 +28,7 @@
 <meta property="og:description" content="编译安装与卸载 make install 与 make uninstall编译安装通用过程  .&#x2F;configure make make install  注意：第一步.&#x2F;configure时，可以加--prefix的参数指定安装路径更多参数自己参考 make uninstall 卸载安装的软件 注意 Makefile 文件里的指令一般 install 对应 uninstall ,大部分的作者会写">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-13T14:44:40.000Z">
-<meta property="article:modified_time" content="2021-09-13T14:50:13.231Z">
+<meta property="article:modified_time" content="2022-08-13T12:09:17.250Z">
 <meta property="article:author" content="huahui">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="shell">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD-make-install-%E4%B8%8E-make-uninstall"><span class="nav-number">1.</span> <span class="nav-text">编译安装与卸载 make install 与 make uninstall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-uninstall-%E5%8D%B8%E8%BD%BD%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">make uninstall 卸载安装的软件</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD-make-install-%E4%B8%8E-make-uninstall"><span class="nav-number">1.</span> <span class="nav-text">编译安装与卸载 make install 与 make uninstall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-uninstall-%E5%8D%B8%E8%BD%BD%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">make uninstall 卸载安装的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="nav-number">1.3.</span> <span class="nav-text">交叉编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb-%E6%B7%BB%E5%8A%A0-python-%E6%94%AF%E6%8C%81"><span class="nav-number">1.4.</span> <span class="nav-text">gdb 添加 python 支持</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -206,10 +206,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-09-13 22:44:40 / Modified: 22:50:13" itemprop="dateCreated datePublished" datetime="2021-09-13T22:44:40+08:00">2021-09-13</time>
+      <time title="Created: 2021-09-13 22:44:40" itemprop="dateCreated datePublished" datetime="2021-09-13T22:44:40+08:00">2021-09-13</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-08-13 20:09:17" itemprop="dateModified" datetime="2022-08-13T20:09:17+08:00">2022-08-13</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -243,7 +249,23 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make unistall</span><br></pre></td></tr></table></figure>
 
 <p>就可以，如果作者懒没有写，那就只有根据<code>make install</code>中的步骤，看它把什么文件拷到哪去了，然后分别手动删除。</p>
-<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。 </p>
+<p>注意：<strong>编译安装完成后，不要删除源代码</strong>，不然就算作者写了unnistall目标，也没有makefile可以执行了。</p>
+<h2 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --target=riscv64-unknown-elf</span><br></pre></td></tr></table></figure>
+
+<p>交叉编译配置参数主要有三个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System types:</span><br><span class="line">--build</span><br><span class="line">--host</span><br><span class="line">--target</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>build 一般与 host 相同</li>
+<li>host 指运行在的 PC 端</li>
+<li>target 指交叉编译的架构，不配置即可 host 保持一致</li>
+</ul>
+<h2 id="gdb-添加-python-支持"><a href="#gdb-添加-python-支持" class="headerlink" title="gdb 添加 python 支持"></a>gdb 添加 python 支持</h2><p><code>./configure --help</code> 中并没有 <code>--with-python</code> 选项，但并不影响。</p>
+<p>在配置阶段加上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">which python</span><br><span class="line"></span><br><span class="line">./configure --with-python=/path</span><br></pre></td></tr></table></figure>
+
+<p>添加 python 支持。</p>
+<p>NOTE：GDB 源码编译可行，其他类型的源码编译是否可以举一反三。</p>
 
     </div>
 
