@@ -3879,7 +3879,7 @@ INSERT MODE：&lt;C-r&gt;+寄存器名称（无需输入寄存器引用符号&qu
   <entry>
     <title>Copy Between Memory and a File</title>
     <url>/2022/08/13/gdb-gdb-file/</url>
-    <content><![CDATA[<p>官方文档路径 [Copy Between Memory and a File] (<a href="https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename">https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename</a>)</p>
+    <content><![CDATA[<p>官方文档路径 <a href="https://sourceware.org/gdb/onlinedocs/gdb/Dump_002fRestore-Files.html#:~:text=%28GDB%20can%20only%20append%20data%20to%20files%20in,specify%20the%20optional%20keyword%20binary%20after%20the%20filename">Copy Between Memory and a File</a></p>
 <h1 id="导出内存为一个文件"><a href="#导出内存为一个文件" class="headerlink" title="导出内存为一个文件"></a>导出内存为一个文件</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dump [format] memory filename start_addr end_addr</span><br><span class="line">dump [format] value filename expr</span><br></pre></td></tr></table></figure>
 <p>Dump the contents of memory from start_addr to end_addr, or the value of expr, to filename in the given format.</p>
 <p>The format parameter may be any one of:</p>
