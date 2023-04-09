@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,88 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">Dtb反编译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-25 19:43:11 / Modified: 19:47:54" itemprop="dateCreated datePublished" datetime="2021-09-25T19:43:11+08:00">2021-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>dts←→dtb</p>
+<ol>
+<li><p>反编译dtb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dtb -O dts -o *.dts  *.dtb</span><br></pre></td></tr></table></figure></li>
+<li><p>正编译dts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dts -O dtb -o *.dtb  *.dts</span><br></pre></td></tr></table></figure></li>
+<li><p>dtc -help</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Usage: dtc [options] &lt;input file&gt;</span><br><span class="line"></span><br><span class="line">Options: -[qI:O:o:V:d:R:S:p:a:fb:i:H:sW:E:@AThv]</span><br><span class="line">  -q, --quiet                </span><br><span class="line">	Quiet: -q suppress warnings, -qq errors, -qqq all</span><br><span class="line">  -I, --in-format &lt;arg&gt;      </span><br><span class="line">	Input formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		fs  - /proc/device-tree style directory</span><br><span class="line">  -o, --out &lt;arg&gt;            </span><br><span class="line">	Output file</span><br><span class="line">  -O, --out-format &lt;arg&gt;     </span><br><span class="line">	Output formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		asm - assembler source</span><br><span class="line">  -V, --out-version &lt;arg&gt;    </span><br><span class="line">	Blob version to produce, defaults to 17 (for dtb and asm output)</span><br><span class="line">  -d, --out-dependency &lt;arg&gt; </span><br><span class="line">	Output dependency file</span><br><span class="line">  -R, --reserve &lt;arg&gt;        </span><br><span class="line">	Make space for &lt;number&gt; reserve map entries (for dtb and asm output)</span><br><span class="line">  -S, --space &lt;arg&gt;          </span><br><span class="line">	Make the blob at least &lt;bytes&gt; long (extra space)</span><br><span class="line">  -p, --pad &lt;arg&gt;            </span><br><span class="line">	Add padding to the blob of &lt;bytes&gt; long (extra space)</span><br><span class="line">  -a, --align &lt;arg&gt;          </span><br><span class="line">	Make the blob align to the &lt;bytes&gt; (extra space)</span><br><span class="line">  -b, --boot-cpu &lt;arg&gt;       </span><br><span class="line">	Set the physical boot cpu</span><br><span class="line">  -f, --force                </span><br><span class="line">	Try to produce output even if the input tree has errors</span><br><span class="line">  -i, --include &lt;arg&gt;        </span><br><span class="line">	Add a path to search for include files</span><br><span class="line">  -s, --sort                 </span><br><span class="line">	Sort nodes and properties before outputting (useful for comparing trees)</span><br><span class="line">  -H, --phandle &lt;arg&gt;        </span><br><span class="line">	Valid phandle formats are:</span><br><span class="line">		legacy - &quot;linux,phandle&quot; properties only</span><br><span class="line">		epapr  - &quot;phandle&quot; properties only</span><br><span class="line">		both   - Both &quot;linux,phandle&quot; and &quot;phandle&quot; properties</span><br><span class="line">  -W, --warning &lt;arg&gt;        </span><br><span class="line">	Enable/disable warnings (prefix with &quot;no-&quot;)</span><br><span class="line">  -E, --error &lt;arg&gt;          </span><br><span class="line">	Enable/disable errors (prefix with &quot;no-&quot;)</span><br><span class="line">  -@, --symbols              </span><br><span class="line">	Enable generation of symbols</span><br><span class="line">  -A, --auto-alias           </span><br><span class="line">	Enable auto-alias of labels</span><br><span class="line">  -T, --annotate             </span><br><span class="line">	Annotate output .dts with input source file and line (-T -T for more details)</span><br><span class="line">  -h, --help                 </span><br><span class="line">	Print this help and exit</span><br><span class="line">  -v, --version              </span><br><span class="line">	Print version and exit</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1300,213 +1382,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E6%9B%BF%E6%8D%A2/" class="post-title-link" itemprop="url">Vim替换</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 17:11:55 / Modified: 17:12:20" itemprop="dateCreated datePublished" datetime="2021-09-12T17:11:55+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h1><h2 id="Tip-87-Meet-the-Substitute-Command"><a href="#Tip-87-Meet-the-Substitute-Command" class="headerlink" title="Tip 87 Meet the Substitute Command"></a>Tip 87 Meet the Substitute Command</h2><p>结识替换命令，<code>:substitute </code>命令。其允许我们查找和替换一个文本块，语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:[range]s[ubstitute]/&#123;pattern&#125;/&#123;string&#125;/[flags]</span><br></pre></td></tr></table></figure>
-
-<p>​    命令很复杂.，除了要提供搜索模式和替换文本之外, 还需要指定执行的范围。另外, 还可以提供额外的标识符来调整其行为。</p>
-<p><code>[range]</code> 的使用和其他 Ex 命令一样，以逗号分隔</p>
-<p><code>&#123;pattern&#125; </code>指代要查找的部分</p>
-<p><strong>Flags，标志位调整替换行为</strong></p>
-<p>几种常用的 flag 标志符:</p>
-<ul>
-<li><p>g - 让替换命令应用到全局,可修改一行内的匹配项， 而不是仅改变第一个匹配项. </p>
-</li>
-<li><p>c -替换前手工确认或拒绝每一处修改, </p>
-</li>
-<li><p>n - 禁止替换行为, 此功能可用于统计匹配文本的数量 </p>
-</li>
-<li><p>e - 忽略错误信息. 例如搜索没有匹配项时, 替换命令会提示一个错误信息 “E486: Pattern not found.”</p>
-</li>
-<li><p>&amp; - 告知 Vim 重用上一次替换命令中的相同标志. </p>
-</li>
-</ul>
-<p><strong>替换域中的特殊字符</strong></p>
-<p>查找模式时某些字符是有特殊意义的. 而替换字段也是有一些特殊字符的</p>
-<table>
-<thead>
-<tr>
-<th><strong>Symbol</strong></th>
-<th><strong>Represents</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\r</td>
-<td>插入回车(而不是\n)</td>
-</tr>
-<tr>
-<td>\t</td>
-<td>插入 tab 键</td>
-</tr>
-<tr>
-<td>\</td>
-<td>插入反斜杠 \</td>
-</tr>
-<tr>
-<td>\1</td>
-<td>插入第一个子匹配</td>
-</tr>
-<tr>
-<td>\2</td>
-<td>插入第二个只匹配 (依次到 \9)</td>
-</tr>
-<tr>
-<td>\0</td>
-<td>插入整个匹配的文本</td>
-</tr>
-<tr>
-<td>&amp;</td>
-<td>插入整个匹配的文本</td>
-</tr>
-<tr>
-<td>~</td>
-<td>使用上次的 {string} 替换文本</td>
-</tr>
-<tr>
-<td>={Vim  script}</td>
-<td>执行 {Vim脚本} 表达式, 把结果结果作为 {string} 替换文本</td>
-</tr>
-</tbody></table>
-<h2 id="Tip-88-Find-and-Replace-Every-Match-in-a-File"><a href="#Tip-88-Find-and-Replace-Every-Match-in-a-File" class="headerlink" title="Tip 88 Find and Replace Every Match in a File"></a>Tip 88 Find and Replace Every Match in a File</h2><p>在文件范围内查找并替换每一处匹配</p>
-<ul>
-<li><p>标志位 g 处理横轴字符，当前行所有匹配</p>
-</li>
-<li><p>地址符 % 处理纵轴的文本行，可理解为处理整个文件的匹配项</p>
-</li>
-</ul>
-<p>语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/g</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Tip-89-Eyeball-Each-Substitution"><a href="#Tip-89-Eyeball-Each-Substitution" class="headerlink" title="Tip 89 Eyeball Each Substitution"></a>Tip 89 Eyeball Each Substitution</h2><p>手动控制每一次替换操作</p>
-<p>标志位 <code>c </code> 手工确认每一处修改</p>
-<p>语法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/content/copy/gc</span><br></pre></td></tr></table></figure>
-
-<p>​    引入标志位 c 后，Vim 会在每处匹配体贴地为我们提示所有的选项<code>y/n/a/q/l/^E/^Y</code>。下表展示了每种答案的含义：</p>
-<table>
-<thead>
-<tr>
-<th><strong>Keystrokes</strong></th>
-<th><strong>Buffer Contents</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>y</td>
-<td><em>yes</em> 替换本次修改</td>
-</tr>
-<tr>
-<td>n</td>
-<td><em>no</em> 放弃本次修改</td>
-</tr>
-<tr>
-<td>q</td>
-<td><em>quit</em> 退出替换</td>
-</tr>
-<tr>
-<td>l</td>
-<td><em>last</em> 本次为最后一次替换, 然后退出</td>
-</tr>
-<tr>
-<td>a</td>
-<td><em>all</em> 替换本次和剩下的所有项</td>
-</tr>
-<tr>
-<td><C-e></td>
-<td>向上滚动屏幕</td>
-</tr>
-<tr>
-<td><C-y></td>
-<td>向下滚动屏幕</td>
-</tr>
-</tbody></table>
-<p>不同于以往的是，在 Vim 的替换-确认模式下，键盘上的大多数按键都将失效。尽</p>
-<p>管 <Esc> 键可以让我们像往常一样回到普通模式，但除此之外，周围的一切都使我们</p>
-<p>感到陌生。</p>
-<h2 id="Tip-90-Reuse-the-Last-Search-Pattern"><a href="#Tip-90-Reuse-the-Last-Search-Pattern" class="headerlink" title="Tip 90 Reuse the Last Search Pattern"></a>Tip 90 Reuse the Last Search Pattern</h2><p>重用上次的查找模式</p>
-<p>如果你觉得将来会以完整形式来调用历史记录中的 substitute 命令， 就要养成在查</p>
-<p>找域中填充内容的习惯。你只需在命令行中输入 <code>&lt;C-r&gt;/</code>，即可把上次的查找内容粘贴进来。</p>
-<p>即留空查找域，使用<code>&lt;C-r&gt;/</code>替代</p>
-<h2 id="Tip-91-Replace-with-the-Contents-of-a-Register"><a href="#Tip-91-Replace-with-the-Contents-of-a-Register" class="headerlink" title="Tip 91 Replace with the Contents of a Register"></a>Tip 91 Replace with the Contents of a Register</h2><p>用寄存器的内容替换</p>
-<p>通过输入<code> &lt;C-r&gt;&#123;register&#125;</code>， 我们可以将寄存器的内容插入到命令行</p>
-<h2 id="Tip-92-Repeat-the-Previous-Substitute-Command"><a href="#Tip-92-Repeat-the-Previous-Substitute-Command" class="headerlink" title="Tip 92 Repeat the Previous Substitute Command"></a>Tip 92 Repeat the Previous Substitute Command</h2><p>重复上一次 substitute 命令</p>
-<p>假设我们刚刚执行完以下命令（其作用范围为当前行）:s/target/replacement/g</p>
-<p>但我们失误，应该加上前缀 % 才对，接下来，我们只需输入 g&amp;，即可在整个文件的范围内重复这条命令。</p>
-<p>某条 substitute 命令除了没加 % 前缀之外，其余都正确的时候，不妨试一试 g&amp;</p>
-<p>​    gv 命令会激活可视模式，并重新将上次被选中的文本高亮起来（详情参考Tip 21 ）进入命令行模式，此时命令行会提示为 :’&lt;,’&gt; 键入 &amp;&amp;, 第一个 :&amp; 组合为 Ex 命令, 功能为重复最后一次替(:substitute)换命令(参考 :h :&amp;), 而第二个 &amp; 则表示使用前一个替换命令的标志符。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1520,7 +1395,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

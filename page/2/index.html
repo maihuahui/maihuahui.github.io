@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +166,134 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/15/gdb-gdb-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/15/gdb-gdb-memory/" class="post-title-link" itemprop="url">GDB 内存操作</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-02-15 19:59:04 / Modified: 20:01:54" itemprop="dateCreated datePublished" datetime="2022-02-15T19:59:04+08:00">2022-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/gdb/" itemprop="url" rel="index"><span itemprop="name">gdb</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="gdb查看内存数据"><a href="#gdb查看内存数据" class="headerlink" title="gdb查看内存数据"></a>gdb查看内存数据</h1><p>格式: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x/nfu</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li><code>x</code> 是 examine 的缩写，意思是检查</li>
+<li><code>n</code>表示要显示的内存单元的个数</li>
+<li><code>f</code>表示显示方式</li>
+<li><code>u</code>表示一个地址单元的长度：</li>
+</ul>
+<h2 id="显示方式-f-取值"><a href="#显示方式-f-取值" class="headerlink" title="显示方式 f 取值"></a>显示方式 f 取值</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x 按十六进制格式显示变量。</span><br><span class="line">d 按十进制格式显示变量。</span><br><span class="line">u 按十进制格式显示无符号整型。</span><br><span class="line">o 按八进制格式显示变量。</span><br><span class="line">t 按二进制格式显示变量。</span><br><span class="line">a 按十六进制格式显示变量。</span><br><span class="line">i 指令地址格式</span><br><span class="line">c 按字符格式显示变量。</span><br><span class="line">f 按浮点数格式显示变量。</span><br></pre></td></tr></table></figure>
+<h2 id="地址单元长度-u-取值"><a href="#地址单元长度-u-取值" class="headerlink" title="地址单元长度 u 取值"></a>地址单元长度 u 取值</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b表示单字节，</span><br><span class="line">h表示双字节，</span><br><span class="line">w表示四字节，</span><br><span class="line">g表示八字节</span><br></pre></td></tr></table></figure>
+
+<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x/50xw 0x40451400</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>50</code>是数量，<code>x</code>是16进制，<code>w</code>是四字节</p>
+<h1 id="Examining-Memory"><a href="#Examining-Memory" class="headerlink" title="Examining Memory"></a>Examining Memory</h1><p>You can use the command <code>x</code> (for “examine”) to examine memory in any of several formats, independently of your program’s data types.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x/nfu addr</span><br><span class="line">x addr</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+<p>Use the x command to examine memory.</p>
+<p><code>n</code>, <code>f</code>, and <code>u</code> are all optional parameters that specify how much memory to display and how to format it; addr is an expression giving the address where you want to start displaying memory. If you use defaults for nfu, you need not type the slash ‘/’. Several commands set convenient defaults for addr.</p>
+<h2 id="n-the-repeat-count"><a href="#n-the-repeat-count" class="headerlink" title="n, the repeat count"></a>n, the repeat count</h2><pre><code>The repeat count is a decimal integer; the default is 1. 
+It specifies how much memory (counting by units u) to display. 
+If a negative number is specified, memory is examined backward from addr.
+</code></pre>
+<h2 id="f-the-display-format"><a href="#f-the-display-format" class="headerlink" title="f, the display format"></a>f, the display format</h2><pre><code>The display format is one of the formats used by print 
+(‘x’, ‘d’, ‘u’, ‘o’, ‘t’, ‘a’, ‘c’, ‘f’, ‘s’), 
+‘i’ (for machine instructions) and ‘m’ (for displaying memory tags). 
+The default is ‘x’ (hexadecimal) initially. 
+The default changes each time you use either x or print.
+</code></pre>
+<h2 id="u-the-unit-size"><a href="#u-the-unit-size" class="headerlink" title="u, the unit size"></a>u, the unit size</h2><p>The unit size is any of</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">b</span><br><span class="line">Bytes.</span><br><span class="line"></span><br><span class="line">h</span><br><span class="line">Halfwords (two bytes).</span><br><span class="line"></span><br><span class="line">w</span><br><span class="line">Words (four bytes). This is the initial default.</span><br><span class="line"></span><br><span class="line">g</span><br><span class="line">Giant words (eight bytes).</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Each time you specify a unit size with x, that size becomes the default unit the next time you use x. </li>
+<li>For the ‘i’ format, the unit size is ignored and is normally not written. </li>
+<li>For the ‘s’ format, the unit size defaults to ‘b’, unless it is explicitly given. </li>
+<li>Use x /hs to display 16-bit char strings and x /ws to display 32-bit strings. The next use of x /s will again display 8-bit strings. </li>
+<li>Note that the results depend on the programming language of the current compilation unit. </li>
+<li>If the language is C, the ‘s’ modifier will use the UTF-16 encoding while ‘w’ will use UTF-32. The encoding is set by the programming language and cannot be altered.</li>
+</ul>
+<h1 id="modify-memory"><a href="#modify-memory" class="headerlink" title="modify memory"></a>modify memory</h1><p>In order to set the variable g, use </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) set var g=4</span><br></pre></td></tr></table></figure>
+<p>GDB allows more implicit conversions in assignments than C; you can freely store an integer value into a pointer variable or vice versa,<br>and you can convert any structure to any other structure that is the same length or shorter.</p>
+<p>To store values into arbitrary places in memory, use the ‘{…}’ construct to generate a value of specified type at a specified address (see Expressions).<br>For example, {int}0x83040 refers to memory location 0x83040 as an integer (which implies a certain size and representation in memory), and</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set &#123;int&#125;0x83040 = 4</span><br></pre></td></tr></table></figure>
+<p>stores the value 4 into that memory location.</p>
+<p>This should work for any valid pointer, and can be cast to any appropriate data type.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set *((int *) 0xbfbb0000) = 20</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">set *(unsigned char      *)&lt;memaddr&gt; = &lt;value&gt;  ; write 1 byte</span><br><span class="line">set *(unsigned short     *)&lt;memaddr&gt; = &lt;value&gt;  ; write 2 bytes</span><br><span class="line">set *(unsigned int       *)&lt;memaddr&gt; = &lt;value&gt;  ; write 4 bytes</span><br><span class="line">set *(unsigned long long *)&lt;memaddr&gt; = &lt;value&gt;  ; write 8 bytes</span><br><span class="line"> </span><br><span class="line">or</span><br><span class="line"> </span><br><span class="line">set *(char      *)&lt;memaddr&gt; = &lt;value&gt;           ; write 1 byte</span><br><span class="line">set *(short     *)&lt;memaddr&gt; = &lt;value&gt;           ; write 2 bytes</span><br><span class="line">set *(int       *)&lt;memaddr&gt; = &lt;value&gt;           ; write 4 bytes</span><br><span class="line">set *(long long *)&lt;memaddr&gt; = &lt;value&gt;           ; write 8 bytes</span><br></pre></td></tr></table></figure>
+
+<p>or use</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set *0xbfbb0000=20</span><br></pre></td></tr></table></figure>
+<p>change memory locations directly.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1823,88 +1951,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">Dtb反编译</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-25 19:43:11 / Modified: 19:47:54" itemprop="dateCreated datePublished" datetime="2021-09-25T19:43:11+08:00">2021-09-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>dts←→dtb</p>
-<ol>
-<li><p>反编译dtb</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dtb -O dts -o *.dts  *.dtb</span><br></pre></td></tr></table></figure></li>
-<li><p>正编译dts</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dtc -I dts -O dtb -o *.dtb  *.dts</span><br></pre></td></tr></table></figure></li>
-<li><p>dtc -help</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Usage: dtc [options] &lt;input file&gt;</span><br><span class="line"></span><br><span class="line">Options: -[qI:O:o:V:d:R:S:p:a:fb:i:H:sW:E:@AThv]</span><br><span class="line">  -q, --quiet                </span><br><span class="line">	Quiet: -q suppress warnings, -qq errors, -qqq all</span><br><span class="line">  -I, --in-format &lt;arg&gt;      </span><br><span class="line">	Input formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		fs  - /proc/device-tree style directory</span><br><span class="line">  -o, --out &lt;arg&gt;            </span><br><span class="line">	Output file</span><br><span class="line">  -O, --out-format &lt;arg&gt;     </span><br><span class="line">	Output formats are:</span><br><span class="line">		dts - device tree source text</span><br><span class="line">		dtb - device tree blob</span><br><span class="line">		asm - assembler source</span><br><span class="line">  -V, --out-version &lt;arg&gt;    </span><br><span class="line">	Blob version to produce, defaults to 17 (for dtb and asm output)</span><br><span class="line">  -d, --out-dependency &lt;arg&gt; </span><br><span class="line">	Output dependency file</span><br><span class="line">  -R, --reserve &lt;arg&gt;        </span><br><span class="line">	Make space for &lt;number&gt; reserve map entries (for dtb and asm output)</span><br><span class="line">  -S, --space &lt;arg&gt;          </span><br><span class="line">	Make the blob at least &lt;bytes&gt; long (extra space)</span><br><span class="line">  -p, --pad &lt;arg&gt;            </span><br><span class="line">	Add padding to the blob of &lt;bytes&gt; long (extra space)</span><br><span class="line">  -a, --align &lt;arg&gt;          </span><br><span class="line">	Make the blob align to the &lt;bytes&gt; (extra space)</span><br><span class="line">  -b, --boot-cpu &lt;arg&gt;       </span><br><span class="line">	Set the physical boot cpu</span><br><span class="line">  -f, --force                </span><br><span class="line">	Try to produce output even if the input tree has errors</span><br><span class="line">  -i, --include &lt;arg&gt;        </span><br><span class="line">	Add a path to search for include files</span><br><span class="line">  -s, --sort                 </span><br><span class="line">	Sort nodes and properties before outputting (useful for comparing trees)</span><br><span class="line">  -H, --phandle &lt;arg&gt;        </span><br><span class="line">	Valid phandle formats are:</span><br><span class="line">		legacy - &quot;linux,phandle&quot; properties only</span><br><span class="line">		epapr  - &quot;phandle&quot; properties only</span><br><span class="line">		both   - Both &quot;linux,phandle&quot; and &quot;phandle&quot; properties</span><br><span class="line">  -W, --warning &lt;arg&gt;        </span><br><span class="line">	Enable/disable warnings (prefix with &quot;no-&quot;)</span><br><span class="line">  -E, --error &lt;arg&gt;          </span><br><span class="line">	Enable/disable errors (prefix with &quot;no-&quot;)</span><br><span class="line">  -@, --symbols              </span><br><span class="line">	Enable generation of symbols</span><br><span class="line">  -A, --auto-alias           </span><br><span class="line">	Enable auto-alias of labels</span><br><span class="line">  -T, --annotate             </span><br><span class="line">	Annotate output .dts with input source file and line (-T -T for more details)</span><br><span class="line">  -h, --help                 </span><br><span class="line">	Print this help and exit</span><br><span class="line">  -v, --version              </span><br><span class="line">	Print version and exit</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1918,7 +1964,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
