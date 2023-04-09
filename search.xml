@@ -3967,4 +3967,29 @@ INSERT MODE：&lt;C-r&gt;+寄存器名称（无需输入寄存器引用符号&qu
         <tag>KMS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>C 语言 与、或 操作</title>
+    <url>/2023/04/09/C%E7%BC%96%E7%A8%8B-%E4%B8%8E%E6%88%96%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="按位与-amp-and"><a href="#按位与-amp-and" class="headerlink" title="按位与 &amp; and"></a>按位与 &amp; and</h1><p>两都为 1 才为 1</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span> &amp; <span class="number">0</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">0</span> &amp; <span class="number">1</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">1</span> &amp; <span class="number">1</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>寄存器特定位清零使用 &amp; 与 and。</p>
+<p>因为要两个 1 才为 1，所以可以使用 0 来清零特定的 bit 位</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用 &amp; 和 0 将 bit8 - bit15 清零而其他位不变</span></span><br><span class="line">reg &amp;= <span class="number">0xFFFF00FF</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="逻辑与-amp-amp"><a href="#逻辑与-amp-amp" class="headerlink" title="逻辑与 &amp;&amp;"></a>逻辑与 &amp;&amp;</h1><p>两个都为真是才为真</p>
+<h1 id="按位或-or"><a href="#按位或-or" class="headerlink" title="按位或 | or"></a>按位或 | or</h1><p>只要有一个为 1，就为 1</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span> | <span class="number">0</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">0</span> | <span class="number">1</span> = <span class="number">1</span>;</span><br><span class="line"><span class="number">1</span> | <span class="number">1</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>寄存器特定位置 1，用 | 或。</p>
+<p>因为只要有一个为 1 就是 1，可以使用 1 来将特定为置 1</p>
+<h1 id="逻辑或"><a href="#逻辑或" class="headerlink" title="逻辑或 ||"></a>逻辑或 ||</h1><p>只要有一个条件为真，结果就为真</p>
+]]></content>
+      <categories>
+        <category>C编程</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
 </search>

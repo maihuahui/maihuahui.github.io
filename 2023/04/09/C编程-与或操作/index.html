@@ -20,28 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="if(p)和if(!p)含义对于 int *p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; NULL)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; NULL)  对于 int p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; 0)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; 0)  在c语言中，0 被认为是假，非0 被认为是真 如果p的值为0，!p判定为真； 如果">
+<meta name="description" content="按位与 &amp; and两都为 1 才为 1 1230 &amp; 0 &#x3D; 0;0 &amp; 1 &#x3D; 0;1 &amp; 1 &#x3D; 1;  寄存器特定位清零使用 &amp; 与 and。 因为要两个 1 才为 1，所以可以使用 0 来清零特定的 bit 位 12&#x2F;&#x2F; 使用 &amp; 和 0 将 bit8 - bit15 清零而其他位不变reg &amp;&#x3D; 0xFFFF00FF;  逻辑与 &amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="If判断指针非空">
-<meta property="og:url" content="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/index.html">
+<meta property="og:title" content="C 语言 与、或 操作">
+<meta property="og:url" content="http://example.com/2023/04/09/C%E7%BC%96%E7%A8%8B-%E4%B8%8E%E6%88%96%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Huahui">
-<meta property="og:description" content="if(p)和if(!p)含义对于 int *p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; NULL)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; NULL)  对于 int p; 来说 12if (!p) &#x3D;&#x3D;&gt; if (p &#x3D;&#x3D; 0)if (p)  &#x3D;&#x3D;&gt; if (p !&#x3D; 0)  在c语言中，0 被认为是假，非0 被认为是真 如果p的值为0，!p判定为真； 如果">
+<meta property="og:description" content="按位与 &amp; and两都为 1 才为 1 1230 &amp; 0 &#x3D; 0;0 &amp; 1 &#x3D; 0;1 &amp; 1 &#x3D; 1;  寄存器特定位清零使用 &amp; 与 and。 因为要两个 1 才为 1，所以可以使用 0 来清零特定的 bit 位 12&#x2F;&#x2F; 使用 &amp; 和 0 将 bit8 - bit15 清零而其他位不变reg &amp;&#x3D; 0xFFFF00FF;  逻辑与 &amp;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-15T12:39:27.000Z">
-<meta property="article:modified_time" content="2021-09-15T12:46:34.321Z">
+<meta property="article:published_time" content="2023-04-09T09:35:33.000Z">
+<meta property="article:modified_time" content="2023-04-09T09:55:39.329Z">
 <meta property="article:author" content="huahui">
 <meta property="article:tag" content="C">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/">
+<link rel="canonical" href="http://example.com/2023/04/09/C%E7%BC%96%E7%A8%8B-%E4%B8%8E%E6%88%96%E6%93%8D%E4%BD%9C/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/","path":"2021/09/15/C编程-if判断指针非空/","title":"If判断指针非空"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/09/C%E7%BC%96%E7%A8%8B-%E4%B8%8E%E6%88%96%E6%93%8D%E4%BD%9C/","path":"2023/04/09/C编程-与或操作/","title":"C 语言 与、或 操作"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>If判断指针非空 | Huahui</title>
+<title>C 语言 与、或 操作 | Huahui</title>
   
 
 
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#if-p-%E5%92%8Cif-p-%E5%90%AB%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">if(p)和if(!p)含义</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%B8%8E-amp-and"><span class="nav-number">1.</span> <span class="nav-text">按位与 &amp; and</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E4%B8%8E-amp-amp"><span class="nav-number">2.</span> <span class="nav-text">逻辑与 &amp;&amp;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E6%88%96-or"><span class="nav-number">3.</span> <span class="nav-text">按位或 | or</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%88%96"><span class="nav-number">4.</span> <span class="nav-text">逻辑或 ||</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -182,7 +182,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/C%E7%BC%96%E7%A8%8B-if%E5%88%A4%E6%96%AD%E6%8C%87%E9%92%88%E9%9D%9E%E7%A9%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/09/C%E7%BC%96%E7%A8%8B-%E4%B8%8E%E6%88%96%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -195,7 +195,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          If判断指针非空
+          C 语言 与、或 操作
         </h1>
 
         <div class="post-meta-container">
@@ -207,7 +207,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-09-15 20:39:27 / Modified: 20:46:34" itemprop="dateCreated datePublished" datetime="2021-09-15T20:39:27+08:00">2021-09-15</time>
+      <time title="Created: 2023-04-09 17:35:33 / Modified: 17:55:39" itemprop="dateCreated datePublished" datetime="2023-04-09T17:35:33+08:00">2023-04-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,17 +229,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="if-p-和if-p-含义"><a href="#if-p-和if-p-含义" class="headerlink" title="if(p)和if(!p)含义"></a>if(p)和if(!p)含义</h1><p>对于 <code>int *p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == NULL)</span><br><span class="line">if (p)  ==&gt; if (p != NULL)</span><br></pre></td></tr></table></figure>
+        <h1 id="按位与-amp-and"><a href="#按位与-amp-and" class="headerlink" title="按位与 &amp; and"></a>按位与 &amp; and</h1><p>两都为 1 才为 1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> &amp; <span class="number">0</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">0</span> &amp; <span class="number">1</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">1</span> &amp; <span class="number">1</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
-<p>对于 <code>int p;</code> 来说</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!p) ==&gt; if (p == 0)</span><br><span class="line">if (p)  ==&gt; if (p != 0)</span><br></pre></td></tr></table></figure>
+<p>寄存器特定位清零使用 &amp; 与 and。</p>
+<p>因为要两个 1 才为 1，所以可以使用 0 来清零特定的 bit 位</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 &amp; 和 0 将 bit8 - bit15 清零而其他位不变</span></span><br><span class="line">reg &amp;= <span class="number">0xFFFF00FF</span>;</span><br></pre></td></tr></table></figure>
 
-<p><strong>在c语言中，0 被认为是假，非0 被认为是真</strong></p>
-<p>如果p的值为0，!p判定为真；</p>
-<p>如果p的值不是0，!p的判定为假</p>
-<p>如果是一个指针，指针有内容，即：p的值不是0，!p的判定为假</p>
-<p>如果指针没有内容，NULL，即：p的值为0，!p判定为真；</p>
+<h1 id="逻辑与-amp-amp"><a href="#逻辑与-amp-amp" class="headerlink" title="逻辑与 &amp;&amp;"></a>逻辑与 &amp;&amp;</h1><p>两个都为真是才为真</p>
+<h1 id="按位或-or"><a href="#按位或-or" class="headerlink" title="按位或 | or"></a>按位或 | or</h1><p>只要有一个为 1，就为 1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> | <span class="number">0</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">0</span> | <span class="number">1</span> = <span class="number">1</span>;</span><br><span class="line"><span class="number">1</span> | <span class="number">1</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>寄存器特定位置 1，用 | 或。</p>
+<p>因为只要有一个为 1 就是 1，可以使用 1 来将特定为置 1</p>
+<h1 id="逻辑或"><a href="#逻辑或" class="headerlink" title="逻辑或 ||"></a>逻辑或 ||</h1><p>只要有一个条件为真，结果就为真</p>
 
     </div>
 
@@ -256,14 +259,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/09/15/vim-vim%E9%85%8D%E7%BD%AE/" rel="prev" title="Vim配置">
-                  <i class="fa fa-chevron-left"></i> Vim配置
+                <a href="/2023/04/09/drm-kms/" rel="prev" title="DRM">
+                  <i class="fa fa-chevron-left"></i> DRM
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/09/25/Linux-shell-dtb%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="next" title="Dtb反编译">
-                  Dtb反编译 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

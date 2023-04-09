@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,6 +166,301 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huahui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huahui">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/12/tmux-tmux%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Tmux使用指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-12-12 19:18:27 / Modified: 20:08:15" itemprop="dateCreated datePublished" datetime="2021-12-12T19:18:27+08:00">2021-12-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="tmux使用指南"><a href="#tmux使用指南" class="headerlink" title="tmux使用指南"></a>tmux使用指南</h1><h2 id="tmux快捷指令"><a href="#tmux快捷指令" class="headerlink" title="tmux快捷指令"></a>tmux快捷指令</h2><p>tmux的所有指令，都包含同一个前缀，默认为<code>Ctrl+b</code>，但两按键相隔甚远，推荐<code>Ctrl+a</code></p>
+<h3 id="系统指令"><a href="#系统指令" class="headerlink" title="系统指令"></a>系统指令</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl + a</td>
+<td>?</td>
+<td>显示快捷键帮助文档</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>d</td>
+<td>断开当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>D</td>
+<td>选择要断开的会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>Ctrl+z</td>
+<td>挂起当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>r</td>
+<td>强制重载当前会话</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>s</td>
+<td>显示会话列表用于选择并切换</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>:</td>
+<td>进入命令行模式，此时可直接输入ls等命令</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>[</td>
+<td>进入复制模式，按q退出</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>]</td>
+<td>粘贴复制模式中复制的文本</td>
+</tr>
+<tr>
+<td>Ctrl + a</td>
+<td>~</td>
+<td>列出提示信息缓存</td>
+</tr>
+</tbody></table>
+<h3 id="窗口指令（window）"><a href="#窗口指令（window）" class="headerlink" title="窗口指令（window）"></a>窗口指令（window）</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+a</td>
+<td>c</td>
+<td>新建窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>&amp;</td>
+<td>关闭当前窗口（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>0~9</td>
+<td>切换到指定窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>p</td>
+<td>切换到上一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>n</td>
+<td>切换到下一窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>w</td>
+<td>打开窗口列表，用于且切换窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>,</td>
+<td>重命名当前窗口</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>.</td>
+<td>修改当前窗口编号（适用于窗口重新排序）</td>
+</tr>
+<tr>
+<td>Ctrl+a</td>
+<td>f</td>
+<td>快速定位到窗口（输入关键字匹配窗口名称）</td>
+</tr>
+</tbody></table>
+<h3 id="面板指令-panel"><a href="#面板指令-panel" class="headerlink" title="面板指令(panel)"></a>面板指令(panel)</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+b</td>
+<td>“</td>
+<td>当前面板上下一分为二，下侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>%</td>
+<td>当前面板左右一分为二，右侧新建面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>x</td>
+<td>关闭当前面板（关闭前需输入y or n确认）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>z</td>
+<td>最大化当前面板，再重复一次按键后恢复正常（v1.8版本新增）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>!</td>
+<td>将当前面板移动到新的窗口打开（原窗口中存在两个及以上面板有效）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>;</td>
+<td>切换到最后一次使用的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>q</td>
+<td>显示面板编号，在编号消失前输入对应的数字可切换到相应的面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>{</td>
+<td>向前置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>}</td>
+<td>向后置换当前面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+o</td>
+<td>顺时针旋转当前窗口中的所有面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>方向键</td>
+<td>移动光标切换面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>o</td>
+<td>选择下一面板</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>空格键</td>
+<td>在自带的面板布局中循环切换</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Alt+方向键</td>
+<td>以5个单元格为单位调整当前面板边缘</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>Ctrl+方向键</td>
+<td>以1个单元格为单位调整当前面板边缘（Mac下被系统快捷键覆盖）</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>t</td>
+<td>显示时钟</td>
+</tr>
+</tbody></table>
+<h1 id="会话-session"><a href="#会话-session" class="headerlink" title="会话 session"></a>会话 session</h1><h2 id="新建会话"><a href="#新建会话" class="headerlink" title="新建会话"></a>新建会话</h2><p>新建一个<code>tmux session</code>非常简单，语法为<code>tmux new -s session-name</code>，也可以简写为<code>tmux</code>，为了方便管理，建议指定会话名称，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux # 新建一个无名称的会话</span><br><span class="line">tmux new -s demo # 新建一个名称为demo的会话</span><br></pre></td></tr></table></figure>
+<h2 id="断开当前会话"><a href="#断开当前会话" class="headerlink" title="断开当前会话"></a>断开当前会话</h2><p>会话中操作了一段时间，我希望断开会话同时下次还能接着用，可以使用<code>detach</code>命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux detach # 断开当前会话</span><br><span class="line">Ctrl+b + d # tmux的会话中，断开快捷键</span><br></pre></td></tr></table></figure>
+<p>TODO: <code>Ctrl+b + d</code>与<code>Ctrl+b + z</code>区别</p>
+<h2 id="进入之前的会话"><a href="#进入之前的会话" class="headerlink" title="进入之前的会话"></a>进入之前的会话</h2><p>断开会话后，想要接着上次留下的现场继续工作，就要使用到tmux的<code>attach</code>命令了，语法为<code>tmux attach-session -t session-name</code>，可简写为<code>tmux a -t session-name</code> 或 <code>tmux a</code>。通常我们使用如下两种方式之一即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux a # 默认进入第一个会话</span><br><span class="line">tmux a -t demo # 进入到名称为demo的会话</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭会话"><a href="#关闭会话" class="headerlink" title="关闭会话"></a>关闭会话</h2><p>会话的使命完成后，一定是要关闭的。我们可以使用tmux的<code>kill</code>命令，kill命令有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kill-pane、kill-server、kill-session 和 kill-window共四种，其中kill-session的语法为tmux kill-session -t session-name。如下：</span><br><span class="line"></span><br><span class="line">tmux kill-session -t demo # 关闭demo会话</span><br><span class="line">tmux kill-server # 关闭服务器，所有的会话都将关闭</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看所有的会话"><a href="#查看所有的会话" class="headerlink" title="查看所有的会话"></a>查看所有的会话</h2><p>管理会话的第一步就是要查看所有的会话，我们可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux list-session # 查看所有会话</span><br><span class="line">tmux ls # 查看所有会话，提倡使用简写形式</span><br></pre></td></tr></table></figure>
+
+<p>如果刚好处于会话中，可以使用对应的tmux快捷键<code>Ctrl+b + s</code>，此时tmux将打开一个会话列表，按上下键或者鼠标滚轮，可选中目标会话，按左右键可收起或展开会话的窗口，选中目标会话或窗口后，按回车键即可完成切换。</p>
+<h1 id="灵活配置"><a href="#灵活配置" class="headerlink" title="灵活配置"></a>灵活配置</h1><h2 id="开启鼠标支持"><a href="#开启鼠标支持" class="headerlink" title="开启鼠标支持"></a>开启鼠标支持</h2><p>默认情况下，tmux的多窗口之间的切换以及面板大小调整，需要输入指令才能完成，这一过程，涉及到的指令较多，而且操作麻烦，特别是面板大小调整，指令难以一步到位，这个时候开启鼠标支持就完美了。</p>
+<p>对于tmux v2.1(2015.10.28)之前的版本，需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setw -g mode-mouse on # 支持鼠标选取文本等</span><br><span class="line">setw -g mouse-resize-pane on # 支持鼠标拖动调整面板的大小(通过拖动面板间的分割线)</span><br><span class="line">setw -g mouse-select-pane on # 支持鼠标选中并切换面板</span><br><span class="line">setw -g mouse-select-window on # 支持鼠标选中并切换窗口(通过点击状态栏窗口名称)</span><br></pre></td></tr></table></figure>
+
+<p>有的地方可能会出现set-window-option的写法，setw就是它的别名。</p>
+<p>对于tmux v2.1及以上的版本，仅需加入如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set-option -g mouse on # 等同于以上4个指令的效果</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，开启鼠标支持后，iTem2默认的鼠标选中即复制功能需要同时按下 Alt 键，才会生效。</p>
+<h2 id="快速面板切换"><a href="#快速面板切换" class="headerlink" title="快速面板切换"></a>快速面板切换</h2><p>鼠标支持确实能带来很大的便捷性，特别是对于习惯了鼠标操作的tmux新手，但对于键盘爱好者而言，这不是什么好消息，对他们而言，双手不离键盘是基本素质。</p>
+<p>虽然指令前缀加方向键可以切换面板，但方向键太远，不够快，不够Geek。没关系，我们可以将面板切换升级为熟悉的h、j、k、l键位。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 绑定hjkl键为面板切换的上下左右键</span><br><span class="line">bind -r k select-pane -U # 绑定k为↑</span><br><span class="line">bind -r j select-pane -D # 绑定j为↓</span><br><span class="line">bind -r h select-pane -L # 绑定h为←</span><br><span class="line">bind -r l select-pane -R # 绑定l为→</span><br></pre></td></tr></table></figure>
+
+<p>-r表示可重复按键，大概500ms之内，重复的h、j、k、l按键都将有效，完美支持了快速切换的Geek需求。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1256,134 +1551,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="huahui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huahui">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/12/vim/vim%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">Vim匹配</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-12 17:13:11 / Modified: 17:13:37" itemprop="dateCreated datePublished" datetime="2021-09-12T17:13:11+08:00">2021-09-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vim%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">vim实用技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="按模式匹配还是按原义匹配"><a href="#按模式匹配还是按原义匹配" class="headerlink" title="按模式匹配还是按原义匹配"></a>按模式匹配还是按原义匹配</h1><h2 id="Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns"><a href="#Tip-72-Tune-the-Case-Sensitivity-of-Search-Patterns" class="headerlink" title="Tip 72 Tune the Case Sensitivity of Search Patterns"></a>Tip 72 Tune the Case Sensitivity of Search Patterns</h2><p>调整搜索大小写敏感度</p>
-<p><strong>全局区分大小写</strong></p>
-<p>通过设置 :set ignorecase 选项即可开启忽略大小写。需要注意的是, 此设置会对 Vim 关键词补全有一定的影响。</p>
-<p><strong>每次搜索区分大小写</strong></p>
-<p>可以使用以下选项来覆盖默认的是否忽略大小写:</p>
-<ul>
-<li><p>\c - 忽略大小写</p>
-</li>
-<li><p>\C - 区分大小写</p>
-</li>
-</ul>
-<p>每次搜索的时候都可以强制指定是否区分大小写。注意：在替换时\c标志位为手工确认。</p>
-<p><strong>启用智能大小写</strong></p>
-<p>Vim 提供了预测我们大小写敏感意图的 smartcase 选项， :set smartcase</p>
-<p>启用此选项后进行搜索时,</p>
-<ul>
-<li><p>如果输入的全部是小写字母, 那么就不区分大小写;</p>
-</li>
-<li><p>但只要包含大写字母, 那么就是大小写敏感的</p>
-</li>
-</ul>
-<h2 id="Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches"><a href="#Tip-73-Use-the-v-Pattern-Switch-for-Regex-Searches" class="headerlink" title="Tip 73 Use the \v Pattern Switch for Regex Searches"></a>Tip 73 Use the \v Pattern Switch for Regex Searches</h2><p>按正则表达式查找时，使用 \v 模式开关  （开启字符的特殊含义）</p>
-<p>我们可以使用 \v 模式(very magic search)开关规范所有的特殊符号, 启用之后, 除了下划线 _, 大小写字母, 和数字外, 所有的字符都具有特殊含义。</p>
-<h2 id="Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches"><a href="#Tip-74-Use-the-V-Literal-Switch-for-Verbatim-Searches" class="headerlink" title="Tip 74 Use the \V Literal Switch for Verbatim Searches"></a>Tip 74 Use the \V Literal Switch for Verbatim Searches</h2><p>按原义查找文本时，使用 \V 原义开关  (开启字符的特殊含义)</p>
-<p>在正则表达式中使用的特殊字符，在按模式查找时用起来很顺手，但如果我们想</p>
-<p>按原义查找文本时，它们就变成了阻碍。使用 very nomagic 原义开关，可以消除附</p>
-<p>加在 .、 * 以及 ? 等大多数字符上的特殊含义。</p>
-<p><strong>使用原义开关 \V，即可激活 very nomagic 搜索模式</strong></p>
-<p>例如：搜索匹配“a.k.a.”字符串</p>
-<p>/ \Va.k.a.</p>
-<p>我们也可以使用转义的方式来消除字符的特殊含义。例如：</p>
-<p>/ a.k.a.</p>
-<p><strong>使用 “\V” 会使得其后的模式中只有反斜杠有特殊的意义,显然更方便。</strong></p>
-<h2 id="Tip-76-Stake-the-Boundaries-of-a-Ward"><a href="#Tip-76-Stake-the-Boundaries-of-a-Ward" class="headerlink" title="Tip 76 Stake the Boundaries of a Ward"></a>Tip 76 Stake the Boundaries of a Ward</h2><p>界定单词的边界</p>
-<p>定义一个搜索模型时, 指定单词的开始和结束位置可能很有用, Vim 给我们提供了单词分隔的选项。</p>
-<p>例如执行搜索 /the<CR> 的时候, 是会把 these they their 等单词一起搜索出来的。</p>
-<p>如果我们想只搜索 the 完整的单词, 而不需要包含 the 片段的词, 那么我们需要指定 词的边界。</p>
-<p>在 \v 模式下（开启字符特殊含义）, <strong>&lt; 和 &gt;</strong> 即代表词边界的符号. 所以我们可以使用 /\v<the><CR> 来达到我们的预期。</p>
-<p>需要注意的是, 如果我们在 \v 模式下需要匹配 &lt;&gt; 字符, 那么就得加反斜杠来进行转义了。</p>
-<h2 id="Tip-78-Escape-Problem-Characters"><a href="#Tip-78-Escape-Problem-Characters" class="headerlink" title="Tip 78 Escape Problem Characters"></a>Tip 78 Escape Problem Characters</h2><p>转义问题字符</p>
-<p>在 /V 纯文本模式下可以很容易的来进行纯文本的搜索匹配, 因为绝大部分的字符(如:. + *等)的特殊含义都被禁用了, 但是仍然有极少字符仍然有特殊的含义。</p>
-<p>这时要用 \ 进行转义。</p>
-<p>正向搜索转义斜杠 ‘/ ’</p>
-<p>正向搜索时, 斜杠 / 字符被解释为终止符, 所有在此字符之后的内容都会被忽略，替换模式下在 \ 字符后添加标志位。</p>
-<p>在 \v 和 \V 模式下, 如果要匹配 / 字符, 那么需要进行转义。</p>
-<p>反向搜索转义问号 ‘ ? ’</p>
-<p>当使用反向搜索的时候, 问号 ? 就是搜索的终止符。如果要匹配 ？号，需要转义 ?</p>
-<p>每次都转义反斜杠 ‘ \ ’</p>
-<p>\ 是需要进行转义的. 通常情况下, 反斜杠 \ 之后的那个字符表示被转义的特殊含义. 所以要匹配反斜杠字符的话就需要加转义, 也就是: \</p>
-<p>而且，不管正向还是反向搜索，要匹配 \ 都是需要转义的。</p>
-<p>终止符( / 或 ? )</p>
-<p>Vim 允许在搜索字段终止符后面追加某些标志来调整搜索命令的行为</p>
-<p>例如 /vim/e<CR> 将把光标放到高亮匹配位置的最后而不是前面</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>
